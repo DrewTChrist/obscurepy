@@ -1,0 +1,67 @@
+@startuml
+class ast.NodeTransformer {
+    visit()
+}
+
+abstract class Handler {
+    next : Handler
+    {abstract} set_next()
+    {abstract} handle()
+}
+
+abstract class BaseTransformer {
+    next : Handler
+    {abstract} set_next(h: Handler)
+    {abstract} handle(tree: ast.Module)
+}
+class ClassHandler {
+    next : Handler
+    set_next(h: Handler)
+    handle(tree: ast.Module)
+    visit_ClassDef(n: node)
+}
+
+class FunctionHandler {
+    next : Handler
+    set_next(h: Handler)
+    handle(tree: ast.Module)
+    visit_FunctionDef(n: node)
+}
+
+class VariableHandler{
+    next : Handler
+    set_next(h: Handler)
+    handle(tree: ast.Module)
+    visit_Assign(n: node)
+}
+
+class Obfuscator {
+    chain : Handler
+    storage: DefinitionStorage
+    modules: list<ast.Module>
+    initialize_chain()
+    load_modules()
+    gather_definitions()
+    obfuscate()
+}
+
+class DefinitionStorage {
+    definitions : dict
+    is_defined(d: str)
+    add_definition(d: str)
+}
+
+class ConfigLoader {
+}
+
+ast.NodeTransformer <|-- BaseTransformer
+Handler <|-- BaseTransformer
+BaseTransformer <|-- ClassHandler
+BaseTransformer "1" *-- ClassHandler
+BaseTransformer <|-- FunctionHandler
+BaseTransformer "1" *-- FunctionHandler
+BaseTransformer <|-- VariableHandler
+BaseTransformer "1" *-- VariableHandler
+Obfuscator "1" *-- DefinitionStorage
+Obfuscator "1" *-- BaseTransformer
+@enduml
