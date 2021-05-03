@@ -10,6 +10,9 @@ class Handler(ABC, ast.NodeTransformer):
     def set_next(self, next_handler):
         self.next = next_handler
 
+    def get_next(self):
+        return self.next
+
     def handle(self, tree):
         tree = self.visit(tree)
 

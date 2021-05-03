@@ -1,16 +1,14 @@
 @startuml
-autoactivate on
+'autoactivate on
 actor User as User
 participant Obfuscator
 participant DefinitionStorage
 participant ChainBuilder
 
-User->Obfuscator:Obfuscate Request
-Obfuscator->Obfuscator:initialize_chain()
-Obfuscator->ChainBuilder:get_chain()
-return chain
-Obfuscator->Obfuscator:intialize_definitions()
-Obfuscator->DefinitionStorage: get_definitions()
-return definitions
+' comment
+/'
+multi line comment
+'/
+User -> Obfuscator : Obfuscate Request
 
 @enduml

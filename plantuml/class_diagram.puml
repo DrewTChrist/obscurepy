@@ -5,12 +5,6 @@ class ast.NodeTransformer {
 
 abstract class Handler {
     next : Handler
-    {abstract} set_next()
-    {abstract} handle()
-}
-
-abstract class BaseTransformer {
-    next : Handler
     {abstract} set_next(h: Handler)
     {abstract} handle(tree: ast.Module)
 }
@@ -51,17 +45,13 @@ class DefinitionStorage {
     add_definition(d: str)
 }
 
-class ConfigLoader {
-}
-
-ast.NodeTransformer <|-- BaseTransformer
-Handler <|-- BaseTransformer
-BaseTransformer <|-- ClassHandler
-BaseTransformer "1" *-- ClassHandler
-BaseTransformer <|-- FunctionHandler
-BaseTransformer "1" *-- FunctionHandler
-BaseTransformer <|-- VariableHandler
-BaseTransformer "1" *-- VariableHandler
+ast.NodeTransformer <|-- Handler
+Handler <|-- ClassHandler
+Handler "1" *-- ClassHandler
+Handler <|-- FunctionHandler
+Handler "1" *-- FunctionHandler
+Handler <|-- VariableHandler
+Handler "1" *-- VariableHandler
 Obfuscator "1" *-- DefinitionStorage
-Obfuscator "1" *-- BaseTransformer
+Obfuscator "1" *-- Handler
 @enduml

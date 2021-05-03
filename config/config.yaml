@@ -1,0 +1,9 @@
+directories:
+  project: '.'
+
+patterns:
+  prefix: 'prefix'
+
+options:
+  obscure_literals: False
+  dynamic_prefix: False

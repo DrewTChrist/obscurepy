@@ -27,8 +27,10 @@ class NumberTwo:
     def more_stuff(self):
         print('more stuff')
 
+
 def not_a_class_function():
     print('hellohello')
+
 
 def main():
     src = SomeRandomClass()
@@ -36,7 +38,6 @@ def main():
     src2 = NumberTwo()
 
     src.random_class_function('hello')
-
 
 
 if __name__ == '__main__':
