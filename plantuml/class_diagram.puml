@@ -39,7 +39,7 @@ class Obfuscator {
     obfuscate()
 }
 
-class DefinitionStorage {
+class DefinitionTracker {
     definitions : dict
     is_defined(d: str)
     add_definition(d: str)
@@ -52,6 +52,6 @@ Handler <|-- FunctionHandler
 Handler "1" *-- FunctionHandler
 Handler <|-- VariableHandler
 Handler "1" *-- VariableHandler
-Obfuscator "1" *-- DefinitionStorage
+Obfuscator "1" *-- DefinitionTracker
 Obfuscator "1" *-- Handler
 @enduml
