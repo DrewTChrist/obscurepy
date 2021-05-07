@@ -2,6 +2,7 @@ from obscurepy.utils.loader import load_handlers, load_config
 
 
 class Obfuscator:
+    """Obfuscator class"""
 
     def __init__(self):
         self.config = None

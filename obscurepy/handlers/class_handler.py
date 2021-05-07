@@ -3,6 +3,7 @@ from obscurepy.utils.definition_tracker import DefinitionTracker
 
 
 class ClassHandler(Handler):
+    """ClassHandler class"""
 
     def __init__(self):
         super(ClassHandler, self).__init__()

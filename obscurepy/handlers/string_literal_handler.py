@@ -2,6 +2,7 @@ from obscurepy.handlers.handler import Handler
 
 
 class StringLiteralHandler(Handler):
+    """StringLiteralHandler class"""
 
     def __init__(self):
         super(StringLiteralHandler, self).__init__()

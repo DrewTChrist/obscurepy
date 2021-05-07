@@ -2,6 +2,7 @@ from obscurepy.handlers.handler import Handler
 
 
 class FunctionHandler(Handler):
+    """FunctionHandler class"""
 
     def __init__(self):
         super(FunctionHandler, self).__init__()

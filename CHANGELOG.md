@@ -11,8 +11,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
-## [0.1.0] - 2021-05-01
+## [0.1.0](https://github.com/drewtchrist/obscurepy/releases/tag/v0.1.0) - 2021-05-06
 ### Added
+* Added some basic handlers
+* Added some basic utils
+* Added some basic diagrams
+* Setup documents
+* Setup pre commit hooks
 
 ### Changed
 

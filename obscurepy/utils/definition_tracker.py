@@ -1,4 +1,5 @@
 class DefinitionTracker:
+    """DefinitionTracker singleton"""
 
     _instance = None
 

@@ -3,6 +3,7 @@ import ast
 
 
 class Handler(ABC, ast.NodeTransformer):
+    """Abstract Handler class"""
 
     def __init__(self):
         self.next = None
