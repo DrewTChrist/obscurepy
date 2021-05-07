@@ -1,8 +1,5 @@
-directories:
-  project: '.'
-
-patterns:
-  prefix: 'prefix'
+handlers:
+  prefix: '_123'
 
 options:
   obscure_literals: False

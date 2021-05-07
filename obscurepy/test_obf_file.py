@@ -35,6 +35,8 @@ def not_a_class_function():
 def main():
     src = SomeRandomClass()
 
+    src.x = 60
+
     src2 = NumberTwo()
 
     src.random_class_function('hello')

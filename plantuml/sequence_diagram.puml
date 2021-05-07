@@ -2,8 +2,9 @@
 'autoactivate on
 actor User as User
 participant Obfuscator
-participant DefinitionStorage
-participant ChainBuilder
+participant DefinitionTracker
+participant Handler
+
 
 ' comment
 /'

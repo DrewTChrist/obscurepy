@@ -30,8 +30,7 @@ def load_config(file):
 def load_file(file):
     text = []
     with open(file, 'r') as file:
-        for line in file.readlines():
-            text.append(line)
+        text = file.read()
         file.close()
     return text
 

@@ -1,5 +1,4 @@
 from obscurepy.handlers.handler import Handler
-import ast
 
 
 class StringLiteralHandler(Handler):

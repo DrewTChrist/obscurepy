@@ -1,5 +1,5 @@
 from obscurepy.handlers.handler import Handler
-import ast
+from obscurepy.utils.definition_tracker import DefinitionTracker
 
 
 class ClassHandler(Handler):
@@ -8,6 +8,8 @@ class ClassHandler(Handler):
         super(ClassHandler, self).__init__()
 
     def visit_ClassDef(self, node):
+        tracker = DefinitionTracker.get_instance()
         if isinstance(node.name, str):
-            node.name = "Hello"
+            node_dict = tracker.add_class(node.name)
+            node.name = node_dict['name']
         return node
