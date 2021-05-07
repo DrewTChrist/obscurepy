@@ -1,0 +1,15 @@
+@startuml
+'autoactivate on
+actor User as User
+participant Obfuscator
+participant DefinitionTracker
+participant Handler
+
+
+' comment
+/'
+multi line comment
+'/
+User -> Obfuscator : Obfuscate Request
+
+@enduml

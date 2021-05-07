@@ -1,0 +1,3 @@
+from obscurepy.handlers.class_handler import ClassHandler
+from obscurepy.handlers.function_handler import FunctionHandler
+from obscurepy.handlers.string_literal_handler import StringLiteralHandler

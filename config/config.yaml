@@ -1,0 +1,6 @@
+handlers:
+  prefix: '_123'
+
+options:
+  obscure_literals: False
+  dynamic_prefix: False
