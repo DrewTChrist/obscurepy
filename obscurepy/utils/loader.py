@@ -26,22 +26,33 @@ def __create_handlers():
 
 def load_config(file):
     """Loads yaml config files"""
-    with open(file, 'r') as f:
-        return yaml.load(f, Loader=yaml.FullLoader)
+    if file:
+        with open(file, 'r') as f:
+            return yaml.load(f, Loader=yaml.FullLoader)
+    else:
+        raise ValueError('file cannot be None or empty')
 
 
 def load_file(file):
     """Loads text from a file"""
-    text = []
-    with open(file, 'r') as file:
-        text = file.read()
-        file.close()
-    return text
+    text = ''
+    if file:
+        with open(file, 'r') as file:
+            text = file.read()
+            file.close()
+        return text
+    else:
+        raise ValueError('file cannot be None or empty')
 
 
 def load_files(files):
     """Loads text from multiple files"""
     texts = []
-    for file in files:
-        texts.append(load_file(file))
-    return texts
+    if files:
+        for file in files:
+            text = load_file(file)
+            if text:
+                texts.append(text)
+        return texts
+    else:
+        raise ValueError('files cannot be None')
