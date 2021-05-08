@@ -2,4 +2,4 @@
 
 cd tests
 
-python -m unittest discover -s $HOME/obscurepy/tests -t $HOME/obscurepy
+python -m unittest discover -s ./ -t ../
