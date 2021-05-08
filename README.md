@@ -6,15 +6,12 @@
 
 1. [Installation](#installation)
 2. [Usage](#usage)
-3. [Sensor Information](#sensor-information)
-4. [Credits](#credits)
-5. [License](#license)
+3. [Credits](#credits)
+4. [License](#license)
 
 ## Installation
 
 ## Usage
-
-## Sensor Information
 
 ## Credits
 
