@@ -11,6 +11,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
+## [0.2.1](https://github.com/drewtchrist/obscurepy/releases/tag/v0.2.1) - 2021-05-19
+### Added
+
+### Changed
+* Changed sphinx documentation theme to "read the docs"
+
+### Removed
+
+
 ## [0.2.0](https://github.com/drewtchrist/obscurepy/releases/tag/v0.2.0) - 2021-05-19
 ### Added
 * Added assign_handler.py to handle ast.Assign nodes
