@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>obscurepy.obfuscator &#8212; obscurepy 0.1.3 documentation</title>
+    <title>obscurepy.obfuscator &#8212; obscurepy 0.2.0 documentation</title>
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
 
@@ -26,7 +26,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">obscurepy 0.1.3 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">obscurepy 0.2.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">obscurepy.obfuscator</a></li>
       </ul>
@@ -42,20 +42,35 @@
 
 
 <div class="viewcode-block" id="Obfuscator"><a class="viewcode-back" href="../../index.html#obscurepy.obfuscator.Obfuscator">[docs]</a><span class="k">class</span> <span class="nc">Obfuscator</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Obfuscator class&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Main obfuscator class for managing files, handlers and other processes</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        **config (dict)**: Configuration options</span>
+
+<span class="sd">        **filenames (list)**: List of filenames to be obscured</span>
+
+<span class="sd">        **chain (:obj: `Handler`)**: A single handler which is the first in the chain of handlers</span>
+
+<span class="sd">        **text (str)**: Source code from a file</span>
+
+<span class="sd">        **tree (:obj: `ast.Module`)**: Reference to the ast tree created from text attribute</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Creates an instance of an Obfuscator&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">filenames</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">chain</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tree</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="k">def</span> <span class="nf">build_chain</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">chain</span> <span class="o">=</span> <span class="n">load_handlers</span><span class="p">()</span>
+<div class="viewcode-block" id="Obfuscator.build_chain"><a class="viewcode-back" href="../../index.html#obscurepy.obfuscator.Obfuscator.build_chain">[docs]</a>    <span class="k">def</span> <span class="nf">build_chain</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Loads handlers and assigns the first one to chain&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">chain</span> <span class="o">=</span> <span class="n">load_handlers</span><span class="p">()</span></div>
 
-    <span class="k">def</span> <span class="nf">load_config</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">load_config</span><span class="p">(</span><span class="s1">&#39;config/config.yaml&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="Obfuscator.load_config"><a class="viewcode-back" href="../../index.html#obscurepy.obfuscator.Obfuscator.load_config">[docs]</a>    <span class="k">def</span> <span class="nf">load_config</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Loads configuration options&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">load_config</span><span class="p">(</span><span class="s1">&#39;config/config.yaml&#39;</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">obfuscate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">pass</span></div>
@@ -90,7 +105,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">obscurepy 0.1.3 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">obscurepy 0.2.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">obscurepy.obfuscator</a></li>
       </ul>

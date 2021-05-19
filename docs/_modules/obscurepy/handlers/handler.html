@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>obscurepy.handlers.handler &#8212; obscurepy 0.1.3 documentation</title>
+    <title>obscurepy.handlers.handler &#8212; obscurepy 0.2.0 documentation</title>
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/classic.css" type="text/css" />
 
@@ -26,7 +26,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../../index.html">obscurepy 0.1.3 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">obscurepy 0.2.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">obscurepy.handlers.handler</a></li>
       </ul>
@@ -43,24 +43,53 @@
 
 
 <div class="viewcode-block" id="Handler"><a class="viewcode-back" href="../../../index.html#obscurepy.handlers.handler.Handler">[docs]</a><span class="k">class</span> <span class="nc">Handler</span><span class="p">(</span><span class="n">ABC</span><span class="p">,</span> <span class="n">ast</span><span class="o">.</span><span class="n">NodeTransformer</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Abstract Handler class&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Abstract Handler class that inherits from ast.NodeTransformer</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        **next (:obj: `Handler`)**: The next handler to be executed</span>
+
+<span class="sd">        **_debug_name (str)**: Class name used for debugging purposes</span>
+
+<span class="sd">        **execution_priority (int)**: Value used to determine when a handler should be executed</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Defines attributes necessary for sub classes&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_debug_name</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">execution_priority</span> <span class="o">=</span> <span class="mi">0</span>
 
-    <span class="k">def</span> <span class="nf">set_next</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">next_handler</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">next_handler</span>
+<div class="viewcode-block" id="Handler.set_next"><a class="viewcode-back" href="../../../index.html#obscurepy.handlers.handler.Handler.set_next">[docs]</a>    <span class="k">def</span> <span class="nf">set_next</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">next_handler</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets the next handler to be executed after the current</span>
 
-    <span class="k">def</span> <span class="nf">get_next</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">next</span>
+<span class="sd">        Args:</span>
+<span class="sd">            **next_handler (:ob: `Handler`)**: Handler to be set as the next</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">next_handler</span></div>
 
-    <span class="k">def</span> <span class="nf">handle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree</span><span class="p">):</span>
+<div class="viewcode-block" id="Handler.get_next"><a class="viewcode-back" href="../../../index.html#obscurepy.handlers.handler.Handler.get_next">[docs]</a>    <span class="k">def</span> <span class="nf">get_next</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Gets whichever handler is currently set as next</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Handler if next is set, None if next is None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">next</span></div>
+
+<div class="viewcode-block" id="Handler.handle"><a class="viewcode-back" href="../../../index.html#obscurepy.handlers.handler.Handler.handle">[docs]</a>    <span class="k">def</span> <span class="nf">handle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Executes the visit method inherited from ast.NodeTransformer and calls handle on the next handler</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            **tree (:obj: `ast.Module`)**: A root ast node</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            The modified tree</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">visit</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">next</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">next</span><span class="o">.</span><span class="n">handle</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">tree</span></div>
+        <span class="k">return</span> <span class="n">tree</span></div></div>
 </pre></div>
 
             <div class="clearer"></div>
@@ -92,7 +121,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../../index.html">obscurepy 0.1.3 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">obscurepy 0.2.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">obscurepy.handlers.handler</a></li>
       </ul>
