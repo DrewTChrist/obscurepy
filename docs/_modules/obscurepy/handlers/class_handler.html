@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>obscurepy.handlers.class_handler &#8212; obscurepy 0.1.3 documentation</title>
+    <title>obscurepy.handlers.class_handler &#8212; obscurepy 0.2.0 documentation</title>
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/classic.css" type="text/css" />
 
@@ -26,7 +26,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../../index.html">obscurepy 0.1.3 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">obscurepy 0.2.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">obscurepy.handlers.class_handler</a></li>
       </ul>
@@ -43,17 +43,36 @@
 
 
 <div class="viewcode-block" id="ClassHandler"><a class="viewcode-back" href="../../../index.html#obscurepy.handlers.class_handler.ClassHandler">[docs]</a><span class="k">class</span> <span class="nc">ClassHandler</span><span class="p">(</span><span class="n">Handler</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;ClassHandler class&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Class to traverse and modify ClassDef nodes in an ast</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        **_debug_name (str)**: Name of class used for debugging purposes</span>
+
+<span class="sd">        **execution_priority (int)**: Used to determine when ClassHandler should be executed</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Creates a new instance of a ClassHandler&quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">ClassHandler</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_debug_name</span> <span class="o">=</span> <span class="s1">&#39;ClassDefHandler&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">execution_priority</span> <span class="o">=</span> <span class="mi">1</span>
 
-    <span class="k">def</span> <span class="nf">visit_ClassDef</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+<div class="viewcode-block" id="ClassHandler.visit_ClassDef"><a class="viewcode-back" href="../../../index.html#obscurepy.handlers.class_handler.ClassHandler.visit_ClassDef">[docs]</a>    <span class="k">def</span> <span class="nf">visit_ClassDef</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Overrides the NodeTransformer visit_ClassDef method. This method makes modifications</span>
+<span class="sd">           to the abstract syntax tree and stores class definitions with the DefinitionTracker class</span>
+
+<span class="sd">           Args:</span>
+<span class="sd">               **node (:obj: `ast.ClassDef`)**: The current ClassDef node to be modified</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                The modified ClassDef node</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">tracker</span> <span class="o">=</span> <span class="n">DefinitionTracker</span><span class="o">.</span><span class="n">get_instance</span><span class="p">()</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-            <span class="n">node_dict</span> <span class="o">=</span> <span class="n">tracker</span><span class="o">.</span><span class="n">add_class</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-            <span class="n">node</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">node_dict</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
-        <span class="k">return</span> <span class="n">node</span></div>
+            <span class="n">previous_name</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">name</span>
+            <span class="n">tracker</span><span class="o">.</span><span class="n">add_class</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">tracker</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;classes&#39;</span><span class="p">][</span><span class="n">previous_name</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">node</span></div></div>
 </pre></div>
 
             <div class="clearer"></div>
@@ -85,7 +104,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../../index.html">obscurepy 0.1.3 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">obscurepy 0.2.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">obscurepy.handlers.class_handler</a></li>
       </ul>

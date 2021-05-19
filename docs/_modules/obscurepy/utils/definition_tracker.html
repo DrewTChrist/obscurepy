@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>obscurepy.utils.definition_tracker &#8212; obscurepy 0.1.3 documentation</title>
+    <title>obscurepy.utils.definition_tracker &#8212; obscurepy 0.2.0 documentation</title>
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/classic.css" type="text/css" />
 
@@ -26,7 +26,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../../index.html">obscurepy 0.1.3 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">obscurepy 0.2.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">obscurepy.utils.definition_tracker</a></li>
       </ul>
@@ -39,7 +39,11 @@
 
   <h1>Source code for obscurepy.utils.definition_tracker</h1><div class="highlight"><pre>
 <div class="viewcode-block" id="DefinitionTracker"><a class="viewcode-back" href="../../../index.html#obscurepy.utils.definition_tracker.DefinitionTracker">[docs]</a><span></span><span class="k">class</span> <span class="nc">DefinitionTracker</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;DefinitionTracker singleton&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Singleton class used to track definitions encountered while traversing the ast</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        **definitions (dict)**: A dictionary for storing definitions</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">_instance</span> <span class="o">=</span> <span class="kc">None</span>
 
@@ -55,33 +59,133 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">DefinitionTracker</span><span class="o">.</span><span class="n">_instance</span> <span class="o">=</span> <span class="bp">self</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">definitions</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;classes&#39;</span><span class="p">:</span> <span class="p">[],</span>
-                            <span class="s1">&#39;functions&#39;</span><span class="p">:</span> <span class="p">[],</span>
-                            <span class="s1">&#39;variables&#39;</span><span class="p">:</span> <span class="p">[]}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">definitions</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;classes&#39;</span><span class="p">:</span> <span class="p">{},</span>
+                            <span class="s1">&#39;functions&#39;</span><span class="p">:</span> <span class="p">{},</span>
+                            <span class="s1">&#39;variables&#39;</span><span class="p">:</span> <span class="p">{}}</span>
 
-    <span class="k">def</span> <span class="nf">add_class</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">class_</span><span class="p">):</span>
+<div class="viewcode-block" id="DefinitionTracker.add_class"><a class="viewcode-back" href="../../../index.html#obscurepy.utils.definition_tracker.DefinitionTracker.add_class">[docs]</a>    <span class="k">def</span> <span class="nf">add_class</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">class_</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Adds a class found in the ast to the definitions dictionary along with an obscure name</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            **class_ (dict)**: A dictionary describing the class</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">class_</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;classes&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">class_</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;classes&#39;</span><span class="p">][</span><span class="n">class_</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name_function</span><span class="p">(</span><span class="n">class_</span><span class="p">),</span>
+                                                   <span class="s1">&#39;functions&#39;</span><span class="p">:</span> <span class="p">[]}</span></div>
 
-    <span class="k">def</span> <span class="nf">get_class</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">class_</span><span class="p">):</span>
+<div class="viewcode-block" id="DefinitionTracker.get_class"><a class="viewcode-back" href="../../../index.html#obscurepy.utils.definition_tracker.DefinitionTracker.get_class">[docs]</a>    <span class="k">def</span> <span class="nf">get_class</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">class_</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Gets a class from the definitions dictionary</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            **class_ (str)**: Name of the class to get from the definitions</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A dictionary with the information of the class requested</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">class_</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;classes&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">class_</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;classes&#39;</span><span class="p">][</span><span class="n">class_</span><span class="p">]</span></div>
+            <span class="c1"># return [x for x in self.definitions[&#39;classes&#39;] if x[&#39;name&#39;] == class_][0]</span>
 
-    <span class="k">def</span> <span class="nf">add_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">function</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_name_class</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">class_</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Generates an obscure name based on the class name hex value added to the length of the classes definition</span>
+<span class="sd">           dictionary</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            **class_ (str)**: name of the class to be obscured</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            An obscured name for a class</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;_</span><span class="si">{</span><span class="nb">hex</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;classes&#39;</span><span class="p">])</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_ascii_sum</span><span class="p">(</span><span class="n">class_</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_get_ascii_sum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">string</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the sum of the ascii values of a string</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            **string (str)**: string of which to get the ascii value</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            The sum of the ascii values of the string provided</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">sum</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">string</span><span class="p">:</span>
+            <span class="nb">sum</span> <span class="o">+=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">sum</span>
+
+<div class="viewcode-block" id="DefinitionTracker.add_function"><a class="viewcode-back" href="../../../index.html#obscurepy.utils.definition_tracker.DefinitionTracker.add_function">[docs]</a>    <span class="k">def</span> <span class="nf">add_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">function</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Adds a function found in the ast to the definitions dictionary along with an obscure name</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            **function (dict)**: a dictionary describing the function to be added to the definitions</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">function</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;functions&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">function</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;functions&#39;</span><span class="p">][</span><span class="n">function</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name_function</span><span class="p">(</span><span class="n">function</span><span class="p">),</span>
+                                                       <span class="s1">&#39;variables&#39;</span><span class="p">:</span> <span class="p">[]}</span></div>
 
-    <span class="k">def</span> <span class="nf">get_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">function</span><span class="p">):</span>
+<div class="viewcode-block" id="DefinitionTracker.get_function"><a class="viewcode-back" href="../../../index.html#obscurepy.utils.definition_tracker.DefinitionTracker.get_function">[docs]</a>    <span class="k">def</span> <span class="nf">get_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">function</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Gets a function from the definitions dictionary</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            **function (str)**: the string name of the function to get</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A dictionary describing the function requested</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">function</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;functions&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">function</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;functions&#39;</span><span class="p">][</span><span class="n">function</span><span class="p">]</span></div>
+            <span class="c1"># return [x for x in self.definitions[&#39;functions&#39;] if x[&#39;name&#39;] == function][0]</span>
 
-    <span class="k">def</span> <span class="nf">add_variable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">variable</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">variable</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;variables&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">variable</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_name_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">function</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Generates an obscure name based on the function name hex value added to the length of the function definition</span>
+<span class="sd">           dictionary</span>
 
-    <span class="k">def</span> <span class="nf">get_variable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">variable</span><span class="p">):</span>
+<span class="sd">        Args:</span>
+<span class="sd">            **function (str)**: name of the function to be obscured</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            An obscured name for a function</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;_</span><span class="si">{</span><span class="nb">hex</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;functions&#39;</span><span class="p">])</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_ascii_sum</span><span class="p">(</span><span class="n">function</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span>
+
+<div class="viewcode-block" id="DefinitionTracker.add_variable"><a class="viewcode-back" href="../../../index.html#obscurepy.utils.definition_tracker.DefinitionTracker.add_variable">[docs]</a>    <span class="k">def</span> <span class="nf">add_variable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">variable</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Adds a variable found in the ast to the definitions dictionary along with an obscure name</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            **variable (dict)**: a dictionary describing the variable to be added to the definitions</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">variable</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;variables&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">variable</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;variables&#39;</span><span class="p">][</span><span class="n">variable</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name_variable</span><span class="p">(</span>
+                <span class="n">variable</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DefinitionTracker.get_variable"><a class="viewcode-back" href="../../../index.html#obscurepy.utils.definition_tracker.DefinitionTracker.get_variable">[docs]</a>    <span class="k">def</span> <span class="nf">get_variable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">variable</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Gets a variable from the definitions dictionary</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            **variable (str)**: the string name of the variable to get</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A dictionary describing the variable requested</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">variable</span><span class="p">:</span>
+            <span class="c1"># return [x for x in self.definitions[&#39;variables&#39;] if x[&#39;name&#39;] == variable][0]</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;variables&#39;</span><span class="p">][</span><span class="n">variable</span><span class="p">]</span></div>
+
+    <span class="k">def</span> <span class="nf">_name_variable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">variable</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Generates an obscure name based on the variable name hex value added to the length of the variable definition</span>
+<span class="sd">           dictionary</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            **variable (str)**: name of the variable to be obscured</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            An obscured name for a variable</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;_</span><span class="si">{</span><span class="nb">hex</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;variables&#39;</span><span class="p">])</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_ascii_sum</span><span class="p">(</span><span class="n">variable</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span>
+
+    <span class="k">def</span> <span class="nf">clear_definitions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;classes&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;functions&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;variables&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span></div>
 </pre></div>
 
             <div class="clearer"></div>
@@ -113,7 +217,7 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../../index.html">obscurepy 0.1.3 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">obscurepy 0.2.0 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li>
         <li class="nav-item nav-item-this"><a href="">obscurepy.utils.definition_tracker</a></li>
       </ul>

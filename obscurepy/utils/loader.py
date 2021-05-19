@@ -5,7 +5,11 @@ import yaml
 
 
 def load_handlers():
-    """Dynamically loads handler classes"""
+    """Dynamically loads handler classes
+
+    Returns:
+        The first handler in the chain of handlers
+    """
     handlers = __create_handlers()
 
     for i in range(0, len(handlers) - 1):
@@ -15,17 +19,30 @@ def load_handlers():
 
 
 def __create_handlers():
-    """Dynamically creates handler classes"""
+    """Dynamically creates handler classes
+
+    Returns:
+        A list of handlers sorted by execution priority
+    """
     handlers = []
     for name, obj in inspect.getmembers(sys.modules[__name__]):
         if inspect.isclass(obj):
             handlers.append(obj())
 
+    handlers.sort(key=lambda x: x.execution_priority)
+
     return handlers
 
 
 def load_config(file):
-    """Loads yaml config files"""
+    """Loads yaml config files
+
+    Args:
+        **file (str)**: File path and name
+
+    Returns:
+        A dictionary of configuration options
+    """
     if file:
         with open(file, 'r') as f:
             return yaml.load(f, Loader=yaml.FullLoader)
@@ -34,7 +51,14 @@ def load_config(file):
 
 
 def load_file(file):
-    """Loads text from a file"""
+    """Loads text from a file
+
+    Args:
+        **file (str)**: File path and name
+
+    Returns:
+        The text read from the requested file
+    """
     text = ''
     if file:
         with open(file, 'r') as file:
@@ -46,7 +70,14 @@ def load_file(file):
 
 
 def load_files(files):
-    """Loads text from multiple files"""
+    """Loads text from multiple files
+
+    Args:
+        **files (list)**: List of paths to files to be read
+
+    Returns:
+        A list of the texts read in from each requested file
+    """
     texts = []
     if files:
         for file in files:
