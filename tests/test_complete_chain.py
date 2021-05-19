@@ -24,4 +24,3 @@ class CompleteChainTest(unittest.TestCase):
     def test_complete_chain(self):
         tree = ast.parse(self.source)
         tree = self.fixture.handle(tree)
-        print(ast.unparse(tree))

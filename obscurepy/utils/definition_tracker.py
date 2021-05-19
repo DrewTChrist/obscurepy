@@ -30,7 +30,8 @@ class DefinitionTracker:
             **class_ (dict)**: A dictionary describing the class
         """
         if class_:
-            self.definitions['classes'][class_] = self._name_class(class_)
+            self.definitions['classes'][class_] = {'name': self._name_function(class_),
+                                                   'functions': []}
 
     def get_class(self, class_):
         """Gets a class from the definitions dictionary
@@ -41,7 +42,8 @@ class DefinitionTracker:
             A dictionary with the information of the class requested
         """
         if class_:
-            return [x for x in self.definitions['classes'] if x['name'] == class_][0]
+            return self.definitions['classes'][class_]
+            # return [x for x in self.definitions['classes'] if x['name'] == class_][0]
 
     def _name_class(self, class_):
         """Generates an obscure name based on the class name hex value added to the length of the classes definition
@@ -89,7 +91,8 @@ class DefinitionTracker:
             A dictionary describing the function requested
         """
         if function:
-            return [x for x in self.definitions['functions'] if x['name'] == function][0]
+            return self.definitions['functions'][function]
+            # return [x for x in self.definitions['functions'] if x['name'] == function][0]
 
     def _name_function(self, function):
         """Generates an obscure name based on the function name hex value added to the length of the function definition
@@ -123,7 +126,8 @@ class DefinitionTracker:
             A dictionary describing the variable requested
         """
         if variable:
-            return [x for x in self.definitions['variables'] if x['name'] == variable][0]
+            # return [x for x in self.definitions['variables'] if x['name'] == variable][0]
+            return self.definitions['variables'][variable]
 
     def _name_variable(self, variable):
         """Generates an obscure name based on the variable name hex value added to the length of the variable definition
@@ -136,3 +140,8 @@ class DefinitionTracker:
             An obscured name for a variable
         """
         return f"_{hex(len(self.definitions['variables']) + self._get_ascii_sum(variable))}"
+
+    def clear_definitions(self):
+        self.definitions['classes'].clear()
+        self.definitions['functions'].clear()
+        self.definitions['variables'].clear()
