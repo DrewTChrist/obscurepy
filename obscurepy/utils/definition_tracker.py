@@ -35,6 +35,7 @@ class DefinitionTracker:
 
     def get_class(self, class_):
         """Gets a class from the definitions dictionary
+
         Args:
             **class_ (str)**: Name of the class to get from the definitions
 

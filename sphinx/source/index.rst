@@ -20,6 +20,16 @@ obscurepy.handlers handler
 .. automodule:: obscurepy.handlers.handler
    :members:
 
+obscurepy.handlers assign_handler
+=================================
+.. automodule:: obscurepy.handlers.assign_handler
+   :members:
+
+obscurepy.handlers call_handler
+===============================
+.. automodule:: obscurepy.handlers.call_handler
+   :members:
+
 obscurepy.handlers class_handler
 ================================
 .. automodule:: obscurepy.handlers.class_handler
@@ -30,9 +40,9 @@ obscurepy.handlers function_handler
 .. automodule:: obscurepy.handlers.function_handler
    :members:
 
-obscurepy.handlers string_literal_handler
+obscurepy.handlers literal_handler
 =========================================
-.. automodule:: obscurepy.handlers.string_literal_handler
+.. automodule:: obscurepy.handlers.literal_handler
    :members:
 
 obscurepy.utils definition_tracker
@@ -45,6 +55,10 @@ obscurepy.utils loader
 .. automodule:: obscurepy.utils.loader
    :members:
 
+obscurepy.utils tree
+====================
+.. automodule:: obscurepy.utils.tree
+   :members:
 
 Indices and tables
 ==================
