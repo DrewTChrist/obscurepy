@@ -22,7 +22,7 @@ copyright = '2020-2021, Andrew Christiansen'
 author = 'Andrew Christiansen'
 
 # The full version, including alpha/beta/rc tags
-release = '0.2.1'
+release = '0.2.2'
 
 
 # -- General configuration ---------------------------------------------------
@@ -36,8 +36,11 @@ extensions = [
     'sphinx.ext.ifconfig',
     'sphinx.ext.viewcode',
     'sphinx.ext.githubpages',
-    'sphinx_rtd_theme'
+    'sphinx_rtd_theme',
+    'm2r2',
 ]
+
+#source_suffix = ['.rst', '.md']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']

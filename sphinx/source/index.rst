@@ -9,56 +9,11 @@ Welcome to obscurepy's documentation!
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
+   :hidden:
 
-obscurepy obfuscator
-====================
-.. automodule:: obscurepy.obfuscator
-   :members:
-
-obscurepy.handlers handler
-==========================
-.. automodule:: obscurepy.handlers.handler
-   :members:
-
-obscurepy.handlers assign_handler
-=================================
-.. automodule:: obscurepy.handlers.assign_handler
-   :members:
-
-obscurepy.handlers call_handler
-===============================
-.. automodule:: obscurepy.handlers.call_handler
-   :members:
-
-obscurepy.handlers class_handler
-================================
-.. automodule:: obscurepy.handlers.class_handler
-   :members:
-
-obscurepy.handlers function_handler
-===================================
-.. automodule:: obscurepy.handlers.function_handler
-   :members:
-
-obscurepy.handlers literal_handler
-=========================================
-.. automodule:: obscurepy.handlers.literal_handler
-   :members:
-
-obscurepy.utils definition_tracker
-==================================
-.. automodule:: obscurepy.utils.definition_tracker
-   :members:
-
-obscurepy.utils loader
-======================
-.. automodule:: obscurepy.utils.loader
-   :members:
-
-obscurepy.utils tree
-====================
-.. automodule:: obscurepy.utils.tree
-   :members:
+   readme
+   changelog
+   modules
 
 Indices and tables
 ==================
