@@ -10,6 +10,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 ### Removed
+## [0.2.2](https://github.com/drewtchrist/obscurepy/releases/tag/v0.2.2) - 2021-05-19
+### Added
+
+### Changed
+* Made docs cleaner by grouping modules in the same package together
+
+### Removed
 
 ## [0.2.1](https://github.com/drewtchrist/obscurepy/releases/tag/v0.2.1) - 2021-05-19
 ### Added
@@ -18,7 +25,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Changed sphinx documentation theme to "read the docs"
 
 ### Removed
-
 
 ## [0.2.0](https://github.com/drewtchrist/obscurepy/releases/tag/v0.2.0) - 2021-05-19
 ### Added

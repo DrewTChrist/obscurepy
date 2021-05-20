@@ -1,0 +1,412 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>obscurepy.handlers package &mdash; obscurepy 0.2.1 documentation</title>
+
+
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+
+
+
+
+
+
+
+
+
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+
+
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="obscurepy.utils package" href="obscurepy.utils.html" />
+    <link rel="prev" title="obscurepy package" href="obscurepy.html" />
+</head>
+
+<body class="wy-body-for-nav">
+
+
+  <div class="wy-grid-for-nav">
+
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+
+
+            <a href="index.html" class="icon icon-home"> obscurepy
+
+
+
+          </a>
+
+
+
+
+
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+
+        </div>
+
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+
+
+
+
+
+
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="readme.html">obscurepy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="obscurepy.html">obscurepy package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="obscurepy.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">obscurepy.handlers package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="obscurepy.utils.html">obscurepy.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="obscurepy.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="obscurepy.html#module-obscurepy.obfuscator">obscurepy.obfuscator module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="obscurepy.html#module-obscurepy.test_obf_file">obscurepy.test_obf_file module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="obscurepy.html#module-obscurepy">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+
+        </div>
+
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+
+      <nav class="wy-nav-top" aria-label="top navigation">
+
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">obscurepy</a>
+
+      </nav>
+
+
+      <div class="wy-nav-content">
+
+        <div class="rst-content">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+
+          <li><a href="modules.html">Documentation</a> &raquo;</li>
+
+          <li><a href="obscurepy.html">obscurepy package</a> &raquo;</li>
+
+      <li>obscurepy.handlers package</li>
+
+
+      <li class="wy-breadcrumbs-aside">
+
+
+            <a href="_sources/obscurepy.handlers.rst.txt" rel="nofollow"> View page source</a>
+
+
+      </li>
+
+  </ul>
+
+
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+
+  <div class="section" id="obscurepy-handlers-package">
+<h1>obscurepy.handlers package<a class="headerlink" href="#obscurepy-handlers-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-obscurepy.handlers.assign_handler">
+<span id="obscurepy-handlers-assign-handler-module"></span><h2>obscurepy.handlers.assign_handler module<a class="headerlink" href="#module-obscurepy.handlers.assign_handler" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="obscurepy.handlers.assign_handler.AssignHandler">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">obscurepy.handlers.assign_handler.</span></code><code class="sig-name descname"><span class="pre">AssignHandler</span></code><a class="reference internal" href="_modules/obscurepy/handlers/assign_handler.html#AssignHandler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.handlers.assign_handler.AssignHandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#obscurepy.handlers.handler.Handler" title="obscurepy.handlers.handler.Handler"><code class="xref py py-class docutils literal notranslate"><span class="pre">obscurepy.handlers.handler.Handler</span></code></a></p>
+<p>Class to traverse and modify Assign nodes in an ast</p>
+<dl>
+<dt>Attributes:</dt><dd><p><strong>_debug_name (str)</strong>: Name of class used for debugging purposes</p>
+<p><strong>execution_priority (int)</strong>: Used to determine when AssignHandler should be executed</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="obscurepy.handlers.assign_handler.AssignHandler.visit_Assign">
+<code class="sig-name descname"><span class="pre">visit_Assign</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/handlers/assign_handler.html#AssignHandler.visit_Assign"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.handlers.assign_handler.AssignHandler.visit_Assign" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Overrides the NodeTransformer visit_Assign method. This method makes modifications</dt><dd><p>to the abstract syntax tree and stores assignments with the DefinitionTracker class</p>
+</dd>
+<dt>Args:</dt><dd><p><strong>node (:obj: `ast.Assign`)</strong>: The current Assign node to be modified</p>
+</dd>
+<dt>Returns:</dt><dd><p>The modified Assign node</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-obscurepy.handlers.call_handler">
+<span id="obscurepy-handlers-call-handler-module"></span><h2>obscurepy.handlers.call_handler module<a class="headerlink" href="#module-obscurepy.handlers.call_handler" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="obscurepy.handlers.call_handler.CallHandler">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">obscurepy.handlers.call_handler.</span></code><code class="sig-name descname"><span class="pre">CallHandler</span></code><a class="reference internal" href="_modules/obscurepy/handlers/call_handler.html#CallHandler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.handlers.call_handler.CallHandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#obscurepy.handlers.handler.Handler" title="obscurepy.handlers.handler.Handler"><code class="xref py py-class docutils literal notranslate"><span class="pre">obscurepy.handlers.handler.Handler</span></code></a></p>
+<p>Class to traverse and modify Call nodes in an ast</p>
+<dl class="simple">
+<dt>Attributes:</dt><dd><p><strong>_debug_name (str)</strong>: Name of class used for debugging purposes
+<strong>execution_priority (int)</strong>: Used to determine when CallHandler should be executed</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="obscurepy.handlers.call_handler.CallHandler.visit_Call">
+<code class="sig-name descname"><span class="pre">visit_Call</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/handlers/call_handler.html#CallHandler.visit_Call"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.handlers.call_handler.CallHandler.visit_Call" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Overrides the NodeTransformer visit_Call method. This method makes modifications</dt><dd><p>to the abstract syntax tree and stores assignments with the DefinitionTracker class</p>
+</dd>
+<dt>Args:</dt><dd><p><strong>node (:obj: `ast.Call`)</strong>: The current Call node to be modified</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-obscurepy.handlers.class_handler">
+<span id="obscurepy-handlers-class-handler-module"></span><h2>obscurepy.handlers.class_handler module<a class="headerlink" href="#module-obscurepy.handlers.class_handler" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="obscurepy.handlers.class_handler.ClassHandler">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">obscurepy.handlers.class_handler.</span></code><code class="sig-name descname"><span class="pre">ClassHandler</span></code><a class="reference internal" href="_modules/obscurepy/handlers/class_handler.html#ClassHandler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.handlers.class_handler.ClassHandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#obscurepy.handlers.handler.Handler" title="obscurepy.handlers.handler.Handler"><code class="xref py py-class docutils literal notranslate"><span class="pre">obscurepy.handlers.handler.Handler</span></code></a></p>
+<p>Class to traverse and modify ClassDef nodes in an ast</p>
+<dl>
+<dt>Attributes:</dt><dd><p><strong>_debug_name (str)</strong>: Name of class used for debugging purposes</p>
+<p><strong>execution_priority (int)</strong>: Used to determine when ClassHandler should be executed</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="obscurepy.handlers.class_handler.ClassHandler.visit_ClassDef">
+<code class="sig-name descname"><span class="pre">visit_ClassDef</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/handlers/class_handler.html#ClassHandler.visit_ClassDef"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.handlers.class_handler.ClassHandler.visit_ClassDef" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overrides the NodeTransformer visit_ClassDef method. This method makes modifications
+to the abstract syntax tree and stores class definitions with the DefinitionTracker class</p>
+<dl>
+<dt>Args:</dt><dd><blockquote>
+<div><p><strong>node (:obj: `ast.ClassDef`)</strong>: The current ClassDef node to be modified</p>
+</div></blockquote>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>The modified ClassDef node</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-obscurepy.handlers.function_handler">
+<span id="obscurepy-handlers-function-handler-module"></span><h2>obscurepy.handlers.function_handler module<a class="headerlink" href="#module-obscurepy.handlers.function_handler" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="obscurepy.handlers.function_handler.FunctionHandler">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">obscurepy.handlers.function_handler.</span></code><code class="sig-name descname"><span class="pre">FunctionHandler</span></code><a class="reference internal" href="_modules/obscurepy/handlers/function_handler.html#FunctionHandler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.handlers.function_handler.FunctionHandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#obscurepy.handlers.handler.Handler" title="obscurepy.handlers.handler.Handler"><code class="xref py py-class docutils literal notranslate"><span class="pre">obscurepy.handlers.handler.Handler</span></code></a></p>
+<p>Class to traverse and modify FunctionDef nodes in an ast</p>
+<dl>
+<dt>Attributes:</dt><dd><p><strong>_debug_name (str)</strong>: Name of class used for debugging purposes</p>
+<p><strong>execution_priority (int)</strong>: Used to determine when FunctionHandler should be executed</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="obscurepy.handlers.function_handler.FunctionHandler.visit_FunctionDef">
+<code class="sig-name descname"><span class="pre">visit_FunctionDef</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/handlers/function_handler.html#FunctionHandler.visit_FunctionDef"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.handlers.function_handler.FunctionHandler.visit_FunctionDef" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Overrides the NodeTransformer visit_FunctionDef method. This method makes modifications</dt><dd><p>to the abstract syntax tree and stores assignments with the DefinitionTracker class</p>
+</dd>
+<dt>Args:</dt><dd><p><strong>node (:obj: `ast.FunctionDef`)</strong>: The current FunctionDef node to be modified</p>
+</dd>
+<dt>Returns:</dt><dd><p>The modified FunctionDef node</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-obscurepy.handlers.handler">
+<span id="obscurepy-handlers-handler-module"></span><h2>obscurepy.handlers.handler module<a class="headerlink" href="#module-obscurepy.handlers.handler" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="obscurepy.handlers.handler.Handler">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">obscurepy.handlers.handler.</span></code><code class="sig-name descname"><span class="pre">Handler</span></code><a class="reference internal" href="_modules/obscurepy/handlers/handler.html#Handler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.handlers.handler.Handler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ast.NodeTransformer</span></code></p>
+<p>Abstract Handler class that inherits from ast.NodeTransformer</p>
+<dl>
+<dt>Attributes:</dt><dd><p><strong>next (:obj: `Handler`)</strong>: The next handler to be executed</p>
+<p><strong>_debug_name (str)</strong>: Class name used for debugging purposes</p>
+<p><strong>execution_priority (int)</strong>: Value used to determine when a handler should be executed</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="obscurepy.handlers.handler.Handler.get_next">
+<code class="sig-name descname"><span class="pre">get_next</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/handlers/handler.html#Handler.get_next"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.handlers.handler.Handler.get_next" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets whichever handler is currently set as next</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>Handler if next is set, None if next is None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="obscurepy.handlers.handler.Handler.handle">
+<code class="sig-name descname"><span class="pre">handle</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tree</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/handlers/handler.html#Handler.handle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.handlers.handler.Handler.handle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Executes the visit method inherited from ast.NodeTransformer and calls handle on the next handler</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p><strong>tree (:obj: `ast.Module`)</strong>: A root ast node</p>
+</dd>
+<dt>Returns:</dt><dd><p>The modified tree</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="obscurepy.handlers.handler.Handler.set_next">
+<code class="sig-name descname"><span class="pre">set_next</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">next_handler</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/handlers/handler.html#Handler.set_next"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.handlers.handler.Handler.set_next" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the next handler to be executed after the current</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p><strong>next_handler (:ob: `Handler`)</strong>: Handler to be set as the next</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-obscurepy.handlers.literal_handler">
+<span id="obscurepy-handlers-literal-handler-module"></span><h2>obscurepy.handlers.literal_handler module<a class="headerlink" href="#module-obscurepy.handlers.literal_handler" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="obscurepy.handlers.literal_handler.LiteralHandler">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">obscurepy.handlers.literal_handler.</span></code><code class="sig-name descname"><span class="pre">LiteralHandler</span></code><a class="reference internal" href="_modules/obscurepy/handlers/literal_handler.html#LiteralHandler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.handlers.literal_handler.LiteralHandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#obscurepy.handlers.handler.Handler" title="obscurepy.handlers.handler.Handler"><code class="xref py py-class docutils literal notranslate"><span class="pre">obscurepy.handlers.handler.Handler</span></code></a></p>
+<p>StringLiteralHandler class</p>
+<dl class="py method">
+<dt id="obscurepy.handlers.literal_handler.LiteralHandler.visit_Constant">
+<code class="sig-name descname"><span class="pre">visit_Constant</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/handlers/literal_handler.html#LiteralHandler.visit_Constant"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.handlers.literal_handler.LiteralHandler.visit_Constant" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-obscurepy.handlers">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-obscurepy.handlers" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="obscurepy.utils.html" class="btn btn-neutral float-right" title="obscurepy.utils package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="obscurepy.html" class="btn btn-neutral float-left" title="obscurepy package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020-2021, Andrew Christiansen.
+
+    </p>
+  </div>
+
+
+
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+
+
+
+
+
+</body>
+</html>

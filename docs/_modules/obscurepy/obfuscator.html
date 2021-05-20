@@ -13,8 +13,6 @@
 
   <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
 
 
 
@@ -31,7 +29,6 @@
 
 
       <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
         <script src="../../_static/doctools.js"></script>
@@ -85,8 +82,13 @@
 
 
 
-              <!-- Local TOC -->
-              <div class="local-toc"></div>
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">obscurepy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">Documentation</a></li>
+</ul>
+
 
 
         </div>
@@ -154,7 +156,7 @@
 <span></span><span class="kn">from</span> <span class="nn">obscurepy.utils.loader</span> <span class="kn">import</span> <span class="n">load_handlers</span><span class="p">,</span> <span class="n">load_config</span>
 
 
-<div class="viewcode-block" id="Obfuscator"><a class="viewcode-back" href="../../index.html#obscurepy.obfuscator.Obfuscator">[docs]</a><span class="k">class</span> <span class="nc">Obfuscator</span><span class="p">:</span>
+<div class="viewcode-block" id="Obfuscator"><a class="viewcode-back" href="../../obscurepy.html#obscurepy.obfuscator.Obfuscator">[docs]</a><span class="k">class</span> <span class="nc">Obfuscator</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Main obfuscator class for managing files, handlers and other processes</span>
 
 <span class="sd">    Attributes:</span>
@@ -177,16 +179,16 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tree</span> <span class="o">=</span> <span class="kc">None</span>
 
-<div class="viewcode-block" id="Obfuscator.build_chain"><a class="viewcode-back" href="../../index.html#obscurepy.obfuscator.Obfuscator.build_chain">[docs]</a>    <span class="k">def</span> <span class="nf">build_chain</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Obfuscator.build_chain"><a class="viewcode-back" href="../../obscurepy.html#obscurepy.obfuscator.Obfuscator.build_chain">[docs]</a>    <span class="k">def</span> <span class="nf">build_chain</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Loads handlers and assigns the first one to chain&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">chain</span> <span class="o">=</span> <span class="n">load_handlers</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="Obfuscator.load_config"><a class="viewcode-back" href="../../index.html#obscurepy.obfuscator.Obfuscator.load_config">[docs]</a>    <span class="k">def</span> <span class="nf">load_config</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Obfuscator.load_config"><a class="viewcode-back" href="../../obscurepy.html#obscurepy.obfuscator.Obfuscator.load_config">[docs]</a>    <span class="k">def</span> <span class="nf">load_config</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Loads configuration options&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">load_config</span><span class="p">(</span><span class="s1">&#39;config/config.yaml&#39;</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">obfuscate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">pass</span></div>
+<div class="viewcode-block" id="Obfuscator.obfuscate"><a class="viewcode-back" href="../../obscurepy.html#obscurepy.obfuscator.Obfuscator.obfuscate">[docs]</a>    <span class="k">def</span> <span class="nf">obfuscate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span></div></div>
 </pre></div>
 
            </div>
