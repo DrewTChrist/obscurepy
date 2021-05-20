@@ -17,3 +17,4 @@ script:
   - bash scripts/test.sh
 after_success:
   - bash scripts/coverage.sh
+  - bash <(curl -s https://codecov.io/bash)
