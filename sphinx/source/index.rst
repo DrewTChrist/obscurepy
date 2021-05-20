@@ -9,11 +9,10 @@ Welcome to obscurepy's documentation!
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
-   :hidden:
 
    readme
-   changelog
    modules
+   changelog
 
 Indices and tables
 ==================
