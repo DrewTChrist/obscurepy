@@ -11,6 +11,7 @@ before_install:
 # command to install dependencies
 install:
   - python -m pip install -r requirements.txt
+  - python -m pip install coverage
 # command to run tests
 script:
   - bash scripts/test.sh
