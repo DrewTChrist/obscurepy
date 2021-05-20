@@ -10,6 +10,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 ### Removed
+## [0.3.1](https://github.com/drewtchrist/obscurepy/releases/tag/v0.3.1) - 2021-05-20
+### Added
+
+### Changed
+* codecov is working
+
+### Removed
 
 ## [0.3.0](https://github.com/drewtchrist/obscurepy/releases/tag/v0.3.0) - 2021-05-20
 ### Added
