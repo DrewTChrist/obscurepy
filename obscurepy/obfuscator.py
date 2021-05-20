@@ -27,10 +27,3 @@ class Obfuscator:
     def build_chain(self):
         """Loads handlers and assigns the first one to chain"""
         self.chain = load_handlers()
-
-    def load_config(self):
-        """Loads configuration options"""
-        self.config = load_config('config/config.yaml')
-
-    def obfuscate(self):
-        pass
