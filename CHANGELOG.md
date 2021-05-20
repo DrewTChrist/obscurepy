@@ -10,6 +10,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 ### Removed
+
+## [0.2.3](https://github.com/drewtchrist/obscurepy/releases/tag/v0.2.3) - 2021-05-19
+### Added
+
+### Changed
+* Made front page links visible again
+
+### Removed
+
 ## [0.2.2](https://github.com/drewtchrist/obscurepy/releases/tag/v0.2.2) - 2021-05-19
 ### Added
 
