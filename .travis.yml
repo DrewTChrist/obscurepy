@@ -8,13 +8,12 @@ python:
   - "nightly"  # nightly build
 before_install:
   - python -m pip install -U pip
-  - python -m pip install codecov
 # command to install dependencies
 install:
   - python -m pip install -r requirements.txt
 # command to run tests
 script:
   - bash scripts/test.sh
-after_success:
   - bash scripts/coverage.sh
+after_success:
   - bash <(curl -s https://codecov.io/bash)
