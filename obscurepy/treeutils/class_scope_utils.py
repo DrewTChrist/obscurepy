@@ -1,5 +1,5 @@
 import ast
-from general import *
+from obscurepy.treeutils.general import *
 
 
 def is_in_class_scope(node):
@@ -11,7 +11,7 @@ def is_in_class_scope(node):
     Returns:
         True if the node is within the scope of a class, False otherwise
     """
-    return is_parent_of_type(node, ast.ClassDef)
+    return has_parent_of_type(node, ast.ClassDef)
 
 
 def get_parent_class_name(node):

@@ -1,5 +1,5 @@
 import ast
-from general import *
+from obscurepy.treeutils.general import *
 
 
 def is_in_function_scope(node):
@@ -11,7 +11,7 @@ def is_in_function_scope(node):
     Returns:
         True if the node is within the scope of a function, False otherwise
     """
-    return is_parent_of_type(node, ast.FunctionDef)
+    return has_parent_of_type(node, ast.FunctionDef)
 
 
 def get_parent_function_name(node):

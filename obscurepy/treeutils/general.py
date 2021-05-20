@@ -26,7 +26,7 @@ def get_node_type(node):
     return type(node)
 
 
-def is_parent_of_type(node, type_):
+def has_parent_of_type(node, type_):
     """Simply checks if the parent of a node is of a certain type
 
     Args:
