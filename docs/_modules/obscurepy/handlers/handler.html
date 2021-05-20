@@ -13,8 +13,6 @@
 
   <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
 
 
 
@@ -31,7 +29,6 @@
 
 
       <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
@@ -85,8 +82,13 @@
 
 
 
-              <!-- Local TOC -->
-              <div class="local-toc"></div>
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">obscurepy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">Documentation</a></li>
+</ul>
+
 
 
         </div>
@@ -155,7 +157,7 @@
 <span class="kn">import</span> <span class="nn">ast</span>
 
 
-<div class="viewcode-block" id="Handler"><a class="viewcode-back" href="../../../index.html#obscurepy.handlers.handler.Handler">[docs]</a><span class="k">class</span> <span class="nc">Handler</span><span class="p">(</span><span class="n">ABC</span><span class="p">,</span> <span class="n">ast</span><span class="o">.</span><span class="n">NodeTransformer</span><span class="p">):</span>
+<div class="viewcode-block" id="Handler"><a class="viewcode-back" href="../../../obscurepy.handlers.html#obscurepy.handlers.handler.Handler">[docs]</a><span class="k">class</span> <span class="nc">Handler</span><span class="p">(</span><span class="n">ABC</span><span class="p">,</span> <span class="n">ast</span><span class="o">.</span><span class="n">NodeTransformer</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Abstract Handler class that inherits from ast.NodeTransformer</span>
 
 <span class="sd">    Attributes:</span>
@@ -172,7 +174,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_debug_name</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">execution_priority</span> <span class="o">=</span> <span class="mi">0</span>
 
-<div class="viewcode-block" id="Handler.set_next"><a class="viewcode-back" href="../../../index.html#obscurepy.handlers.handler.Handler.set_next">[docs]</a>    <span class="k">def</span> <span class="nf">set_next</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">next_handler</span><span class="p">):</span>
+<div class="viewcode-block" id="Handler.set_next"><a class="viewcode-back" href="../../../obscurepy.handlers.html#obscurepy.handlers.handler.Handler.set_next">[docs]</a>    <span class="k">def</span> <span class="nf">set_next</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">next_handler</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Sets the next handler to be executed after the current</span>
 
 <span class="sd">        Args:</span>
@@ -180,7 +182,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">next</span> <span class="o">=</span> <span class="n">next_handler</span></div>
 
-<div class="viewcode-block" id="Handler.get_next"><a class="viewcode-back" href="../../../index.html#obscurepy.handlers.handler.Handler.get_next">[docs]</a>    <span class="k">def</span> <span class="nf">get_next</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Handler.get_next"><a class="viewcode-back" href="../../../obscurepy.handlers.html#obscurepy.handlers.handler.Handler.get_next">[docs]</a>    <span class="k">def</span> <span class="nf">get_next</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Gets whichever handler is currently set as next</span>
 
 <span class="sd">        Returns:</span>
@@ -188,7 +190,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">next</span></div>
 
-<div class="viewcode-block" id="Handler.handle"><a class="viewcode-back" href="../../../index.html#obscurepy.handlers.handler.Handler.handle">[docs]</a>    <span class="k">def</span> <span class="nf">handle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree</span><span class="p">):</span>
+<div class="viewcode-block" id="Handler.handle"><a class="viewcode-back" href="../../../obscurepy.handlers.html#obscurepy.handlers.handler.Handler.handle">[docs]</a>    <span class="k">def</span> <span class="nf">handle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tree</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Executes the visit method inherited from ast.NodeTransformer and calls handle on the next handler</span>
 
 <span class="sd">        Args:</span>
