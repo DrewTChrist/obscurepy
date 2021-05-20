@@ -11,6 +11,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
+## [0.3.0](https://github.com/drewtchrist/obscurepy/releases/tag/v0.3.0) - 2021-05-20
+### Added
+* Added treeutils package
+* Added treeutils.class_scope_utils.py
+* Added treeutils.function_scope_utils.py
+* Added tests for treeutils package
+* Added scripts/coverage.sh to execute code coverage reports
+* Added coverage.sh to .travis.yml
+
+### Changed
+* utils.tree.py is now treeutils.general.py
+
+### Removed
+
 ## [0.2.3](https://github.com/drewtchrist/obscurepy/releases/tag/v0.2.3) - 2021-05-19
 ### Added
 

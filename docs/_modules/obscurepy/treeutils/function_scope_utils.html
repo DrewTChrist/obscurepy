@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>obscurepy.handlers.literal_handler &mdash; obscurepy 0.3.0 documentation</title>
+  <title>obscurepy.treeutils.function_scope_utils &mdash; obscurepy 0.3.0 documentation</title>
 
 
 
@@ -137,7 +137,7 @@
 
           <li><a href="../../index.html">Module code</a> &raquo;</li>
 
-      <li>obscurepy.handlers.literal_handler</li>
+      <li>obscurepy.treeutils.function_scope_utils</li>
 
 
       <li class="wy-breadcrumbs-aside">
@@ -152,22 +152,39 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
 
-  <h1>Source code for obscurepy.handlers.literal_handler</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">obscurepy.handlers.handler</span> <span class="kn">import</span> <span class="n">Handler</span>
+  <h1>Source code for obscurepy.treeutils.function_scope_utils</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">ast</span>
+<span class="kn">from</span> <span class="nn">obscurepy.treeutils.general</span> <span class="kn">import</span> <span class="o">*</span>
 
 
-<div class="viewcode-block" id="LiteralHandler"><a class="viewcode-back" href="../../../obscurepy.handlers.html#obscurepy.handlers.literal_handler.LiteralHandler">[docs]</a><span class="k">class</span> <span class="nc">LiteralHandler</span><span class="p">(</span><span class="n">Handler</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;StringLiteralHandler class&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="is_in_function_scope"><a class="viewcode-back" href="../../../obscurepy.treeutils.html#obscurepy.treeutils.function_scope_utils.is_in_function_scope">[docs]</a><span class="k">def</span> <span class="nf">is_in_function_scope</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Checks if a node is within the scope of a function</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">LiteralHandler</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_debug_name</span> <span class="o">=</span> <span class="s2">&quot;LiteralHandler&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">execution_priority</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="sd">    Args:</span>
+<span class="sd">        **node (:obj:)**: node for which to check the scope</span>
 
-<div class="viewcode-block" id="LiteralHandler.visit_Constant"><a class="viewcode-back" href="../../../obscurepy.handlers.html#obscurepy.handlers.literal_handler.LiteralHandler.visit_Constant">[docs]</a>    <span class="k">def</span> <span class="nf">visit_Constant</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-            <span class="n">node</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Hello&quot;</span>
-        <span class="k">return</span> <span class="n">node</span></div></div>
+<span class="sd">    Returns:</span>
+<span class="sd">        True if the node is within the scope of a function, False otherwise</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">has_parent_of_type</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">ast</span><span class="o">.</span><span class="n">FunctionDef</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_parent_function_name"><a class="viewcode-back" href="../../../obscurepy.treeutils.html#obscurepy.treeutils.function_scope_utils.get_parent_function_name">[docs]</a><span class="k">def</span> <span class="nf">get_parent_function_name</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Gets the name of the parent node if it is a function</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        **node (:obj:)**: node of which to get the parent function name</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The name of the parent function if node is within the scope of a function</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        Exception if the node is not within the scope of a function</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">is_in_function_scope</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">name</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;This node is not within the scope of a function&quot;</span><span class="p">)</span></div>
 </pre></div>
 
            </div>
