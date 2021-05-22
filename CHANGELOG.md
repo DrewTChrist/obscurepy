@@ -10,6 +10,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 ### Removed
+
+## [0.4.0](https://github.com/drewtchrist/obscurepy/releases/tag/v0.4.0) - 2021-05-21
+### Added
+* Added functionality to the Obfuscator class to complete the pipeline from file to tree to obfuscated file
+* Added support for pre 3.9 versions of python, since ast.unparse released in 3.9, astunparse was the library used
+* Added several tests for the Obfuscator class
+
+### Changed
+
+### Removed
+
 ## [0.3.1](https://github.com/drewtchrist/obscurepy/releases/tag/v0.3.1) - 2021-05-20
 ### Added
 

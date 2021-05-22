@@ -7,12 +7,14 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>obscurepy.treeutils package &mdash; obscurepy 0.3.1 documentation</title>
+  <title>obscurepy.treeutils package &mdash; obscurepy 0.4.0 documentation</title>
 
 
 
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
 
 
 
@@ -29,6 +31,7 @@
 
 
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
@@ -97,7 +100,6 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="obscurepy.html#submodules">Submodules</a></li>
 <li class="toctree-l3"><a class="reference internal" href="obscurepy.html#module-obscurepy.obfuscator">obscurepy.obfuscator module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="obscurepy.html#module-obscurepy.test_obf_file">obscurepy.test_obf_file module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="obscurepy.html#module-obscurepy">Module contents</a></li>
 </ul>
 </li>
@@ -183,8 +185,8 @@
 <div class="section" id="module-obscurepy.treeutils.class_scope_utils">
 <span id="obscurepy-treeutils-class-scope-utils-module"></span><h2>obscurepy.treeutils.class_scope_utils module<a class="headerlink" href="#module-obscurepy.treeutils.class_scope_utils" title="Permalink to this headline">¶</a></h2>
 <dl class="py function">
-<dt id="obscurepy.treeutils.class_scope_utils.get_parent_class_name">
-<code class="sig-prename descclassname"><span class="pre">obscurepy.treeutils.class_scope_utils.</span></code><code class="sig-name descname"><span class="pre">get_parent_class_name</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/treeutils/class_scope_utils.html#get_parent_class_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.treeutils.class_scope_utils.get_parent_class_name" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="obscurepy.treeutils.class_scope_utils.get_parent_class_name">
+<span class="sig-prename descclassname"><span class="pre">obscurepy.treeutils.class_scope_utils.</span></span><span class="sig-name descname"><span class="pre">get_parent_class_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/treeutils/class_scope_utils.html#get_parent_class_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.treeutils.class_scope_utils.get_parent_class_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets the name of the parent node if it is a class</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p><strong>node (:obj:)</strong>: node of which to get the parent class name</p>
@@ -197,8 +199,8 @@
 </dd></dl>
 
 <dl class="py function">
-<dt id="obscurepy.treeutils.class_scope_utils.is_in_class_scope">
-<code class="sig-prename descclassname"><span class="pre">obscurepy.treeutils.class_scope_utils.</span></code><code class="sig-name descname"><span class="pre">is_in_class_scope</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/treeutils/class_scope_utils.html#is_in_class_scope"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.treeutils.class_scope_utils.is_in_class_scope" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="obscurepy.treeutils.class_scope_utils.is_in_class_scope">
+<span class="sig-prename descclassname"><span class="pre">obscurepy.treeutils.class_scope_utils.</span></span><span class="sig-name descname"><span class="pre">is_in_class_scope</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/treeutils/class_scope_utils.html#is_in_class_scope"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.treeutils.class_scope_utils.is_in_class_scope" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks if a node is within the scope of a class</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p><strong>node (:obj:)</strong>: node for which to check the scope</p>
@@ -212,8 +214,8 @@
 <div class="section" id="module-obscurepy.treeutils.function_scope_utils">
 <span id="obscurepy-treeutils-function-scope-utils-module"></span><h2>obscurepy.treeutils.function_scope_utils module<a class="headerlink" href="#module-obscurepy.treeutils.function_scope_utils" title="Permalink to this headline">¶</a></h2>
 <dl class="py function">
-<dt id="obscurepy.treeutils.function_scope_utils.get_parent_function_name">
-<code class="sig-prename descclassname"><span class="pre">obscurepy.treeutils.function_scope_utils.</span></code><code class="sig-name descname"><span class="pre">get_parent_function_name</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/treeutils/function_scope_utils.html#get_parent_function_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.treeutils.function_scope_utils.get_parent_function_name" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="obscurepy.treeutils.function_scope_utils.get_parent_function_name">
+<span class="sig-prename descclassname"><span class="pre">obscurepy.treeutils.function_scope_utils.</span></span><span class="sig-name descname"><span class="pre">get_parent_function_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/treeutils/function_scope_utils.html#get_parent_function_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.treeutils.function_scope_utils.get_parent_function_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets the name of the parent node if it is a function</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p><strong>node (:obj:)</strong>: node of which to get the parent function name</p>
@@ -226,8 +228,8 @@
 </dd></dl>
 
 <dl class="py function">
-<dt id="obscurepy.treeutils.function_scope_utils.is_in_function_scope">
-<code class="sig-prename descclassname"><span class="pre">obscurepy.treeutils.function_scope_utils.</span></code><code class="sig-name descname"><span class="pre">is_in_function_scope</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/treeutils/function_scope_utils.html#is_in_function_scope"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.treeutils.function_scope_utils.is_in_function_scope" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="obscurepy.treeutils.function_scope_utils.is_in_function_scope">
+<span class="sig-prename descclassname"><span class="pre">obscurepy.treeutils.function_scope_utils.</span></span><span class="sig-name descname"><span class="pre">is_in_function_scope</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/treeutils/function_scope_utils.html#is_in_function_scope"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.treeutils.function_scope_utils.is_in_function_scope" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks if a node is within the scope of a function</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p><strong>node (:obj:)</strong>: node for which to check the scope</p>
@@ -241,8 +243,8 @@
 <div class="section" id="module-obscurepy.treeutils.general">
 <span id="obscurepy-treeutils-general-module"></span><h2>obscurepy.treeutils.general module<a class="headerlink" href="#module-obscurepy.treeutils.general" title="Permalink to this headline">¶</a></h2>
 <dl class="py function">
-<dt id="obscurepy.treeutils.general.add_parents">
-<code class="sig-prename descclassname"><span class="pre">obscurepy.treeutils.general.</span></code><code class="sig-name descname"><span class="pre">add_parents</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/treeutils/general.html#add_parents"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.treeutils.general.add_parents" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="obscurepy.treeutils.general.add_parents">
+<span class="sig-prename descclassname"><span class="pre">obscurepy.treeutils.general.</span></span><span class="sig-name descname"><span class="pre">add_parents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/treeutils/general.html#add_parents"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.treeutils.general.add_parents" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="simple">
 <dt>Helper function to add parent property to ast tree nodes</dt><dd><p>Credit goes to this answer here: <a class="reference external" href="https://stackoverflow.com/a/43311383">https://stackoverflow.com/a/43311383</a></p>
 </dd>
@@ -252,8 +254,8 @@
 </dd></dl>
 
 <dl class="py function">
-<dt id="obscurepy.treeutils.general.get_node_type">
-<code class="sig-prename descclassname"><span class="pre">obscurepy.treeutils.general.</span></code><code class="sig-name descname"><span class="pre">get_node_type</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/treeutils/general.html#get_node_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.treeutils.general.get_node_type" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="obscurepy.treeutils.general.get_node_type">
+<span class="sig-prename descclassname"><span class="pre">obscurepy.treeutils.general.</span></span><span class="sig-name descname"><span class="pre">get_node_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/treeutils/general.html#get_node_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.treeutils.general.get_node_type" title="Permalink to this definition">¶</a></dt>
 <dd><p>Simply gets the type of an ast node</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p><strong>node (:obj:)</strong>: ast node</p>
@@ -264,8 +266,8 @@
 </dd></dl>
 
 <dl class="py function">
-<dt id="obscurepy.treeutils.general.has_parent_of_type">
-<code class="sig-prename descclassname"><span class="pre">obscurepy.treeutils.general.</span></code><code class="sig-name descname"><span class="pre">has_parent_of_type</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/treeutils/general.html#has_parent_of_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.treeutils.general.has_parent_of_type" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="obscurepy.treeutils.general.has_parent_of_type">
+<span class="sig-prename descclassname"><span class="pre">obscurepy.treeutils.general.</span></span><span class="sig-name descname"><span class="pre">has_parent_of_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/treeutils/general.html#has_parent_of_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.treeutils.general.has_parent_of_type" title="Permalink to this definition">¶</a></dt>
 <dd><p>Simply checks if the parent of a node is of a certain type</p>
 <dl>
 <dt>Args:</dt><dd><p><strong>node (:obj:)</strong>: an ast node</p>

@@ -7,12 +7,14 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Index &mdash; obscurepy 0.3.1 documentation</title>
+  <title>Index &mdash; obscurepy 0.4.0 documentation</title>
 
 
 
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
 
 
 
@@ -29,6 +31,7 @@
 
 
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
@@ -166,11 +169,10 @@
  | <a href="#I"><strong>I</strong></a>
  | <a href="#L"><strong>L</strong></a>
  | <a href="#M"><strong>M</strong></a>
- | <a href="#N"><strong>N</strong></a>
  | <a href="#O"><strong>O</strong></a>
- | <a href="#R"><strong>R</strong></a>
  | <a href="#S"><strong>S</strong></a>
  | <a href="#V"><strong>V</strong></a>
+ | <a href="#W"><strong>W</strong></a>
 
 </div>
 <h2 id="A">A</h2>
@@ -180,13 +182,11 @@
 </li>
       <li><a href="obscurepy.utils.html#obscurepy.utils.definition_tracker.DefinitionTracker.add_function">add_function() (obscurepy.utils.definition_tracker.DefinitionTracker method)</a>
 </li>
-      <li><a href="obscurepy.treeutils.html#obscurepy.treeutils.general.add_parents">add_parents() (in module obscurepy.treeutils.general)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="obscurepy.utils.html#obscurepy.utils.definition_tracker.DefinitionTracker.add_variable">add_variable() (obscurepy.utils.definition_tracker.DefinitionTracker method)</a>
+      <li><a href="obscurepy.treeutils.html#obscurepy.treeutils.general.add_parents">add_parents() (in module obscurepy.treeutils.general)</a>
 </li>
-      <li><a href="obscurepy.html#obscurepy.test_obf_file.AnotherClass">AnotherClass (class in obscurepy.test_obf_file)</a>
+      <li><a href="obscurepy.utils.html#obscurepy.utils.definition_tracker.DefinitionTracker.add_variable">add_variable() (obscurepy.utils.definition_tracker.DefinitionTracker method)</a>
 </li>
       <li><a href="obscurepy.handlers.html#obscurepy.handlers.assign_handler.AssignHandler">AssignHandler (class in obscurepy.handlers.assign_handler)</a>
 </li>
@@ -199,14 +199,16 @@
       <li><a href="obscurepy.html#obscurepy.obfuscator.Obfuscator.build_chain">build_chain() (obscurepy.obfuscator.Obfuscator method)</a>
 </li>
   </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="obscurepy.html#obscurepy.obfuscator.Obfuscator.build_output_directories">build_output_directories() (obscurepy.obfuscator.Obfuscator method)</a>
+</li>
+  </ul></td>
 </tr></table>
 
 <h2 id="C">C</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="obscurepy.handlers.html#obscurepy.handlers.call_handler.CallHandler">CallHandler (class in obscurepy.handlers.call_handler)</a>
-</li>
-      <li><a href="obscurepy.html#obscurepy.test_obf_file.AnotherClass.class_function_two">class_function_two() (obscurepy.test_obf_file.AnotherClass method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -252,6 +254,8 @@
 </li>
       <li><a href="obscurepy.treeutils.html#obscurepy.treeutils.function_scope_utils.get_parent_function_name">get_parent_function_name() (in module obscurepy.treeutils.function_scope_utils)</a>
 </li>
+      <li><a href="obscurepy.html#obscurepy.obfuscator.Obfuscator.get_project_filepaths">get_project_filepaths() (obscurepy.obfuscator.Obfuscator method)</a>
+</li>
       <li><a href="obscurepy.utils.html#obscurepy.utils.definition_tracker.DefinitionTracker.get_variable">get_variable() (obscurepy.utils.definition_tracker.DefinitionTracker method)</a>
 </li>
   </ul></td>
@@ -276,9 +280,13 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="obscurepy.treeutils.html#obscurepy.treeutils.class_scope_utils.is_in_class_scope">is_in_class_scope() (in module obscurepy.treeutils.class_scope_utils)</a>
 </li>
+      <li><a href="obscurepy.treeutils.html#obscurepy.treeutils.function_scope_utils.is_in_function_scope">is_in_function_scope() (in module obscurepy.treeutils.function_scope_utils)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="obscurepy.treeutils.html#obscurepy.treeutils.function_scope_utils.is_in_function_scope">is_in_function_scope() (in module obscurepy.treeutils.function_scope_utils)</a>
+      <li><a href="obscurepy.html#obscurepy.obfuscator.Obfuscator.is_multi_file">is_multi_file() (obscurepy.obfuscator.Obfuscator method)</a>
+</li>
+      <li><a href="obscurepy.html#obscurepy.obfuscator.Obfuscator.is_single_file">is_single_file() (obscurepy.obfuscator.Obfuscator method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -289,11 +297,7 @@
       <li><a href="obscurepy.handlers.html#obscurepy.handlers.literal_handler.LiteralHandler">LiteralHandler (class in obscurepy.handlers.literal_handler)</a>
 </li>
       <li><a href="obscurepy.utils.html#obscurepy.utils.loader.load_config">load_config() (in module obscurepy.utils.loader)</a>
-
-      <ul>
-        <li><a href="obscurepy.html#obscurepy.obfuscator.Obfuscator.load_config">(obscurepy.obfuscator.Obfuscator method)</a>
 </li>
-      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="obscurepy.utils.html#obscurepy.utils.loader.load_file">load_file() (in module obscurepy.utils.loader)</a>
@@ -308,8 +312,6 @@
 <h2 id="M">M</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="obscurepy.html#obscurepy.test_obf_file.main">main() (in module obscurepy.test_obf_file)</a>
-</li>
       <li>
     module
 
@@ -332,8 +334,6 @@
 </li>
         <li><a href="obscurepy.html#module-obscurepy.obfuscator">obscurepy.obfuscator</a>
 </li>
-        <li><a href="obscurepy.html#module-obscurepy.test_obf_file">obscurepy.test_obf_file</a>
-</li>
         <li><a href="obscurepy.treeutils.html#module-obscurepy.treeutils">obscurepy.treeutils</a>
 </li>
         <li><a href="obscurepy.treeutils.html#module-obscurepy.treeutils.class_scope_utils">obscurepy.treeutils.class_scope_utils</a>
@@ -350,30 +350,18 @@
 </li>
       </ul></li>
   </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="obscurepy.html#obscurepy.test_obf_file.NumberTwo.more_stuff">more_stuff() (obscurepy.test_obf_file.NumberTwo method)</a>
-</li>
-  </ul></td>
-</tr></table>
-
-<h2 id="N">N</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="obscurepy.html#obscurepy.test_obf_file.not_a_class_function">not_a_class_function() (in module obscurepy.test_obf_file)</a>
-</li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="obscurepy.html#obscurepy.test_obf_file.NumberTwo">NumberTwo (class in obscurepy.test_obf_file)</a>
-</li>
-  </ul></td>
 </tr></table>
 
 <h2 id="O">O</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="obscurepy.html#obscurepy.obfuscator.Obfuscator.obfuscate">obfuscate() (obscurepy.obfuscator.Obfuscator method)</a>
-</li>
       <li><a href="obscurepy.html#obscurepy.obfuscator.Obfuscator">Obfuscator (class in obscurepy.obfuscator)</a>
+</li>
+      <li><a href="obscurepy.html#obscurepy.obfuscator.Obfuscator.obscure">obscure() (obscurepy.obfuscator.Obfuscator method)</a>
+</li>
+      <li><a href="obscurepy.html#obscurepy.obfuscator.Obfuscator.obscure_file">obscure_file() (obscurepy.obfuscator.Obfuscator method)</a>
+</li>
+      <li><a href="obscurepy.html#obscurepy.obfuscator.Obfuscator.obscure_project">obscure_project() (obscurepy.obfuscator.Obfuscator method)</a>
 </li>
       <li>
     obscurepy
@@ -424,6 +412,8 @@
         <li><a href="obscurepy.handlers.html#module-obscurepy.handlers.handler">module</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     obscurepy.handlers.literal_handler
 
@@ -431,20 +421,11 @@
         <li><a href="obscurepy.handlers.html#module-obscurepy.handlers.literal_handler">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     obscurepy.obfuscator
 
       <ul>
         <li><a href="obscurepy.html#module-obscurepy.obfuscator">module</a>
-</li>
-      </ul></li>
-      <li>
-    obscurepy.test_obf_file
-
-      <ul>
-        <li><a href="obscurepy.html#module-obscurepy.test_obf_file">module</a>
 </li>
       </ul></li>
       <li>
@@ -499,14 +480,6 @@
   </ul></td>
 </tr></table>
 
-<h2 id="R">R</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="obscurepy.html#obscurepy.test_obf_file.SomeRandomClass.random_class_function">random_class_function() (obscurepy.test_obf_file.SomeRandomClass method)</a>
-</li>
-  </ul></td>
-</tr></table>
-
 <h2 id="S">S</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -514,7 +487,7 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="obscurepy.html#obscurepy.test_obf_file.SomeRandomClass">SomeRandomClass (class in obscurepy.test_obf_file)</a>
+      <li><a href="obscurepy.html#obscurepy.obfuscator.Obfuscator.set_tree">set_tree() (obscurepy.obfuscator.Obfuscator method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -533,6 +506,14 @@
       <li><a href="obscurepy.handlers.html#obscurepy.handlers.literal_handler.LiteralHandler.visit_Constant">visit_Constant() (obscurepy.handlers.literal_handler.LiteralHandler method)</a>
 </li>
       <li><a href="obscurepy.handlers.html#obscurepy.handlers.function_handler.FunctionHandler.visit_FunctionDef">visit_FunctionDef() (obscurepy.handlers.function_handler.FunctionHandler method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="W">W</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="obscurepy.html#obscurepy.obfuscator.Obfuscator.write_tree_to_file">write_tree_to_file() (obscurepy.obfuscator.Obfuscator method)</a>
 </li>
   </ul></td>
 </tr></table>

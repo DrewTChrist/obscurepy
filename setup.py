@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="obscurepy",
-    version="0.3.1",
+    version="0.4.0",
     author="Andrew Christiansen",
     author_email="andrewtaylorchristiansen@gmail.com",
     description="",
