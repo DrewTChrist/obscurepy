@@ -12,6 +12,6 @@ class CallHandlerTest(unittest.TestCase):
         self.tracker.add_class('FirstClass')
         self.source = 'class FirstClass:\n\tpass\n\na = FirstClass()'
 
-    def test_visitClassDef(self):
+    def test_visitCall(self):
         tree = ast.parse(self.source)
         tree = self.fixture.handle(tree)

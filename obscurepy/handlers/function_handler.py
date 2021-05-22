@@ -31,5 +31,5 @@ class FunctionHandler(Handler):
         if isinstance(node.name, str):
             previous_name = node.name
             tracker.add_function(node.name)
-            node.name = tracker.definitions['functions'][previous_name]
+            node.name = tracker.definitions['functions'][previous_name]['name']
         return node

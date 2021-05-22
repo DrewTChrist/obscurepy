@@ -31,5 +31,5 @@ class ClassHandler(Handler):
         if isinstance(node.name, str):
             previous_name = node.name
             tracker.add_class(node.name)
-            node.name = tracker.definitions['classes'][previous_name]
+            node.name = tracker.definitions['classes'][previous_name]['name']
         return node

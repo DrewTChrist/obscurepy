@@ -13,6 +13,10 @@ class TestDefinitionTracker(unittest.TestCase):
                               'parameters': []}
         self.test_variable = {'name': 'test_variable'}
 
+    def test_singleton(self):
+        with self.assertRaises(Exception):
+            DefinitionTracker()
+
     def test_add_class(self):
         self.fixture.add_class("TestClass")
         self.assertEqual(len(self.fixture.definitions['classes']), 1)

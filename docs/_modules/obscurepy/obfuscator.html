@@ -7,12 +7,14 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>obscurepy.obfuscator &mdash; obscurepy 0.3.1 documentation</title>
+  <title>obscurepy.obfuscator &mdash; obscurepy 0.4.0 documentation</title>
 
 
 
   <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
 
 
 
@@ -29,6 +31,7 @@
 
 
       <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
         <script src="../../_static/doctools.js"></script>
@@ -153,42 +156,155 @@
            <div itemprop="articleBody">
 
   <h1>Source code for obscurepy.obfuscator</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">obscurepy.utils.loader</span> <span class="kn">import</span> <span class="n">load_handlers</span><span class="p">,</span> <span class="n">load_config</span>
+<span></span><span class="kn">import</span> <span class="nn">ast</span>
+<span class="kn">import</span> <span class="nn">astunparse</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">obscurepy.utils.loader</span> <span class="kn">import</span> <span class="n">load_handlers</span><span class="p">,</span> <span class="n">load_file</span>
 
 
 <div class="viewcode-block" id="Obfuscator"><a class="viewcode-back" href="../../obscurepy.html#obscurepy.obfuscator.Obfuscator">[docs]</a><span class="k">class</span> <span class="nc">Obfuscator</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Main obfuscator class for managing files, handlers and other processes</span>
 
 <span class="sd">    Attributes:</span>
-<span class="sd">        **config (dict)**: Configuration options</span>
+<span class="sd">        **filepath (str)**: Single file to be obscured</span>
 
-<span class="sd">        **filenames (list)**: List of filenames to be obscured</span>
+<span class="sd">        **is_project (bool)**: Boolean representing whether or not to try obscuring a multi file project</span>
+
+<span class="sd">        **project_directory (str)**: The directory of the project to be obscured</span>
+
+<span class="sd">        **output_directory (str)**: The directory to output the obscured code</span>
+
+<span class="sd">        **filepaths (list)**: List of filenames to be obscured</span>
 
 <span class="sd">        **chain (:obj: `Handler`)**: A single handler which is the first in the chain of handlers</span>
 
-<span class="sd">        **text (str)**: Source code from a file</span>
-
 <span class="sd">        **tree (:obj: `ast.Module`)**: Reference to the ast tree created from text attribute</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        **filepath (str)**: Single file to be obscured</span>
+
+<span class="sd">        **is_project (bool)**: Boolean representing whether or not to try obscuring a multi file project</span>
+
+<span class="sd">        **project_directory (str)**: The directory of the project to be obscured</span>
+
+<span class="sd">        **output_directory (str)**: The directory to output the obscured code</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">is_project</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">project_directory</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">output_directory</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Creates an instance of an Obfuscator&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">filenames</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filepath</span> <span class="o">=</span> <span class="n">filepath</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_project</span> <span class="o">=</span> <span class="n">is_project</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">project_directory</span> <span class="o">=</span> <span class="n">project_directory</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_directory</span> <span class="o">=</span> <span class="n">output_directory</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filepaths</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">chain</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tree</span> <span class="o">=</span> <span class="kc">None</span>
 
+        <span class="bp">self</span><span class="o">.</span><span class="n">build_chain</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_multi_file</span><span class="p">()</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_single_file</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="s1">&#39;Improper configuration for both single file and projects&#39;</span><span class="p">)</span>
+
 <div class="viewcode-block" id="Obfuscator.build_chain"><a class="viewcode-back" href="../../obscurepy.html#obscurepy.obfuscator.Obfuscator.build_chain">[docs]</a>    <span class="k">def</span> <span class="nf">build_chain</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Loads handlers and assigns the first one to chain&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Loads handlers and assigns the first one to the chain property&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">chain</span> <span class="o">=</span> <span class="n">load_handlers</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="Obfuscator.load_config"><a class="viewcode-back" href="../../obscurepy.html#obscurepy.obfuscator.Obfuscator.load_config">[docs]</a>    <span class="k">def</span> <span class="nf">load_config</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Loads configuration options&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">load_config</span><span class="p">(</span><span class="s1">&#39;config/config.yaml&#39;</span><span class="p">)</span></div>
+<div class="viewcode-block" id="Obfuscator.get_project_filepaths"><a class="viewcode-back" href="../../obscurepy.html#obscurepy.obfuscator.Obfuscator.get_project_filepaths">[docs]</a>    <span class="k">def</span> <span class="nf">get_project_filepaths</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets the filepaths property to a list of filepaths found in the project directory&quot;&quot;&quot;</span>
+        <span class="n">filepaths</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">dp</span><span class="p">,</span> <span class="n">dn</span><span class="p">,</span> <span class="n">filenames</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">project_directory</span><span class="p">):</span>
+            <span class="k">if</span> <span class="s1">&#39;__pycache__&#39;</span> <span class="ow">in</span> <span class="n">dn</span><span class="p">:</span>
+                <span class="n">dn</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">&#39;__pycache__&#39;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">filenames</span><span class="p">:</span>
+                <span class="n">filepaths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dp</span><span class="p">,</span> <span class="n">f</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filepaths</span> <span class="o">=</span> <span class="n">filepaths</span></div>
 
-<div class="viewcode-block" id="Obfuscator.obfuscate"><a class="viewcode-back" href="../../obscurepy.html#obscurepy.obfuscator.Obfuscator.obfuscate">[docs]</a>    <span class="k">def</span> <span class="nf">obfuscate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">pass</span></div></div>
+<div class="viewcode-block" id="Obfuscator.set_tree"><a class="viewcode-back" href="../../obscurepy.html#obscurepy.obfuscator.Obfuscator.set_tree">[docs]</a>    <span class="k">def</span> <span class="nf">set_tree</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets the tree property to the parsed abstract syntax tree of source in the filepath provided</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            **filepath (str)**: File path of which to get the tree</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="n">load_file</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tree</span> <span class="o">=</span> <span class="n">ast</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">text</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Obfuscator.build_output_directories"><a class="viewcode-back" href="../../obscurepy.html#obscurepy.obfuscator.Obfuscator.build_output_directories">[docs]</a>    <span class="k">def</span> <span class="nf">build_output_directories</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Recreates the project directory structure in the output directory&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_multi_file</span><span class="p">():</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output_directory</span><span class="p">,</span> <span class="s1">&#39;obscurepy_out&#39;</span><span class="p">))</span>
+            <span class="n">directories</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">dp</span><span class="p">,</span> <span class="n">dn</span><span class="p">,</span> <span class="n">filenames</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">project_directory</span><span class="p">):</span>
+                <span class="k">if</span> <span class="s1">&#39;__pycache__&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dp</span><span class="p">:</span>
+                    <span class="n">directories</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">directory</span> <span class="ow">in</span> <span class="n">directories</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_directory</span> <span class="ow">in</span> <span class="n">directory</span><span class="p">:</span>
+                    <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output_directory</span><span class="p">,</span>
+                                          <span class="s1">&#39;obscurepy_out&#39;</span><span class="p">,</span>
+                                          <span class="n">directory</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">output_directory</span><span class="si">}</span><span class="s2">/&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output_directory</span><span class="p">,</span>
+                             <span class="s1">&#39;obscurepy_out&#39;</span><span class="p">,</span> <span class="n">directory</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_single_file</span><span class="p">():</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output_directory</span><span class="p">,</span> <span class="s1">&#39;obscurepy_out&#39;</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Obfuscator.write_tree_to_file"><a class="viewcode-back" href="../../obscurepy.html#obscurepy.obfuscator.Obfuscator.write_tree_to_file">[docs]</a>    <span class="k">def</span> <span class="nf">write_tree_to_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Writes unparsed abstract syntax trees to files</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            **filepath (str)**: The location to save the source of the ast</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span> <span class="o">&lt;</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">9</span><span class="p">):</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="n">astunparse</span><span class="o">.</span><span class="n">unparse</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="n">ast</span><span class="o">.</span><span class="n">unparse</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+            <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+            <span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Obfuscator.obscure"><a class="viewcode-back" href="../../obscurepy.html#obscurepy.obfuscator.Obfuscator.obscure">[docs]</a>    <span class="k">def</span> <span class="nf">obscure</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Obscures the project or single file as defined in the class properties&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_multi_file</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">obscure_project</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_single_file</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">obscure_file</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Obfuscator.obscure_file"><a class="viewcode-back" href="../../obscurepy.html#obscurepy.obfuscator.Obfuscator.obscure_file">[docs]</a>    <span class="k">def</span> <span class="nf">obscure_file</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Obscures a single file&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_tree</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filepath</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">chain</span><span class="o">.</span><span class="n">handle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">build_output_directories</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_directory</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">filepath</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">write_tree_to_file</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output_directory</span><span class="p">,</span>
+                                                 <span class="s1">&#39;obscurepy_out&#39;</span><span class="p">,</span>
+                                                 <span class="bp">self</span><span class="o">.</span><span class="n">filepath</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">output_directory</span><span class="si">}</span><span class="s2">/&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">write_tree_to_file</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">output_directory</span><span class="p">,</span> <span class="s1">&#39;obscurepy_out&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">filepath</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Obfuscator.obscure_project"><a class="viewcode-back" href="../../obscurepy.html#obscurepy.obfuscator.Obfuscator.obscure_project">[docs]</a>    <span class="k">def</span> <span class="nf">obscure_project</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Obscures a multi file project&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">get_project_filepaths</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">build_output_directories</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">filepath</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">filepaths</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_tree</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">chain</span><span class="o">.</span><span class="n">handle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tree</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_directory</span> <span class="ow">in</span> <span class="n">filepath</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">write_tree_to_file</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output_directory</span><span class="p">,</span>
+                                                     <span class="s1">&#39;obscurepy_out&#39;</span><span class="p">,</span>
+                                                     <span class="n">filepath</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">output_directory</span><span class="si">}</span><span class="s2">/&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">write_tree_to_file</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">output_directory</span><span class="p">,</span> <span class="s1">&#39;obscurepy_out&#39;</span><span class="p">,</span> <span class="n">filepath</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Obfuscator.is_multi_file"><a class="viewcode-back" href="../../obscurepy.html#obscurepy.obfuscator.Obfuscator.is_multi_file">[docs]</a>    <span class="k">def</span> <span class="nf">is_multi_file</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Checks if this class is configured properly for a multi file project&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_project</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">project_directory</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">project_directory</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Obfuscator.is_single_file"><a class="viewcode-back" href="../../obscurepy.html#obscurepy.obfuscator.Obfuscator.is_single_file">[docs]</a>    <span class="k">def</span> <span class="nf">is_single_file</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Checks if this class is configured properly for a single file&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_project</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">filepath</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filepath</span><span class="p">)</span></div></div>
 </pre></div>
 
            </div>

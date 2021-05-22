@@ -22,14 +22,6 @@ obscurepy.obfuscator module
    :undoc-members:
    :show-inheritance:
 
-obscurepy.test\_obf\_file module
---------------------------------
-
-.. automodule:: obscurepy.test_obf_file
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 Module contents
 ---------------
 
