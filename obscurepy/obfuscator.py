@@ -98,7 +98,7 @@ class Obfuscator:
             **filepath (str)**: The location to save the source of the ast
         """
         if sys.version_info < (3, 9):
-            test = astunparse.unparse(self.tree)
+            text = astunparse.unparse(self.tree)
         else:
             text = ast.unparse(self.tree)
         with open(filepath, 'w') as file:
