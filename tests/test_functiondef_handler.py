@@ -11,7 +11,7 @@ class FunctionDefHandlerTest(unittest.TestCase):
         self.tracker = DefinitionTracker.get_instance()
         self.source = 'def FirstFunction():\n\tpass\n\ndef SecondFunction():\n\tpass'
 
-    def test_visitClassDef(self):
+    def test_visitFunctionDef(self):
         tree = ast.parse(self.source)
         tree = self.fixture.handle(tree)
         self.assertEqual(len(self.tracker.definitions['functions']), 2)
