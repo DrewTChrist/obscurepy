@@ -30,8 +30,11 @@ class DefinitionTracker:
             **class_ (dict)**: A dictionary describing the class
         """
         if class_:
-            self.definitions['classes'][class_] = {'name': self._name_function(class_),
-                                                   'functions': []}
+            # self.definitions['classes'][class_] = {'name': self._name_function(class_),
+            #                                       'functions': []}
+            self.definitions['classes'][class_['prev_name']] = class_
+            self.definitions['classes'][class_['prev_name']
+                                        ]['new_name'] = self._name_class(class_['prev_name'])
 
     def get_class(self, class_):
         """Gets a class from the definitions dictionary

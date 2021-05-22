@@ -26,7 +26,7 @@ class CallHandler(Handler):
         tracker = DefinitionTracker.get_instance()
         if isinstance(node.func.id, str):
             if node.func.id in tracker.definitions['classes']:
-                node.func.id = tracker.definitions['classes'][node.func.id]['name']
+                node.func.id = tracker.definitions['classes'][node.func.id]['new_name']
             elif node.func.id in tracker.definitions['functions']:
                 node.func.id = tracker.definitions['functions'][node.func.id]['name']
         return node

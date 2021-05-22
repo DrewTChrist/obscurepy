@@ -7,8 +7,14 @@ class TestDefinitionTracker(unittest.TestCase):
     def setUp(self):
         self.fixture = DefinitionTracker.get_instance()
         self.fixture.clear_definitions()
-        self.test_class = {'name': 'test_class',
-                           'functions': []}
+        self.test_class = class_dict = {
+            'new_name': "NewClassName",
+            'prev_name': "TestClass",
+            'variables': [],
+            'properties': [],
+            'methods': [],
+            'bases': [],
+        }
         self.test_function = {'name': 'test_function',
                               'parameters': []}
         self.test_variable = {'name': 'test_variable'}
@@ -18,13 +24,13 @@ class TestDefinitionTracker(unittest.TestCase):
             DefinitionTracker()
 
     def test_add_class(self):
-        self.fixture.add_class("TestClass")
+        self.fixture.add_class(self.test_class)
         self.assertEqual(len(self.fixture.definitions['classes']), 1)
 
     def test_get_class(self):
-        self.fixture.add_class("TestClass")
+        self.fixture.add_class(self.test_class)
         class_ = self.fixture.get_class("TestClass")
-        self.assertEqual(class_['name'], "_0x396")
+        self.assertEqual(class_['new_name'], "_0x397")
 
     def test_add_function(self):
         self.fixture.add_function("TestFunction")

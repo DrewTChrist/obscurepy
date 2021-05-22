@@ -1,6 +1,5 @@
 import ast
 import unittest
-from obscurepy.handlers.class_handler import ClassHandler
 from obscurepy.utils.definition_tracker import DefinitionTracker
 from obscurepy.utils.loader import *
 
