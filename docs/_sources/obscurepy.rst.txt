@@ -8,6 +8,7 @@ Subpackages
    :maxdepth: 4
 
    obscurepy.handlers
+   obscurepy.scripts
    obscurepy.treeutils
    obscurepy.utils
 

@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Index &mdash; obscurepy 0.4.0 documentation</title>
+  <title>Index &mdash; obscurepy 0.5.0 documentation</title>
 
 
 
@@ -210,11 +210,17 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="obscurepy.handlers.html#obscurepy.handlers.call_handler.CallHandler">CallHandler (class in obscurepy.handlers.call_handler)</a>
 </li>
+      <li><a href="obscurepy.scripts.html#obscurepy.scripts.obscure.check_bad_option_usage">check_bad_option_usage() (in module obscurepy.scripts.obscure)</a>
+</li>
+      <li><a href="obscurepy.handlers.html#obscurepy.handlers.classdef_handler.ClassDefHandler">ClassDefHandler (class in obscurepy.handlers.classdef_handler)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="obscurepy.handlers.html#obscurepy.handlers.class_handler.ClassHandler">ClassHandler (class in obscurepy.handlers.class_handler)</a>
-</li>
       <li><a href="obscurepy.utils.html#obscurepy.utils.definition_tracker.DefinitionTracker.clear_definitions">clear_definitions() (obscurepy.utils.definition_tracker.DefinitionTracker method)</a>
+</li>
+      <li><a href="obscurepy.handlers.html#obscurepy.handlers.classdef_handler.create_class_dictionary">create_class_dictionary() (in module obscurepy.handlers.classdef_handler)</a>
+</li>
+      <li><a href="obscurepy.handlers.html#obscurepy.handlers.functiondef_handler.create_function_dictionary">create_function_dictionary() (in module obscurepy.handlers.functiondef_handler)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -230,7 +236,7 @@
 <h2 id="F">F</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="obscurepy.handlers.html#obscurepy.handlers.function_handler.FunctionHandler">FunctionHandler (class in obscurepy.handlers.function_handler)</a>
+      <li><a href="obscurepy.handlers.html#obscurepy.handlers.functiondef_handler.FunctionDefHandler">FunctionDefHandler (class in obscurepy.handlers.functiondef_handler)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -238,26 +244,42 @@
 <h2 id="G">G</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="obscurepy.handlers.html#obscurepy.handlers.functiondef_handler.get_args">get_args() (in module obscurepy.handlers.functiondef_handler)</a>
+</li>
+      <li><a href="obscurepy.handlers.html#obscurepy.handlers.classdef_handler.get_base_classes">get_base_classes() (in module obscurepy.handlers.classdef_handler)</a>
+</li>
       <li><a href="obscurepy.utils.html#obscurepy.utils.definition_tracker.DefinitionTracker.get_class">get_class() (obscurepy.utils.definition_tracker.DefinitionTracker method)</a>
 </li>
       <li><a href="obscurepy.utils.html#obscurepy.utils.definition_tracker.DefinitionTracker.get_function">get_function() (obscurepy.utils.definition_tracker.DefinitionTracker method)</a>
 </li>
       <li><a href="obscurepy.utils.html#obscurepy.utils.definition_tracker.DefinitionTracker.get_instance">get_instance() (obscurepy.utils.definition_tracker.DefinitionTracker class method)</a>
 </li>
+      <li><a href="obscurepy.handlers.html#obscurepy.handlers.classdef_handler.get_methods">get_methods() (in module obscurepy.handlers.classdef_handler)</a>
+</li>
       <li><a href="obscurepy.handlers.html#obscurepy.handlers.handler.Handler.get_next">get_next() (obscurepy.handlers.handler.Handler method)</a>
+</li>
+      <li><a href="obscurepy.treeutils.html#obscurepy.treeutils.general.get_node_type">get_node_type() (in module obscurepy.treeutils.general)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="obscurepy.treeutils.html#obscurepy.treeutils.general.get_node_type">get_node_type() (in module obscurepy.treeutils.general)</a>
-</li>
       <li><a href="obscurepy.treeutils.html#obscurepy.treeutils.class_scope_utils.get_parent_class_name">get_parent_class_name() (in module obscurepy.treeutils.class_scope_utils)</a>
 </li>
       <li><a href="obscurepy.treeutils.html#obscurepy.treeutils.function_scope_utils.get_parent_function_name">get_parent_function_name() (in module obscurepy.treeutils.function_scope_utils)</a>
 </li>
       <li><a href="obscurepy.html#obscurepy.obfuscator.Obfuscator.get_project_filepaths">get_project_filepaths() (obscurepy.obfuscator.Obfuscator method)</a>
 </li>
+      <li><a href="obscurepy.handlers.html#obscurepy.handlers.classdef_handler.get_properties">get_properties() (in module obscurepy.handlers.classdef_handler)</a>
+</li>
+      <li><a href="obscurepy.handlers.html#obscurepy.handlers.functiondef_handler.get_return">get_return() (in module obscurepy.handlers.functiondef_handler)</a>
+</li>
       <li><a href="obscurepy.utils.html#obscurepy.utils.definition_tracker.DefinitionTracker.get_variable">get_variable() (obscurepy.utils.definition_tracker.DefinitionTracker method)</a>
 </li>
+      <li><a href="obscurepy.handlers.html#obscurepy.handlers.classdef_handler.get_variables">get_variables() (in module obscurepy.handlers.classdef_handler)</a>
+
+      <ul>
+        <li><a href="obscurepy.handlers.html#obscurepy.handlers.functiondef_handler.get_variables">(in module obscurepy.handlers.functiondef_handler)</a>
+</li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -324,15 +346,19 @@
 </li>
         <li><a href="obscurepy.handlers.html#module-obscurepy.handlers.call_handler">obscurepy.handlers.call_handler</a>
 </li>
-        <li><a href="obscurepy.handlers.html#module-obscurepy.handlers.class_handler">obscurepy.handlers.class_handler</a>
+        <li><a href="obscurepy.handlers.html#module-obscurepy.handlers.classdef_handler">obscurepy.handlers.classdef_handler</a>
 </li>
-        <li><a href="obscurepy.handlers.html#module-obscurepy.handlers.function_handler">obscurepy.handlers.function_handler</a>
+        <li><a href="obscurepy.handlers.html#module-obscurepy.handlers.functiondef_handler">obscurepy.handlers.functiondef_handler</a>
 </li>
         <li><a href="obscurepy.handlers.html#module-obscurepy.handlers.handler">obscurepy.handlers.handler</a>
 </li>
         <li><a href="obscurepy.handlers.html#module-obscurepy.handlers.literal_handler">obscurepy.handlers.literal_handler</a>
 </li>
         <li><a href="obscurepy.html#module-obscurepy.obfuscator">obscurepy.obfuscator</a>
+</li>
+        <li><a href="obscurepy.scripts.html#module-obscurepy.scripts">obscurepy.scripts</a>
+</li>
+        <li><a href="obscurepy.scripts.html#module-obscurepy.scripts.obscure">obscurepy.scripts.obscure</a>
 </li>
         <li><a href="obscurepy.treeutils.html#module-obscurepy.treeutils">obscurepy.treeutils</a>
 </li>
@@ -392,17 +418,17 @@
 </li>
       </ul></li>
       <li>
-    obscurepy.handlers.class_handler
+    obscurepy.handlers.classdef_handler
 
       <ul>
-        <li><a href="obscurepy.handlers.html#module-obscurepy.handlers.class_handler">module</a>
+        <li><a href="obscurepy.handlers.html#module-obscurepy.handlers.classdef_handler">module</a>
 </li>
       </ul></li>
       <li>
-    obscurepy.handlers.function_handler
+    obscurepy.handlers.functiondef_handler
 
       <ul>
-        <li><a href="obscurepy.handlers.html#module-obscurepy.handlers.function_handler">module</a>
+        <li><a href="obscurepy.handlers.html#module-obscurepy.handlers.functiondef_handler">module</a>
 </li>
       </ul></li>
       <li>
@@ -412,8 +438,6 @@
         <li><a href="obscurepy.handlers.html#module-obscurepy.handlers.handler">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     obscurepy.handlers.literal_handler
 
@@ -421,11 +445,27 @@
         <li><a href="obscurepy.handlers.html#module-obscurepy.handlers.literal_handler">module</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     obscurepy.obfuscator
 
       <ul>
         <li><a href="obscurepy.html#module-obscurepy.obfuscator">module</a>
+</li>
+      </ul></li>
+      <li>
+    obscurepy.scripts
+
+      <ul>
+        <li><a href="obscurepy.scripts.html#module-obscurepy.scripts">module</a>
+</li>
+      </ul></li>
+      <li>
+    obscurepy.scripts.obscure
+
+      <ul>
+        <li><a href="obscurepy.scripts.html#module-obscurepy.scripts.obscure">module</a>
 </li>
       </ul></li>
       <li>
@@ -501,11 +541,11 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="obscurepy.handlers.html#obscurepy.handlers.class_handler.ClassHandler.visit_ClassDef">visit_ClassDef() (obscurepy.handlers.class_handler.ClassHandler method)</a>
+      <li><a href="obscurepy.handlers.html#obscurepy.handlers.classdef_handler.ClassDefHandler.visit_ClassDef">visit_ClassDef() (obscurepy.handlers.classdef_handler.ClassDefHandler method)</a>
 </li>
       <li><a href="obscurepy.handlers.html#obscurepy.handlers.literal_handler.LiteralHandler.visit_Constant">visit_Constant() (obscurepy.handlers.literal_handler.LiteralHandler method)</a>
 </li>
-      <li><a href="obscurepy.handlers.html#obscurepy.handlers.function_handler.FunctionHandler.visit_FunctionDef">visit_FunctionDef() (obscurepy.handlers.function_handler.FunctionHandler method)</a>
+      <li><a href="obscurepy.handlers.html#obscurepy.handlers.functiondef_handler.FunctionDefHandler.visit_FunctionDef">visit_FunctionDef() (obscurepy.handlers.functiondef_handler.FunctionDefHandler method)</a>
 </li>
   </ul></td>
 </tr></table>
