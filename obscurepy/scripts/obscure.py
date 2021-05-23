@@ -1,5 +1,6 @@
 from obscurepy.obfuscator import Obfuscator
 import click
+import sys
 
 
 @click.command()
