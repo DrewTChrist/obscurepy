@@ -20,18 +20,18 @@ obscurepy.handlers.call\_handler module
    :undoc-members:
    :show-inheritance:
 
-obscurepy.handlers.class\_handler module
-----------------------------------------
+obscurepy.handlers.classdef\_handler module
+-------------------------------------------
 
-.. automodule:: obscurepy.handlers.class_handler
+.. automodule:: obscurepy.handlers.classdef_handler
    :members:
    :undoc-members:
    :show-inheritance:
 
-obscurepy.handlers.function\_handler module
--------------------------------------------
+obscurepy.handlers.functiondef\_handler module
+----------------------------------------------
 
-.. automodule:: obscurepy.handlers.function_handler
+.. automodule:: obscurepy.handlers.functiondef_handler
    :members:
    :undoc-members:
    :show-inheritance:
