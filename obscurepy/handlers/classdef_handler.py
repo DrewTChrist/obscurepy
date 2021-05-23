@@ -114,6 +114,7 @@ class ClassDefHandler(Handler):
                 The modified ClassDef node
         """
         tracker = DefinitionTracker.get_instance()
+        # Check to make sure this node is not already in tracker definitions
         if isinstance(node.name, str):
             class_dict = create_class_dictionary(node)
             tracker.add_class(class_dict)

@@ -1,22 +1,22 @@
-class _0x19d:
+class SomeClass:
     pass
 
 
-class _0x1a6:
+class AnotherClass(SomeClass):
     pass
 
 
-def _0x209():
-    _0x170 = 42
+def some_function():
+    c = 42
 
 
-def _0x1a8():
-    _0x1fe = 96
+def another_function():
+    some_variable = 96
 
 
-_0x170 = _0x19d()
-_0x174 = _0x1a6()
-_0x209()
-_0x1a8()
-_0x170 = _0x1a6()
-_0x170 = 42
+a = SomeClass()
+b = AnotherClass()
+some_function()
+another_function()
+a = AnotherClass()
+c = 42

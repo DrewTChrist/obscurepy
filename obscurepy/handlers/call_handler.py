@@ -28,5 +28,5 @@ class CallHandler(Handler):
             if node.func.id in tracker.definitions['classes']:
                 node.func.id = tracker.definitions['classes'][node.func.id]['new_name']
             elif node.func.id in tracker.definitions['functions']:
-                node.func.id = tracker.definitions['functions'][node.func.id]['name']
+                node.func.id = tracker.definitions['functions'][node.func.id]['new_name']
         return node

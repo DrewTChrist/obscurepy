@@ -26,4 +26,4 @@ class FunctionScopeUtilsTest(unittest.TestCase):
         tree = ast.parse('a = 1')
         add_parents(tree)
         with self.assertRaises(Exception):
-            get_parent_function_name(tree.body[0].body[0])
+            get_parent_function_name(tree.body[0])
