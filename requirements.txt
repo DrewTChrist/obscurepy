@@ -1,3 +1,4 @@
 setuptools~=49.2.1
 PyYAML~=5.4.1
 astunparse==1.6.3
+click==8.0.1

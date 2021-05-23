@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>obscurepy.handlers package &mdash; obscurepy 0.4.0 documentation</title>
+  <title>obscurepy.handlers package &mdash; obscurepy 0.5.0 documentation</title>
 
 
 
@@ -41,7 +41,7 @@
 
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="obscurepy.treeutils package" href="obscurepy.treeutils.html" />
+    <link rel="next" title="obscurepy.scripts package" href="obscurepy.scripts.html" />
     <link rel="prev" title="obscurepy package" href="obscurepy.html" />
 </head>
 
@@ -94,6 +94,7 @@
 <li class="toctree-l2 current"><a class="reference internal" href="obscurepy.html">obscurepy package</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="obscurepy.html#subpackages">Subpackages</a><ul class="current">
 <li class="toctree-l4 current"><a class="current reference internal" href="#">obscurepy.handlers package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="obscurepy.scripts.html">obscurepy.scripts package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="obscurepy.treeutils.html">obscurepy.treeutils package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="obscurepy.utils.html">obscurepy.utils package</a></li>
 </ul>
@@ -236,11 +237,11 @@
 </dd></dl>
 
 </div>
-<div class="section" id="module-obscurepy.handlers.class_handler">
-<span id="obscurepy-handlers-class-handler-module"></span><h2>obscurepy.handlers.class_handler module<a class="headerlink" href="#module-obscurepy.handlers.class_handler" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-obscurepy.handlers.classdef_handler">
+<span id="obscurepy-handlers-classdef-handler-module"></span><h2>obscurepy.handlers.classdef_handler module<a class="headerlink" href="#module-obscurepy.handlers.classdef_handler" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
-<dt class="sig sig-object py" id="obscurepy.handlers.class_handler.ClassHandler">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">obscurepy.handlers.class_handler.</span></span><span class="sig-name descname"><span class="pre">ClassHandler</span></span><a class="reference internal" href="_modules/obscurepy/handlers/class_handler.html#ClassHandler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.handlers.class_handler.ClassHandler" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="obscurepy.handlers.classdef_handler.ClassDefHandler">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">obscurepy.handlers.classdef_handler.</span></span><span class="sig-name descname"><span class="pre">ClassDefHandler</span></span><a class="reference internal" href="_modules/obscurepy/handlers/classdef_handler.html#ClassDefHandler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.handlers.classdef_handler.ClassDefHandler" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#obscurepy.handlers.handler.Handler" title="obscurepy.handlers.handler.Handler"><code class="xref py py-class docutils literal notranslate"><span class="pre">obscurepy.handlers.handler.Handler</span></code></a></p>
 <p>Class to traverse and modify ClassDef nodes in an ast</p>
 <dl>
@@ -249,8 +250,8 @@
 </dd>
 </dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="obscurepy.handlers.class_handler.ClassHandler.visit_ClassDef">
-<span class="sig-name descname"><span class="pre">visit_ClassDef</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/handlers/class_handler.html#ClassHandler.visit_ClassDef"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.handlers.class_handler.ClassHandler.visit_ClassDef" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="obscurepy.handlers.classdef_handler.ClassDefHandler.visit_ClassDef">
+<span class="sig-name descname"><span class="pre">visit_ClassDef</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/handlers/classdef_handler.html#ClassDefHandler.visit_ClassDef"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.handlers.classdef_handler.ClassDefHandler.visit_ClassDef" title="Permalink to this definition">¶</a></dt>
 <dd><p>Overrides the NodeTransformer visit_ClassDef method. This method makes modifications
 to the abstract syntax tree and stores class definitions with the DefinitionTracker class</p>
 <dl>
@@ -267,12 +268,65 @@ to the abstract syntax tree and stores class definitions with the DefinitionTrac
 
 </dd></dl>
 
+<dl class="py function">
+<dt class="sig sig-object py" id="obscurepy.handlers.classdef_handler.create_class_dictionary">
+<span class="sig-prename descclassname"><span class="pre">obscurepy.handlers.classdef_handler.</span></span><span class="sig-name descname"><span class="pre">create_class_dictionary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/handlers/classdef_handler.html#create_class_dictionary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.handlers.classdef_handler.create_class_dictionary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="obscurepy.handlers.classdef_handler.get_base_classes">
+<span class="sig-prename descclassname"><span class="pre">obscurepy.handlers.classdef_handler.</span></span><span class="sig-name descname"><span class="pre">get_base_classes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/handlers/classdef_handler.html#get_base_classes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.handlers.classdef_handler.get_base_classes" title="Permalink to this definition">¶</a></dt>
+<dd><p>An ugly function that gets a list of classes inhereted from</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p><strong>node (:obj: `ast.ClassDef`)</strong>: The ClassDef node for which to get the base classes of</p>
+</dd>
+<dt>Returns:</dt><dd><p>List of base classes (str), or empty list if none</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="obscurepy.handlers.classdef_handler.get_methods">
+<span class="sig-prename descclassname"><span class="pre">obscurepy.handlers.classdef_handler.</span></span><span class="sig-name descname"><span class="pre">get_methods</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/handlers/classdef_handler.html#get_methods"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.handlers.classdef_handler.get_methods" title="Permalink to this definition">¶</a></dt>
+<dd><p>An ugly function that gets a list of class methods</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p><strong>node (:obj: `ast.ClassDef`)</strong>: The ClassDef node for which to get the methods of</p>
+</dd>
+<dt>Returns:</dt><dd><p>List of class methods (str), or empty list if none</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="obscurepy.handlers.classdef_handler.get_properties">
+<span class="sig-prename descclassname"><span class="pre">obscurepy.handlers.classdef_handler.</span></span><span class="sig-name descname"><span class="pre">get_properties</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/handlers/classdef_handler.html#get_properties"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.handlers.classdef_handler.get_properties" title="Permalink to this definition">¶</a></dt>
+<dd><p>An ugly function that gets a list of class properties</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p><strong>node (:obj: `ast.ClassDef`)</strong>: The ClassDef node for which to get the properties of</p>
+</dd>
+<dt>Returns:</dt><dd><p>List of class properties (str), or empty list if none</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="obscurepy.handlers.classdef_handler.get_variables">
+<span class="sig-prename descclassname"><span class="pre">obscurepy.handlers.classdef_handler.</span></span><span class="sig-name descname"><span class="pre">get_variables</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/handlers/classdef_handler.html#get_variables"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.handlers.classdef_handler.get_variables" title="Permalink to this definition">¶</a></dt>
+<dd><p>An ugly function that gets a list of class variables</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p><strong>node (:obj: `ast.ClassDef`)</strong>: The ClassDef node for which to get the variables of</p>
+</dd>
+<dt>Returns:</dt><dd><p>List of class variables (str), or empty list if none</p>
+</dd>
+</dl>
+</dd></dl>
+
 </div>
-<div class="section" id="module-obscurepy.handlers.function_handler">
-<span id="obscurepy-handlers-function-handler-module"></span><h2>obscurepy.handlers.function_handler module<a class="headerlink" href="#module-obscurepy.handlers.function_handler" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-obscurepy.handlers.functiondef_handler">
+<span id="obscurepy-handlers-functiondef-handler-module"></span><h2>obscurepy.handlers.functiondef_handler module<a class="headerlink" href="#module-obscurepy.handlers.functiondef_handler" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
-<dt class="sig sig-object py" id="obscurepy.handlers.function_handler.FunctionHandler">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">obscurepy.handlers.function_handler.</span></span><span class="sig-name descname"><span class="pre">FunctionHandler</span></span><a class="reference internal" href="_modules/obscurepy/handlers/function_handler.html#FunctionHandler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.handlers.function_handler.FunctionHandler" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="obscurepy.handlers.functiondef_handler.FunctionDefHandler">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">obscurepy.handlers.functiondef_handler.</span></span><span class="sig-name descname"><span class="pre">FunctionDefHandler</span></span><a class="reference internal" href="_modules/obscurepy/handlers/functiondef_handler.html#FunctionDefHandler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.handlers.functiondef_handler.FunctionDefHandler" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#obscurepy.handlers.handler.Handler" title="obscurepy.handlers.handler.Handler"><code class="xref py py-class docutils literal notranslate"><span class="pre">obscurepy.handlers.handler.Handler</span></code></a></p>
 <p>Class to traverse and modify FunctionDef nodes in an ast</p>
 <dl>
@@ -281,8 +335,8 @@ to the abstract syntax tree and stores class definitions with the DefinitionTrac
 </dd>
 </dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="obscurepy.handlers.function_handler.FunctionHandler.visit_FunctionDef">
-<span class="sig-name descname"><span class="pre">visit_FunctionDef</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/handlers/function_handler.html#FunctionHandler.visit_FunctionDef"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.handlers.function_handler.FunctionHandler.visit_FunctionDef" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="obscurepy.handlers.functiondef_handler.FunctionDefHandler.visit_FunctionDef">
+<span class="sig-name descname"><span class="pre">visit_FunctionDef</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/handlers/functiondef_handler.html#FunctionDefHandler.visit_FunctionDef"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.handlers.functiondef_handler.FunctionDefHandler.visit_FunctionDef" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="simple">
 <dt>Overrides the NodeTransformer visit_FunctionDef method. This method makes modifications</dt><dd><p>to the abstract syntax tree and stores assignments with the DefinitionTracker class</p>
 </dd>
@@ -294,6 +348,26 @@ to the abstract syntax tree and stores class definitions with the DefinitionTrac
 </dd></dl>
 
 </dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="obscurepy.handlers.functiondef_handler.create_function_dictionary">
+<span class="sig-prename descclassname"><span class="pre">obscurepy.handlers.functiondef_handler.</span></span><span class="sig-name descname"><span class="pre">create_function_dictionary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/handlers/functiondef_handler.html#create_function_dictionary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.handlers.functiondef_handler.create_function_dictionary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="obscurepy.handlers.functiondef_handler.get_args">
+<span class="sig-prename descclassname"><span class="pre">obscurepy.handlers.functiondef_handler.</span></span><span class="sig-name descname"><span class="pre">get_args</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/handlers/functiondef_handler.html#get_args"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.handlers.functiondef_handler.get_args" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="obscurepy.handlers.functiondef_handler.get_return">
+<span class="sig-prename descclassname"><span class="pre">obscurepy.handlers.functiondef_handler.</span></span><span class="sig-name descname"><span class="pre">get_return</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/handlers/functiondef_handler.html#get_return"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.handlers.functiondef_handler.get_return" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="obscurepy.handlers.functiondef_handler.get_variables">
+<span class="sig-prename descclassname"><span class="pre">obscurepy.handlers.functiondef_handler.</span></span><span class="sig-name descname"><span class="pre">get_variables</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/handlers/functiondef_handler.html#get_variables"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.handlers.functiondef_handler.get_variables" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </div>
 <div class="section" id="module-obscurepy.handlers.handler">
@@ -370,7 +444,7 @@ to the abstract syntax tree and stores class definitions with the DefinitionTrac
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="obscurepy.treeutils.html" class="btn btn-neutral float-right" title="obscurepy.treeutils package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="obscurepy.scripts.html" class="btn btn-neutral float-right" title="obscurepy.scripts package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
         <a href="obscurepy.html" class="btn btn-neutral float-left" title="obscurepy package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 

@@ -27,4 +27,4 @@ class ClassScopeUtilsTest(unittest.TestCase):
         tree = ast.parse('a = 1')
         add_parents(tree)
         with self.assertRaises(Exception):
-            get_parent_class_name(tree)
+            get_parent_class_name(tree.body[0])

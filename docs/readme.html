@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>obscurepy &mdash; obscurepy 0.4.0 documentation</title>
+  <title>obscurepy &mdash; obscurepy 0.5.0 documentation</title>
 
 
 
@@ -173,6 +173,7 @@
 <a class="reference external image-reference" href="https://codecov.io/gh/DrewTChrist/obscurepy"><img alt="codecov" src="https://codecov.io/gh/DrewTChrist/obscurepy/branch/master/graph/badge.svg?token=2LN7K8W2PZ" /></a>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<p>A tool for obscuring, or making python source difficult to read.</p>
 </div>
 <div class="section" id="table-of-contents">
 <h2>Table of Contents<a class="headerlink" href="#table-of-contents" title="Permalink to this headline">¶</a></h2>
@@ -185,9 +186,34 @@
 </div>
 <div class="section" id="id1">
 <h2>Installation<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>This command will install obscurepy:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python -m pip install git+https://github.com/drewtchrist/obscurepy.git
+</pre></div>
+</div>
+<p>I would recommend installing it in a virtual environment as opposed to globally:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python -m venv venv
+<span class="nb">source</span> venv/bin/activate
+python -m pip install git+https://github.com/drewtchrist/obscurepy.git
+</pre></div>
+</div>
 </div>
 <div class="section" id="id2">
 <h2>Usage<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>The following command can be used to obscure a single file:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>obscure --filepath<span class="o">=</span>my_module.py
+</pre></div>
+</div>
+<p>The following command can be used to obscure a multi file project:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>obscure -p --project_dir<span class="o">=</span>my_project
+</pre></div>
+</div>
+<p>Alternatively, you can specifiy an output directory for both single file and multi file obscuring:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>obscure --filepath<span class="o">=</span>my_module.py --output_dir<span class="o">=</span>desired_output_directory
+</pre></div>
+</div>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>obscure --project_dir<span class="o">=</span>my_project --output_dir<span class="o">=</span>desired_output_directory
+</pre></div>
+</div>
 </div>
 <div class="section" id="id3">
 <h2>Credits<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>

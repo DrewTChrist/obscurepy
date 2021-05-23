@@ -5,10 +5,10 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="obscurepy",
-    version="0.4.0",
+    version="0.5.0",
     author="Andrew Christiansen",
     author_email="andrewtaylorchristiansen@gmail.com",
-    description="",
+    description=" A tool for obscuring, or making python source difficult to read. ",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/drewtchrist/obscurepy",
@@ -19,4 +19,15 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     python_requires='>=3.6',
+    include_package_data=True,
+    install_requires=[
+        'Click',
+        'astunparse',
+        'pyyaml',
+    ],
+    entry_points={
+        'console_scripts': [
+            'obscure = obscurepy.scripts.obscure:obscure'
+        ],
+    },
 )

@@ -10,6 +10,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 ### Removed
+## [0.5.0](https://github.com/drewtchrist/obscurepy/releases/tag/v0.5.0) - 2021-05-23
+### Added
+* Added better functionality for ClassDefHandler building dictionaries of classes
+* Added better funtionality for FunctionDefHandler building dictionaries of functions
+* Added obscurepy/scripts/obscure.py which holds a click based command line interface
+
+### Changed
+* Updated class and sequence diagrams
+* Updated setup.py to properly integrate with click
+* Updated the readme with installation and usage instructions
+
+### Removed
 
 ## [0.4.0](https://github.com/drewtchrist/obscurepy/releases/tag/v0.4.0) - 2021-05-21
 ### Added
