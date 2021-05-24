@@ -1,5 +1,4 @@
 import ast
-import astpretty
 from obscurepy.handlers.handler import Handler
 from obscurepy.utils.definition_tracker import DefinitionTracker
 

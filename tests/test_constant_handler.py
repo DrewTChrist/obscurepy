@@ -1,5 +1,4 @@
 import ast
-import astpretty
 import unittest
 from obscurepy.handlers.constant_handler import ConstantHandler
 
