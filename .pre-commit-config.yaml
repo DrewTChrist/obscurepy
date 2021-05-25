@@ -19,7 +19,7 @@ repos:
     -   id: unittest
         name: unittest
         entry: 'scripts/test.sh'
-        language: python
+        language: system
         'types': [python]
         pass_filenames: false
         stages: [commit]
