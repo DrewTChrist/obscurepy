@@ -18,7 +18,8 @@ class ConstantHandlerTest(unittest.TestCase):
                          "a = ''.join([chr(x) for x in [97, 32, 115, 116, 114, 105, 110, "
                          "103, 32, 108, 105, 116, 101, 114, 97, 108]])")
         self.assertEqual(ast.unparse(self.tree.body[1]), "b = int('0x2a', 16)")
-        self.assertEqual(ast.unparse(self.tree.body[2]), "c = 100.0")
+        self.assertEqual(ast.unparse(
+            self.tree.body[2]), "c = float.fromhex('0x1.9000000000000p+6')")
 
     def test_visit_constant_none(self):
         tree = ast.parse('some_function()')
@@ -40,4 +41,7 @@ class ConstantHandlerTest(unittest.TestCase):
         self.assertEqual(source, "int('0x3e8', 16)")
 
     def test_handle_float(self):
-        pass
+        tree = ast.parse(ast.parse('a = 10.5'))
+        tree = handle_float(tree.body[0].value)
+        source = ast.unparse(tree)
+        self.assertEqual(source, "float.fromhex('0x1.5000000000000p+3')")
