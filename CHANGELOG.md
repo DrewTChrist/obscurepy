@@ -11,6 +11,65 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
+## [0.6.0](https://github.com/drewtchrist/obscurepy/releases/tag/v0.6.0) - 2021-05-24
+### Added
+* Added deployment scripts for pypi and testpypi
+* Added a license
+* Added a NameHandler class (unimplemented)
+* Added a ConstantHandler class, it now obscures strings, integers and floats
+* Added tests for obscure.py
+
+### Changed
+* Updated readme
+* Updated travis.yml to deploy to pypi
+
+### Removed
+
+## [0.5.0](https://github.com/drewtchrist/obscurepy/releases/tag/v0.5.0) - 2021-05-23
+### Added
+* Added better functionality for ClassDefHandler building dictionaries of classes
+* Added better funtionality for FunctionDefHandler building dictionaries of functions
+* Added obscurepy/scripts/obscure.py which holds a click based command line interface
+
+### Changed
+* Updated class and sequence diagrams
+* Updated setup.py to properly integrate with click
+* Updated the readme with installation and usage instructions
+
+### Removed
+
+## [0.4.0](https://github.com/drewtchrist/obscurepy/releases/tag/v0.4.0) - 2021-05-21
+### Added
+* Added functionality to the Obfuscator class to complete the pipeline from file to tree to obfuscated file
+* Added support for pre 3.9 versions of python, since ast.unparse released in 3.9, astunparse was the library used
+* Added several tests for the Obfuscator class
+
+### Changed
+
+### Removed
+
+## [0.3.1](https://github.com/drewtchrist/obscurepy/releases/tag/v0.3.1) - 2021-05-20
+### Added
+
+### Changed
+* codecov is working
+
+### Removed
+
+## [0.3.0](https://github.com/drewtchrist/obscurepy/releases/tag/v0.3.0) - 2021-05-20
+### Added
+* Added treeutils package
+* Added treeutils.class_scope_utils.py
+* Added treeutils.function_scope_utils.py
+* Added tests for treeutils package
+* Added scripts/coverage.sh to execute code coverage reports
+* Added coverage.sh to .travis.yml
+
+### Changed
+* utils.tree.py is now treeutils.general.py
+
+### Removed
+
 ## [0.2.3](https://github.com/drewtchrist/obscurepy/releases/tag/v0.2.3) - 2021-05-19
 ### Added
 

@@ -1,0 +1,244 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>obscurepy.treeutils.general &mdash; obscurepy 0.6.0 documentation</title>
+
+
+
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+
+
+
+
+
+
+
+
+
+
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+
+
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+</head>
+
+<body class="wy-body-for-nav">
+
+
+  <div class="wy-grid-for-nav">
+
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+
+
+            <a href="../../../index.html" class="icon icon-home"> obscurepy
+
+
+
+          </a>
+
+
+
+
+
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+
+        </div>
+
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+
+
+
+
+
+
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">obscurepy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
+</ul>
+
+
+
+        </div>
+
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+
+      <nav class="wy-nav-top" aria-label="top navigation">
+
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">obscurepy</a>
+
+      </nav>
+
+
+      <div class="wy-nav-content">
+
+        <div class="rst-content">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+
+      <li>obscurepy.treeutils.general</li>
+
+
+      <li class="wy-breadcrumbs-aside">
+
+      </li>
+
+  </ul>
+
+
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+
+  <h1>Source code for obscurepy.treeutils.general</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">ast</span>
+
+
+<div class="viewcode-block" id="add_parents"><a class="viewcode-back" href="../../../obscurepy.treeutils.html#obscurepy.treeutils.general.add_parents">[docs]</a><span class="k">def</span> <span class="nf">add_parents</span><span class="p">(</span><span class="n">root</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Helper function to add parent property to ast tree nodes</span>
+<span class="sd">       Credit goes to this answer here: https://stackoverflow.com/a/43311383</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        **root (:obj: `ast.Module`)**: Top level ast node</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">ast</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">root</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">ast</span><span class="o">.</span><span class="n">iter_child_nodes</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
+            <span class="n">child</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">node</span></div>
+
+
+<div class="viewcode-block" id="get_node_type"><a class="viewcode-back" href="../../../obscurepy.treeutils.html#obscurepy.treeutils.general.get_node_type">[docs]</a><span class="k">def</span> <span class="nf">get_node_type</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Simply gets the type of an ast node</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        **node (:obj:)**: ast node</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The type of an ast node</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="n">node</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="has_parent_of_type"><a class="viewcode-back" href="../../../obscurepy.treeutils.html#obscurepy.treeutils.general.has_parent_of_type">[docs]</a><span class="k">def</span> <span class="nf">has_parent_of_type</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">type_</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Simply checks if the parent of a node is of a certain type</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        **node (:obj:)**: an ast node</span>
+
+<span class="sd">        **type_ (type)**: the type to check the node against</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        True if node is of type type_, False otherwise</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">get_node_type</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">)</span> <span class="o">==</span> <span class="n">type_</span></div>
+</pre></div>
+
+           </div>
+
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020-2021, Andrew Christiansen.
+
+    </p>
+  </div>
+
+
+
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+
+
+
+
+
+</body>
+</html>

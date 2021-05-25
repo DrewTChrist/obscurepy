@@ -2,7 +2,7 @@
 'autoactivate on
 actor User as User
 participant Obfuscator
-participant DefinitionTracker
+participant loader
 participant Handler
 
 
@@ -10,6 +10,25 @@ participant Handler
 /'
 multi line comment
 '/
-User -> Obfuscator : Obfuscate Request
+User -> Obfuscator : Obfuscate('some_file.py')
+activate Obfuscator
+
+Obfuscator -> loader : build_chain()
+activate loader
+loop for each handler in\n obscurepy.handlers
+    loader -> Handler : Handler()
+    loader -> Handler : set_next()
+end
+loader -> Obfuscator : load_handlers()
+deactivate loader
+
+Obfuscator -> Obfuscator : obscure()
+activate Obfuscator
+Obfuscator -> Handler : Handler.handle()
+
+
+deactivate Obfuscator
+Obfuscator -> User : 'out/obscure_file.py'
+deactivate Obfuscator
 
 @enduml

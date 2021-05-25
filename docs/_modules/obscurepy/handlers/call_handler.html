@@ -7,12 +7,14 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>obscurepy.handlers.call_handler &mdash; obscurepy 0.2.3 documentation</title>
+  <title>obscurepy.handlers.call_handler &mdash; obscurepy 0.6.0 documentation</title>
 
 
 
   <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
 
 
 
@@ -29,6 +31,7 @@
 
 
       <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
@@ -181,9 +184,9 @@
         <span class="n">tracker</span> <span class="o">=</span> <span class="n">DefinitionTracker</span><span class="o">.</span><span class="n">get_instance</span><span class="p">()</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">func</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">func</span><span class="o">.</span><span class="n">id</span> <span class="ow">in</span> <span class="n">tracker</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;classes&#39;</span><span class="p">]:</span>
-                <span class="n">node</span><span class="o">.</span><span class="n">func</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">tracker</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;classes&#39;</span><span class="p">][</span><span class="n">node</span><span class="o">.</span><span class="n">func</span><span class="o">.</span><span class="n">id</span><span class="p">]</span>
+                <span class="n">node</span><span class="o">.</span><span class="n">func</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">tracker</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;classes&#39;</span><span class="p">][</span><span class="n">node</span><span class="o">.</span><span class="n">func</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="s1">&#39;new_name&#39;</span><span class="p">]</span>
             <span class="k">elif</span> <span class="n">node</span><span class="o">.</span><span class="n">func</span><span class="o">.</span><span class="n">id</span> <span class="ow">in</span> <span class="n">tracker</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;functions&#39;</span><span class="p">]:</span>
-                <span class="n">node</span><span class="o">.</span><span class="n">func</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">tracker</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;functions&#39;</span><span class="p">][</span><span class="n">node</span><span class="o">.</span><span class="n">func</span><span class="o">.</span><span class="n">id</span><span class="p">]</span>
+                <span class="n">node</span><span class="o">.</span><span class="n">func</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">tracker</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;functions&#39;</span><span class="p">][</span><span class="n">node</span><span class="o">.</span><span class="n">func</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="s1">&#39;new_name&#39;</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">node</span></div></div>
 </pre></div>
 

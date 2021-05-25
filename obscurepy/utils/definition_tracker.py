@@ -30,8 +30,9 @@ class DefinitionTracker:
             **class_ (dict)**: A dictionary describing the class
         """
         if class_:
-            self.definitions['classes'][class_] = {'name': self._name_function(class_),
-                                                   'functions': []}
+            self.definitions['classes'][class_['prev_name']] = class_
+            self.definitions['classes'][class_['prev_name']
+                                        ]['new_name'] = self._name_class(class_['prev_name'])
 
     def get_class(self, class_):
         """Gets a class from the definitions dictionary
@@ -44,7 +45,6 @@ class DefinitionTracker:
         """
         if class_:
             return self.definitions['classes'][class_]
-            # return [x for x in self.definitions['classes'] if x['name'] == class_][0]
 
     def _name_class(self, class_):
         """Generates an obscure name based on the class name hex value added to the length of the classes definition
@@ -79,8 +79,9 @@ class DefinitionTracker:
             **function (dict)**: a dictionary describing the function to be added to the definitions
         """
         if function:
-            self.definitions['functions'][function] = {'name': self._name_function(function),
-                                                       'variables': []}
+            self.definitions['functions'][function['prev_name']] = function
+            self.definitions['functions'][function['prev_name']
+                                          ]['new_name'] = self._name_function(function['prev_name'])
 
     def get_function(self, function):
         """Gets a function from the definitions dictionary
@@ -93,7 +94,6 @@ class DefinitionTracker:
         """
         if function:
             return self.definitions['functions'][function]
-            # return [x for x in self.definitions['functions'] if x['name'] == function][0]
 
     def _name_function(self, function):
         """Generates an obscure name based on the function name hex value added to the length of the function definition

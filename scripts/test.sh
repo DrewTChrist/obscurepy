@@ -1,5 +1,3 @@
 #!/bin/sh
 
-cd tests
-
-python -m unittest discover -s ./ -t ../
+python -m unittest discover -s ./tests -t ./

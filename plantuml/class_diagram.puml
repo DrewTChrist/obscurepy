@@ -1,12 +1,11 @@
 @startuml
 class ast.NodeTransformer {
-    visit()
 }
 
 abstract class Handler {
     next : Handler
-    {abstract} set_next(h: Handler)
-    {abstract} handle(tree: ast.Module)
+    set_next(h: Handler)
+    handle(tree: ast.Module)
 }
 class ClassHandler {
     next : Handler
@@ -22,11 +21,25 @@ class FunctionHandler {
     visit_FunctionDef(n: node)
 }
 
-class VariableHandler{
+class AssignHandler {
     next : Handler
     set_next(h: Handler)
     handle(tree: ast.Module)
     visit_Assign(n: node)
+}
+
+class CallHandler {
+    next : Handler
+    set_next(h: Handler)
+    handle(tree: ast.Module)
+    visit_Call(n: node)
+}
+
+class ConstantHandler {
+    next : Handler
+    set_next(h: Handler)
+    handle(tree: ast.Module)
+    visit_Constant(n: node)
 }
 
 class Obfuscator {
@@ -40,18 +53,27 @@ class Obfuscator {
 }
 
 class DefinitionTracker {
+    _instance : DefinitionTracker
     definitions : dict
-    is_defined(d: str)
-    add_definition(d: str)
+    get_instance() : DefinitionTracker
+    add_class(class_: dict)
+    get_class(class_: dict) : dict
+    _name_class(class_: str) : str
+    _get_ascii_sum(string: str) : int
+    add_function(function: dict)
+    get_function(function: str)
+    _name_function(function: str) : str
+    add_variable(variable: str)
+    get_variable(variable: str) : str
+    _name_variable(variable: str) : str
+    clear_definitions()
 }
 
 ast.NodeTransformer <|-- Handler
 Handler <|-- ClassHandler
-Handler "1" *-- ClassHandler
 Handler <|-- FunctionHandler
-Handler "1" *-- FunctionHandler
-Handler <|-- VariableHandler
-Handler "1" *-- VariableHandler
-Obfuscator "1" *-- DefinitionTracker
+Handler <|-- AssignHandler
+Handler <|-- CallHandler
+Handler <|-- ConstantHandler
 Obfuscator "1" *-- Handler
 @enduml

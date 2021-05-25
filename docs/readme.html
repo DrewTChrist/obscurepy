@@ -7,12 +7,14 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>obscurepy &mdash; obscurepy 0.2.3 documentation</title>
+  <title>obscurepy &mdash; obscurepy 0.6.0 documentation</title>
 
 
 
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
 
 
 
@@ -29,6 +31,7 @@
 
 
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
@@ -90,8 +93,13 @@
 <li class="toctree-l2"><a class="reference internal" href="#description">Description</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#table-of-contents">Table of Contents</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id1">Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id2">Usage</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id3">Credits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">Limitations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#things-that-obscurepy-can-currently-do">Things that obscurepy can currently do:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#things-it-cannot-do">Things it cannot do:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#an-example">An example:</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">Usage</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id4">License</a></li>
 </ul>
 </li>
@@ -167,29 +175,150 @@
   <div class="section" id="obscurepy">
 <h1>obscurepy<a class="headerlink" href="#obscurepy" title="Permalink to this headline">¶</a></h1>
 <a class="reference external image-reference" href="https://travis-ci.com/DrewTChrist/obscurepy"><img alt="Build Status" src="https://travis-ci.com/DrewTChrist/obscurepy.svg?branch=master" /></a>
+<a class="reference external image-reference" href="https://codecov.io/gh/DrewTChrist/obscurepy"><img alt="codecov" src="https://codecov.io/gh/DrewTChrist/obscurepy/branch/master/graph/badge.svg?token=2LN7K8W2PZ" /></a>
 <div class="section" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<p>A tool for obscuring, or making python source code difficult to read.</p>
 </div>
 <div class="section" id="table-of-contents">
 <h2>Table of Contents<a class="headerlink" href="#table-of-contents" title="Permalink to this headline">¶</a></h2>
 <ol class="arabic simple">
 <li><p><a class="reference external" href="#installation">Installation</a></p></li>
+<li><p><a class="reference external" href="#limitations">Limitations</a></p></li>
 <li><p><a class="reference external" href="#usage">Usage</a></p></li>
-<li><p><a class="reference external" href="#credits">Credits</a></p></li>
 <li><p><a class="reference external" href="#license">License</a></p></li>
 </ol>
 </div>
 <div class="section" id="id1">
 <h2>Installation<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>This command will install obscurepy:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python -m pip install obscurepy
+</pre></div>
+</div>
+<p>I would recommend installing it in a virtual environment as opposed to globally:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python -m venv venv
+<span class="nb">source</span> venv/bin/activate
+python -m pip install obscurepy
+</pre></div>
+</div>
 </div>
 <div class="section" id="id2">
-<h2>Usage<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<h2>Limitations<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>As this program is still in active development, there are many limitations. Below is a list of things obscurepy can and
+can’t do, along with an example.</p>
+<div class="section" id="things-that-obscurepy-can-currently-do">
+<h3>Things that obscurepy can currently do:<a class="headerlink" href="#things-that-obscurepy-can-currently-do" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Obscure class definitions (without bases)</p></li>
+<li><p>Obscure class calls (without arguments)</p></li>
+<li><p>Obscure function definitions (without parameters)</p></li>
+<li><p>Obscure function calls (without arguments)</p></li>
+<li><p>Obscure string constants</p></li>
+<li><p>Obscure integer constants</p></li>
+<li><p>Obscure float constants</p></li>
+</ul>
+</div>
+<div class="section" id="things-it-cannot-do">
+<h3>Things it cannot do:<a class="headerlink" href="#things-it-cannot-do" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Anything else</p></li>
+</ul>
+</div>
+<div class="section" id="an-example">
+<h3>An example:<a class="headerlink" href="#an-example" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">FirstClass</span><span class="p">:</span>
+    <span class="k">pass</span>
+
+
+<span class="k">class</span> <span class="nc">SecondClass</span><span class="p">:</span>
+    <span class="c1"># this is a comment</span>
+    <span class="k">pass</span>
+
+
+<span class="k">def</span> <span class="nf">first_function</span><span class="p">():</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="mi">42</span>
+
+
+<span class="k">def</span> <span class="nf">second_function</span><span class="p">():</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="s1">&#39;string&#39;</span>
+
+<span class="k">def</span> <span class="nf">third_function</span><span class="p">():</span>
+    <span class="n">e</span> <span class="o">=</span> <span class="mf">100.0</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">FirstClass</span><span class="p">()</span>
+
+<span class="n">b</span> <span class="o">=</span> <span class="n">SecondClass</span><span class="p">()</span>
+
+<span class="n">first_function</span><span class="p">()</span>
+
+<span class="n">second_function</span><span class="p">()</span>
+
+<span class="n">third_function</span><span class="p">()</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">SecondClass</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">_0x3ff</span><span class="p">:</span>
+    <span class="k">pass</span>
+
+<span class="k">class</span> <span class="nc">_0x454</span><span class="p">:</span>
+    <span class="k">pass</span>
+
+<span class="k">def</span> <span class="nf">_0x5ee</span><span class="p">():</span>
+    <span class="n">_0x63</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="s1">&#39;0x2a&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">_0x643</span><span class="p">():</span>
+    <span class="n">_0x65</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">chr</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">115</span><span class="p">,</span> <span class="mi">116</span><span class="p">,</span> <span class="mi">114</span><span class="p">,</span> <span class="mi">105</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">103</span><span class="p">]])</span>
+
+<span class="k">def</span> <span class="nf">_0x5e3</span><span class="p">():</span>
+    <span class="n">_0x67</span> <span class="o">=</span> <span class="nb">float</span><span class="o">.</span><span class="n">fromhex</span><span class="p">(</span><span class="s1">&#39;0x1.9000000000000p+6&#39;</span><span class="p">)</span>
+<span class="n">_0x64</span> <span class="o">=</span> <span class="n">_0x3ff</span><span class="p">()</span>
+<span class="n">_0x66</span> <span class="o">=</span> <span class="n">_0x454</span><span class="p">()</span>
+<span class="n">_0x5ee</span><span class="p">()</span>
+<span class="n">_0x643</span><span class="p">()</span>
+<span class="n">_0x5e3</span><span class="p">()</span>
+<span class="n">_0x64</span> <span class="o">=</span> <span class="n">_0x454</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
 </div>
 <div class="section" id="id3">
-<h2>Credits<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h2>Usage<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>The following command can be used to obscure a single file:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>obscure --filepath<span class="o">=</span>my_module.py
+</pre></div>
+</div>
+<p>The following command can be used to obscure a multi file project:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>obscure -p --project_dir<span class="o">=</span>my_project
+</pre></div>
+</div>
+<p>Alternatively, you can specify an output directory for both single file and multi file obscuring:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>obscure --filepath<span class="o">=</span>my_module.py --output_dir<span class="o">=</span>desired_output_directory
+</pre></div>
+</div>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>obscure --project_dir<span class="o">=</span>my_project --output_dir<span class="o">=</span>desired_output_directory
+</pre></div>
+</div>
 </div>
 <div class="section" id="id4">
 <h2>License<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p>MIT License</p>
+<p>Copyright (c) 2021 Andrew Christiansen</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the “Software”), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE</p>
 </div>
 </div>
 

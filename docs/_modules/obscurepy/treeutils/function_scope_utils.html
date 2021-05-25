@@ -7,12 +7,14 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>obscurepy.utils.tree &mdash; obscurepy 0.2.3 documentation</title>
+  <title>obscurepy.treeutils.function_scope_utils &mdash; obscurepy 0.6.0 documentation</title>
 
 
 
   <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
 
 
 
@@ -29,6 +31,7 @@
 
 
       <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
@@ -137,7 +140,7 @@
 
           <li><a href="../../index.html">Module code</a> &raquo;</li>
 
-      <li>obscurepy.utils.tree</li>
+      <li>obscurepy.treeutils.function_scope_utils</li>
 
 
       <li class="wy-breadcrumbs-aside">
@@ -152,20 +155,39 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
 
-  <h1>Source code for obscurepy.utils.tree</h1><div class="highlight"><pre>
+  <h1>Source code for obscurepy.treeutils.function_scope_utils</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">ast</span>
+<span class="kn">from</span> <span class="nn">obscurepy.treeutils.general</span> <span class="kn">import</span> <span class="o">*</span>
 
 
-<div class="viewcode-block" id="add_parents"><a class="viewcode-back" href="../../../obscurepy.utils.html#obscurepy.utils.tree.add_parents">[docs]</a><span class="k">def</span> <span class="nf">add_parents</span><span class="p">(</span><span class="n">root</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Helper function to add parent property to ast tree nodes</span>
-<span class="sd">       Credit goes to this answer here: https://stackoverflow.com/a/43311383</span>
+<div class="viewcode-block" id="is_in_function_scope"><a class="viewcode-back" href="../../../obscurepy.treeutils.html#obscurepy.treeutils.function_scope_utils.is_in_function_scope">[docs]</a><span class="k">def</span> <span class="nf">is_in_function_scope</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Checks if a node is within the scope of a function</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        **root (:obj: `ast.Module`)**: Top level ast node</span>
+<span class="sd">        **node (:obj:)**: node for which to check the scope</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        True if the node is within the scope of a function, False otherwise</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">ast</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">root</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">ast</span><span class="o">.</span><span class="n">iter_child_nodes</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
-            <span class="n">child</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">node</span></div>
+    <span class="k">return</span> <span class="n">has_parent_of_type</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">ast</span><span class="o">.</span><span class="n">FunctionDef</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_parent_function_name"><a class="viewcode-back" href="../../../obscurepy.treeutils.html#obscurepy.treeutils.function_scope_utils.get_parent_function_name">[docs]</a><span class="k">def</span> <span class="nf">get_parent_function_name</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Gets the name of the parent node if it is a function</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        **node (:obj:)**: node of which to get the parent function name</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The name of the parent function if node is within the scope of a function</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        Exception if the node is not within the scope of a function</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">is_in_function_scope</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">name</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;This node is not within the scope of a function&quot;</span><span class="p">)</span></div>
 </pre></div>
 
            </div>

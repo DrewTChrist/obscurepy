@@ -7,12 +7,14 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>obscurepy.utils package &mdash; obscurepy 0.2.3 documentation</title>
+  <title>obscurepy.utils package &mdash; obscurepy 0.6.0 documentation</title>
 
 
 
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
 
 
 
@@ -29,6 +31,7 @@
 
 
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
@@ -39,7 +42,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Changelog" href="changelog.html" />
-    <link rel="prev" title="obscurepy.handlers package" href="obscurepy.handlers.html" />
+    <link rel="prev" title="obscurepy.treeutils package" href="obscurepy.treeutils.html" />
 </head>
 
 <body class="wy-body-for-nav">
@@ -91,12 +94,13 @@
 <li class="toctree-l2 current"><a class="reference internal" href="obscurepy.html">obscurepy package</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="obscurepy.html#subpackages">Subpackages</a><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="obscurepy.handlers.html">obscurepy.handlers package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="obscurepy.scripts.html">obscurepy.scripts package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="obscurepy.treeutils.html">obscurepy.treeutils package</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">obscurepy.utils package</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="obscurepy.html#submodules">Submodules</a></li>
 <li class="toctree-l3"><a class="reference internal" href="obscurepy.html#module-obscurepy.obfuscator">obscurepy.obfuscator module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="obscurepy.html#module-obscurepy.test_obf_file">obscurepy.test_obf_file module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="obscurepy.html#module-obscurepy">Module contents</a></li>
 </ul>
 </li>
@@ -182,8 +186,8 @@
 <div class="section" id="module-obscurepy.utils.definition_tracker">
 <span id="obscurepy-utils-definition-tracker-module"></span><h2>obscurepy.utils.definition_tracker module<a class="headerlink" href="#module-obscurepy.utils.definition_tracker" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
-<dt id="obscurepy.utils.definition_tracker.DefinitionTracker">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">obscurepy.utils.definition_tracker.</span></code><code class="sig-name descname"><span class="pre">DefinitionTracker</span></code><a class="reference internal" href="_modules/obscurepy/utils/definition_tracker.html#DefinitionTracker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.utils.definition_tracker.DefinitionTracker" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="obscurepy.utils.definition_tracker.DefinitionTracker">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">obscurepy.utils.definition_tracker.</span></span><span class="sig-name descname"><span class="pre">DefinitionTracker</span></span><a class="reference internal" href="_modules/obscurepy/utils/definition_tracker.html#DefinitionTracker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.utils.definition_tracker.DefinitionTracker" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Singleton class used to track definitions encountered while traversing the ast</p>
 <dl class="simple">
@@ -191,8 +195,8 @@
 </dd>
 </dl>
 <dl class="py method">
-<dt id="obscurepy.utils.definition_tracker.DefinitionTracker.add_class">
-<code class="sig-name descname"><span class="pre">add_class</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/utils/definition_tracker.html#DefinitionTracker.add_class"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.utils.definition_tracker.DefinitionTracker.add_class" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="obscurepy.utils.definition_tracker.DefinitionTracker.add_class">
+<span class="sig-name descname"><span class="pre">add_class</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/utils/definition_tracker.html#DefinitionTracker.add_class"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.utils.definition_tracker.DefinitionTracker.add_class" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds a class found in the ast to the definitions dictionary along with an obscure name</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p><strong>class_ (dict)</strong>: A dictionary describing the class</p>
@@ -201,8 +205,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt id="obscurepy.utils.definition_tracker.DefinitionTracker.add_function">
-<code class="sig-name descname"><span class="pre">add_function</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">function</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/utils/definition_tracker.html#DefinitionTracker.add_function"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.utils.definition_tracker.DefinitionTracker.add_function" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="obscurepy.utils.definition_tracker.DefinitionTracker.add_function">
+<span class="sig-name descname"><span class="pre">add_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">function</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/utils/definition_tracker.html#DefinitionTracker.add_function"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.utils.definition_tracker.DefinitionTracker.add_function" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds a function found in the ast to the definitions dictionary along with an obscure name</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p><strong>function (dict)</strong>: a dictionary describing the function to be added to the definitions</p>
@@ -211,8 +215,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt id="obscurepy.utils.definition_tracker.DefinitionTracker.add_variable">
-<code class="sig-name descname"><span class="pre">add_variable</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">variable</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/utils/definition_tracker.html#DefinitionTracker.add_variable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.utils.definition_tracker.DefinitionTracker.add_variable" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="obscurepy.utils.definition_tracker.DefinitionTracker.add_variable">
+<span class="sig-name descname"><span class="pre">add_variable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">variable</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/utils/definition_tracker.html#DefinitionTracker.add_variable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.utils.definition_tracker.DefinitionTracker.add_variable" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds a variable found in the ast to the definitions dictionary along with an obscure name</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p><strong>variable (dict)</strong>: a dictionary describing the variable to be added to the definitions</p>
@@ -221,13 +225,13 @@
 </dd></dl>
 
 <dl class="py method">
-<dt id="obscurepy.utils.definition_tracker.DefinitionTracker.clear_definitions">
-<code class="sig-name descname"><span class="pre">clear_definitions</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/utils/definition_tracker.html#DefinitionTracker.clear_definitions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.utils.definition_tracker.DefinitionTracker.clear_definitions" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="obscurepy.utils.definition_tracker.DefinitionTracker.clear_definitions">
+<span class="sig-name descname"><span class="pre">clear_definitions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/utils/definition_tracker.html#DefinitionTracker.clear_definitions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.utils.definition_tracker.DefinitionTracker.clear_definitions" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="obscurepy.utils.definition_tracker.DefinitionTracker.get_class">
-<code class="sig-name descname"><span class="pre">get_class</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/utils/definition_tracker.html#DefinitionTracker.get_class"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.utils.definition_tracker.DefinitionTracker.get_class" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="obscurepy.utils.definition_tracker.DefinitionTracker.get_class">
+<span class="sig-name descname"><span class="pre">get_class</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/utils/definition_tracker.html#DefinitionTracker.get_class"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.utils.definition_tracker.DefinitionTracker.get_class" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets a class from the definitions dictionary</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p><strong>class_ (str)</strong>: Name of the class to get from the definitions</p>
@@ -238,8 +242,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt id="obscurepy.utils.definition_tracker.DefinitionTracker.get_function">
-<code class="sig-name descname"><span class="pre">get_function</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">function</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/utils/definition_tracker.html#DefinitionTracker.get_function"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.utils.definition_tracker.DefinitionTracker.get_function" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="obscurepy.utils.definition_tracker.DefinitionTracker.get_function">
+<span class="sig-name descname"><span class="pre">get_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">function</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/utils/definition_tracker.html#DefinitionTracker.get_function"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.utils.definition_tracker.DefinitionTracker.get_function" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets a function from the definitions dictionary</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p><strong>function (str)</strong>: the string name of the function to get</p>
@@ -250,13 +254,13 @@
 </dd></dl>
 
 <dl class="py method">
-<dt id="obscurepy.utils.definition_tracker.DefinitionTracker.get_instance">
-<em class="property"><span class="pre">classmethod</span> </em><code class="sig-name descname"><span class="pre">get_instance</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/utils/definition_tracker.html#DefinitionTracker.get_instance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.utils.definition_tracker.DefinitionTracker.get_instance" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="obscurepy.utils.definition_tracker.DefinitionTracker.get_instance">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">get_instance</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/utils/definition_tracker.html#DefinitionTracker.get_instance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.utils.definition_tracker.DefinitionTracker.get_instance" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="obscurepy.utils.definition_tracker.DefinitionTracker.get_variable">
-<code class="sig-name descname"><span class="pre">get_variable</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">variable</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/utils/definition_tracker.html#DefinitionTracker.get_variable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.utils.definition_tracker.DefinitionTracker.get_variable" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="obscurepy.utils.definition_tracker.DefinitionTracker.get_variable">
+<span class="sig-name descname"><span class="pre">get_variable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">variable</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/utils/definition_tracker.html#DefinitionTracker.get_variable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.utils.definition_tracker.DefinitionTracker.get_variable" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets a variable from the definitions dictionary</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p><strong>variable (str)</strong>: the string name of the variable to get</p>
@@ -272,8 +276,8 @@
 <div class="section" id="module-obscurepy.utils.loader">
 <span id="obscurepy-utils-loader-module"></span><h2>obscurepy.utils.loader module<a class="headerlink" href="#module-obscurepy.utils.loader" title="Permalink to this headline">¶</a></h2>
 <dl class="py function">
-<dt id="obscurepy.utils.loader.load_config">
-<code class="sig-prename descclassname"><span class="pre">obscurepy.utils.loader.</span></code><code class="sig-name descname"><span class="pre">load_config</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/utils/loader.html#load_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.utils.loader.load_config" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="obscurepy.utils.loader.load_config">
+<span class="sig-prename descclassname"><span class="pre">obscurepy.utils.loader.</span></span><span class="sig-name descname"><span class="pre">load_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/utils/loader.html#load_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.utils.loader.load_config" title="Permalink to this definition">¶</a></dt>
 <dd><p>Loads yaml config files</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p><strong>file (str)</strong>: File path and name</p>
@@ -284,8 +288,8 @@
 </dd></dl>
 
 <dl class="py function">
-<dt id="obscurepy.utils.loader.load_file">
-<code class="sig-prename descclassname"><span class="pre">obscurepy.utils.loader.</span></code><code class="sig-name descname"><span class="pre">load_file</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/utils/loader.html#load_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.utils.loader.load_file" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="obscurepy.utils.loader.load_file">
+<span class="sig-prename descclassname"><span class="pre">obscurepy.utils.loader.</span></span><span class="sig-name descname"><span class="pre">load_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/utils/loader.html#load_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.utils.loader.load_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Loads text from a file</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p><strong>file (str)</strong>: File path and name</p>
@@ -296,8 +300,8 @@
 </dd></dl>
 
 <dl class="py function">
-<dt id="obscurepy.utils.loader.load_files">
-<code class="sig-prename descclassname"><span class="pre">obscurepy.utils.loader.</span></code><code class="sig-name descname"><span class="pre">load_files</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">files</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/utils/loader.html#load_files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.utils.loader.load_files" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="obscurepy.utils.loader.load_files">
+<span class="sig-prename descclassname"><span class="pre">obscurepy.utils.loader.</span></span><span class="sig-name descname"><span class="pre">load_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">files</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/utils/loader.html#load_files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.utils.loader.load_files" title="Permalink to this definition">¶</a></dt>
 <dd><p>Loads text from multiple files</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p><strong>files (list)</strong>: List of paths to files to be read</p>
@@ -308,25 +312,11 @@
 </dd></dl>
 
 <dl class="py function">
-<dt id="obscurepy.utils.loader.load_handlers">
-<code class="sig-prename descclassname"><span class="pre">obscurepy.utils.loader.</span></code><code class="sig-name descname"><span class="pre">load_handlers</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/utils/loader.html#load_handlers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.utils.loader.load_handlers" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="obscurepy.utils.loader.load_handlers">
+<span class="sig-prename descclassname"><span class="pre">obscurepy.utils.loader.</span></span><span class="sig-name descname"><span class="pre">load_handlers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/utils/loader.html#load_handlers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.utils.loader.load_handlers" title="Permalink to this definition">¶</a></dt>
 <dd><p>Dynamically loads handler classes</p>
 <dl class="simple">
 <dt>Returns:</dt><dd><p>The first handler in the chain of handlers</p>
-</dd>
-</dl>
-</dd></dl>
-
-</div>
-<div class="section" id="module-obscurepy.utils.tree">
-<span id="obscurepy-utils-tree-module"></span><h2>obscurepy.utils.tree module<a class="headerlink" href="#module-obscurepy.utils.tree" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="obscurepy.utils.tree.add_parents">
-<code class="sig-prename descclassname"><span class="pre">obscurepy.utils.tree.</span></code><code class="sig-name descname"><span class="pre">add_parents</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/utils/tree.html#add_parents"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.utils.tree.add_parents" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="simple">
-<dt>Helper function to add parent property to ast tree nodes</dt><dd><p>Credit goes to this answer here: <a class="reference external" href="https://stackoverflow.com/a/43311383">https://stackoverflow.com/a/43311383</a></p>
-</dd>
-<dt>Args:</dt><dd><p><strong>root (:obj: `ast.Module`)</strong>: Top level ast node</p>
 </dd>
 </dl>
 </dd></dl>
@@ -344,7 +334,7 @@
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
         <a href="changelog.html" class="btn btn-neutral float-right" title="Changelog" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="obscurepy.handlers.html" class="btn btn-neutral float-left" title="obscurepy.handlers package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="obscurepy.treeutils.html" class="btn btn-neutral float-left" title="obscurepy.treeutils package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>

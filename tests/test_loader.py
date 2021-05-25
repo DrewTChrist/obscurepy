@@ -7,7 +7,7 @@ class TestTheLoader(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.file_path = 'test_data/test_files/'
+        cls.file_path = 'tests/test_data/test_files/'
         cls.files = os.listdir(cls.file_path)
         for i in range(len(cls.files)):
             cls.files[i] = cls.file_path + cls.files[i]
@@ -61,5 +61,5 @@ class TestTheLoader(unittest.TestCase):
 
     def test_load_config(self):
         test_config = {'test': {'thisisatest': 'yes'}}
-        config = load_config('test_data/test_config.yaml')
+        config = load_config('tests/test_data/test_config.yaml')
         self.assertEqual(config, test_config)

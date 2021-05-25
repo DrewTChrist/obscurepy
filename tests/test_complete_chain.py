@@ -1,6 +1,5 @@
 import ast
 import unittest
-from obscurepy.handlers.class_handler import ClassHandler
 from obscurepy.utils.definition_tracker import DefinitionTracker
 from obscurepy.utils.loader import *
 
@@ -12,7 +11,7 @@ class CompleteChainTest(unittest.TestCase):
         self.tracker = DefinitionTracker.get_instance()
         self.source = 'class FirstClass:\n\tpass\n\n' \
                       'class SecondClass:\n\tpass\n\n' \
-                      'def FirstFunction():\n\tc = 42\n\n' \
+                      'def FirstFunction():\n\tc = "a literal"\n\n' \
                       'def SecondFunction():\n\tpass\n\n' \
                       'a = FirstClass()\n\n' \
                       'b = SecondClass()\n\n' \
