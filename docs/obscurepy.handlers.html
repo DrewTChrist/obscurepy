@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>obscurepy.handlers package &mdash; obscurepy 0.5.0 documentation</title>
+  <title>obscurepy.handlers package &mdash; obscurepy 0.6.0 documentation</title>
 
 
 
@@ -322,6 +322,85 @@ to the abstract syntax tree and stores class definitions with the DefinitionTrac
 </dd></dl>
 
 </div>
+<div class="section" id="module-obscurepy.handlers.constant_handler">
+<span id="obscurepy-handlers-constant-handler-module"></span><h2>obscurepy.handlers.constant_handler module<a class="headerlink" href="#module-obscurepy.handlers.constant_handler" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="obscurepy.handlers.constant_handler.ConstantHandler">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">obscurepy.handlers.constant_handler.</span></span><span class="sig-name descname"><span class="pre">ConstantHandler</span></span><a class="reference internal" href="_modules/obscurepy/handlers/constant_handler.html#ConstantHandler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.handlers.constant_handler.ConstantHandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#obscurepy.handlers.handler.Handler" title="obscurepy.handlers.handler.Handler"><code class="xref py py-class docutils literal notranslate"><span class="pre">obscurepy.handlers.handler.Handler</span></code></a></p>
+<p>Class to traverse and modify Constant nodes in an ast</p>
+<dl>
+<dt>Attributes:</dt><dd><p><strong>_debug_name (str)</strong>: Name of class used for debugging purposes</p>
+<p><strong>execution_priority (int)</strong>: Used to determine when ConstantHandler should be executed</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="obscurepy.handlers.constant_handler.ConstantHandler.visit_Constant">
+<span class="sig-name descname"><span class="pre">visit_Constant</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/handlers/constant_handler.html#ConstantHandler.visit_Constant"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.handlers.constant_handler.ConstantHandler.visit_Constant" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overrides the NodeTransformer visit_Constant method and obscures Constants</p>
+<dl>
+<dt>Args:</dt><dd><blockquote>
+<div><p><strong>node (:obj: `ast.Constant`)</strong>: The current Constant node to be modified</p>
+</div></blockquote>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>The obscured node</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="obscurepy.handlers.constant_handler.handle_constant_types">
+<span class="sig-prename descclassname"><span class="pre">obscurepy.handlers.constant_handler.</span></span><span class="sig-name descname"><span class="pre">handle_constant_types</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/handlers/constant_handler.html#handle_constant_types"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.handlers.constant_handler.handle_constant_types" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function properly directs each node to the function that handles its specific type</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p><strong>node (:obj: `ast.Constant`)</strong>: The node to be obscured</p>
+</dd>
+<dt>Return:</dt><dd><p>The obscured node</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="obscurepy.handlers.constant_handler.handle_float">
+<span class="sig-prename descclassname"><span class="pre">obscurepy.handlers.constant_handler.</span></span><span class="sig-name descname"><span class="pre">handle_float</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/handlers/constant_handler.html#handle_float"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.handlers.constant_handler.handle_float" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replaces an ast.Constant containing an float with a hex representation converted back to float</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p><strong>node (:obj: `ast.Constant`)</strong>: The node to replace with the ast.Call node</p>
+</dd>
+<dt>Returns:</dt><dd><p>A new obscured node with updated locations</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="obscurepy.handlers.constant_handler.handle_int">
+<span class="sig-prename descclassname"><span class="pre">obscurepy.handlers.constant_handler.</span></span><span class="sig-name descname"><span class="pre">handle_int</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/handlers/constant_handler.html#handle_int"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.handlers.constant_handler.handle_int" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replaces an ast.Constant containing an integer with a hex representation converted back to int</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p><strong>node (:obj: `ast.Constant`)</strong>: The node to replace with the ast.Call node</p>
+</dd>
+<dt>Returns:</dt><dd><p>A new obscured node with updated locations</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="obscurepy.handlers.constant_handler.handle_str">
+<span class="sig-prename descclassname"><span class="pre">obscurepy.handlers.constant_handler.</span></span><span class="sig-name descname"><span class="pre">handle_str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/handlers/constant_handler.html#handle_str"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.handlers.constant_handler.handle_str" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replaces an ast.Constant containing a string, with an ascii representation joined together</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p><strong>node (:obj: `ast.Constant`)</strong>: The node to replace with the ast.Call node</p>
+</dd>
+<dt>Returns:</dt><dd><p>A new obscured node with updated locations</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
 <div class="section" id="module-obscurepy.handlers.functiondef_handler">
 <span id="obscurepy-handlers-functiondef-handler-module"></span><h2>obscurepy.handlers.functiondef_handler module<a class="headerlink" href="#module-obscurepy.handlers.functiondef_handler" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
@@ -418,19 +497,23 @@ to the abstract syntax tree and stores class definitions with the DefinitionTrac
 </dd></dl>
 
 </div>
-<div class="section" id="module-obscurepy.handlers.literal_handler">
-<span id="obscurepy-handlers-literal-handler-module"></span><h2>obscurepy.handlers.literal_handler module<a class="headerlink" href="#module-obscurepy.handlers.literal_handler" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-obscurepy.handlers.name_handler">
+<span id="obscurepy-handlers-name-handler-module"></span><h2>obscurepy.handlers.name_handler module<a class="headerlink" href="#module-obscurepy.handlers.name_handler" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
-<dt class="sig sig-object py" id="obscurepy.handlers.literal_handler.LiteralHandler">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">obscurepy.handlers.literal_handler.</span></span><span class="sig-name descname"><span class="pre">LiteralHandler</span></span><a class="reference internal" href="_modules/obscurepy/handlers/literal_handler.html#LiteralHandler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.handlers.literal_handler.LiteralHandler" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="obscurepy.handlers.name_handler.NameHandler">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">obscurepy.handlers.name_handler.</span></span><span class="sig-name descname"><span class="pre">NameHandler</span></span><a class="reference internal" href="_modules/obscurepy/handlers/name_handler.html#NameHandler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.handlers.name_handler.NameHandler" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#obscurepy.handlers.handler.Handler" title="obscurepy.handlers.handler.Handler"><code class="xref py py-class docutils literal notranslate"><span class="pre">obscurepy.handlers.handler.Handler</span></code></a></p>
-<p>StringLiteralHandler class</p>
 <dl class="py method">
-<dt class="sig sig-object py" id="obscurepy.handlers.literal_handler.LiteralHandler.visit_Constant">
-<span class="sig-name descname"><span class="pre">visit_Constant</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/handlers/literal_handler.html#LiteralHandler.visit_Constant"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.handlers.literal_handler.LiteralHandler.visit_Constant" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="obscurepy.handlers.name_handler.NameHandler.visit_Name">
+<span class="sig-name descname"><span class="pre">visit_Name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/handlers/name_handler.html#NameHandler.visit_Name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.handlers.name_handler.NameHandler.visit_Name" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="obscurepy.handlers.name_handler.obscure_class_bases">
+<span class="sig-prename descclassname"><span class="pre">obscurepy.handlers.name_handler.</span></span><span class="sig-name descname"><span class="pre">obscure_class_bases</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/handlers/name_handler.html#obscure_class_bases"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.handlers.name_handler.obscure_class_bases" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </div>
 <div class="section" id="module-obscurepy.handlers">

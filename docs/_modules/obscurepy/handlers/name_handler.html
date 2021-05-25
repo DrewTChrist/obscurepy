@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>obscurepy.handlers.literal_handler &mdash; obscurepy 0.5.0 documentation</title>
+  <title>obscurepy.handlers.name_handler &mdash; obscurepy 0.6.0 documentation</title>
 
 
 
@@ -140,7 +140,7 @@
 
           <li><a href="../../index.html">Module code</a> &raquo;</li>
 
-      <li>obscurepy.handlers.literal_handler</li>
+      <li>obscurepy.handlers.name_handler</li>
 
 
       <li class="wy-breadcrumbs-aside">
@@ -155,21 +155,28 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
 
-  <h1>Source code for obscurepy.handlers.literal_handler</h1><div class="highlight"><pre>
+  <h1>Source code for obscurepy.handlers.name_handler</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">obscurepy.handlers.handler</span> <span class="kn">import</span> <span class="n">Handler</span>
+<span class="kn">from</span> <span class="nn">obscurepy.utils.definition_tracker</span> <span class="kn">import</span> <span class="n">DefinitionTracker</span>
+<span class="kn">from</span> <span class="nn">obscurepy.treeutils.class_scope_utils</span> <span class="kn">import</span> <span class="o">*</span>
 
 
-<div class="viewcode-block" id="LiteralHandler"><a class="viewcode-back" href="../../../obscurepy.handlers.html#obscurepy.handlers.literal_handler.LiteralHandler">[docs]</a><span class="k">class</span> <span class="nc">LiteralHandler</span><span class="p">(</span><span class="n">Handler</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;StringLiteralHandler class&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="obscure_class_bases"><a class="viewcode-back" href="../../../obscurepy.handlers.html#obscurepy.handlers.name_handler.obscure_class_bases">[docs]</a><span class="k">def</span> <span class="nf">obscure_class_bases</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="NameHandler"><a class="viewcode-back" href="../../../obscurepy.handlers.html#obscurepy.handlers.name_handler.NameHandler">[docs]</a><span class="k">class</span> <span class="nc">NameHandler</span><span class="p">(</span><span class="n">Handler</span><span class="p">):</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">LiteralHandler</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_debug_name</span> <span class="o">=</span> <span class="s2">&quot;LiteralHandler&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">execution_priority</span> <span class="o">=</span> <span class="mi">4</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">NameHandler</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_debug_name</span> <span class="o">=</span> <span class="s1">&#39;NameHandler&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">execution_priority</span> <span class="o">=</span> <span class="mi">6</span>
 
-<div class="viewcode-block" id="LiteralHandler.visit_Constant"><a class="viewcode-back" href="../../../obscurepy.handlers.html#obscurepy.handlers.literal_handler.LiteralHandler.visit_Constant">[docs]</a>    <span class="k">def</span> <span class="nf">visit_Constant</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-            <span class="n">node</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Hello&quot;</span>
+<div class="viewcode-block" id="NameHandler.visit_Name"><a class="viewcode-back" href="../../../obscurepy.handlers.html#obscurepy.handlers.name_handler.NameHandler.visit_Name">[docs]</a>    <span class="k">def</span> <span class="nf">visit_Name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="n">tracker</span> <span class="o">=</span> <span class="n">DefinitionTracker</span><span class="o">.</span><span class="n">get_instance</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="n">obscure_class_bases</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+
         <span class="k">return</span> <span class="n">node</span></div></div>
 </pre></div>
 
