@@ -8,20 +8,92 @@ A tool for obscuring, or making python source code difficult to read.
 ## Table of Contents
 
 1. [Installation](#installation)
-2. [Usage](#usage)
-3. [Credits](#credits)
+2. [Limitations](#limitations)
+3. [Usage](#usage)
 4. [License](#license)
 
 ## Installation
 This command will install obscurepy:
 ```shell
-python -m pip install git+https://github.com/drewtchrist/obscurepy.git
+python -m pip install obscurepy
 ```
 I would recommend installing it in a virtual environment as opposed to globally:
 ```shell
 python -m venv venv
 source venv/bin/activate
-python -m pip install git+https://github.com/drewtchrist/obscurepy.git
+python -m pip install obscurepy
+```
+
+## Limitations
+As this program is still in active development, there are many limitations. Below is a list of things obscurepy can and
+can't do, along with an example.
+
+### Things that obscurepy can currently do:
+* Obscure class definitions (without bases)
+* Obscure class calls (without arguments)
+* Obscure function definitions (without parameters)
+* Obscure function calls (without arguments)
+* Obscure string constants
+* Obscure integer constants
+* Obscure float constants
+
+### Things it cannot do:
+* Anything else
+
+### An example:
+```python
+class FirstClass:
+    pass
+
+
+class SecondClass:
+    # this is a comment
+    pass
+
+
+def first_function():
+    c = 42
+
+
+def second_function():
+    d = 'string'
+
+def third_function():
+    e = 100.0
+
+a = FirstClass()
+
+b = SecondClass()
+
+first_function()
+
+second_function()
+
+third_function()
+
+a = SecondClass()
+```
+```python
+class _0x3ff:
+    pass
+
+class _0x454:
+    pass
+
+def _0x5ee():
+    _0x63 = int('0x2a', 16)
+
+def _0x643():
+    _0x65 = ''.join([chr(x) for x in [115, 116, 114, 105, 110, 103]])
+
+def _0x5e3():
+    _0x67 = float.fromhex('0x1.9000000000000p+6')
+_0x64 = _0x3ff()
+_0x66 = _0x454()
+_0x5ee()
+_0x643()
+_0x5e3()
+_0x64 = _0x454()
 ```
 
 ## Usage
@@ -35,15 +107,13 @@ The following command can be used to obscure a multi file project:
 obscure -p --project_dir=my_project
 ```
 
-Alternatively, you can specifiy an output directory for both single file and multi file obscuring:
+Alternatively, you can specify an output directory for both single file and multi file obscuring:
 ```shell
 obscure --filepath=my_module.py --output_dir=desired_output_directory
 ```
 ```shell
 obscure --project_dir=my_project --output_dir=desired_output_directory
 ```
-
-## Credits
 
 ## License
 MIT License
