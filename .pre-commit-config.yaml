@@ -13,3 +13,13 @@ repos:
     rev: v1.5.7
     hooks:
         -   id: autopep8
+
+-   repo: local
+    hooks:
+    -   id: unittest
+        name: unittest
+        entry: 'scripts/test.sh'
+        language: python
+        'types': [python]
+        pass_filenames: false
+        stages: [commit]
