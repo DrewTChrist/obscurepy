@@ -28,6 +28,14 @@ obscurepy.handlers.classdef\_handler module
    :undoc-members:
    :show-inheritance:
 
+obscurepy.handlers.constant\_handler module
+-------------------------------------------
+
+.. automodule:: obscurepy.handlers.constant_handler
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 obscurepy.handlers.functiondef\_handler module
 ----------------------------------------------
 
@@ -44,10 +52,10 @@ obscurepy.handlers.handler module
    :undoc-members:
    :show-inheritance:
 
-obscurepy.handlers.literal\_handler module
-------------------------------------------
+obscurepy.handlers.name\_handler module
+---------------------------------------
 
-.. automodule:: obscurepy.handlers.literal_handler
+.. automodule:: obscurepy.handlers.name_handler
    :members:
    :undoc-members:
    :show-inheritance:
