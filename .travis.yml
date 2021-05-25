@@ -1,20 +1,24 @@
 language: python
 python:
-  - "3.6"      # current default Python on Travis CI
-  - "3.7"
-  - "3.8"
-  - "3.9"
-  - "3.9-dev"  # 3.9 development branch
-  - "nightly"  # nightly build
+- '3.9'
+- 3.9-dev
+- nightly
 before_install:
-  - python -m pip install -U pip
-# command to install dependencies
+- python -m pip install -U pip
 install:
-  - python -m pip install -r requirements.txt
-  - python -m pip install coverage
-# command to run tests
+- python -m pip install -r requirements.txt
+- python -m pip install coverage
 script:
-  - bash scripts/test.sh
-  - bash scripts/coverage.sh
+- bash scripts/test.sh
+- bash scripts/coverage.sh
 after_success:
-  - bash <(curl -s https://codecov.io/bash)
+- bash <(curl -s https://codecov.io/bash)
+deploy:
+  provider: pypi
+  username: __token__
+  password:
+    secure: O+pRov0WJpbXHAlrLhUnUGDkke5vGj45zgUbOG/1uDSRlqEyOnTJovUgWXSN+z8lGBzq3g9qJKG0xjS12z2VgAu4WNEL8Nn8xSU93cttsqJdjhlKKWN/h+Cwk3ld4yFSgALOUg9XFz/H22qjZuJPOcMOTKoTrEkOJJgXZvTzbsEXs4tbIrh1BUDGzsGwbVzrRp1RrscWga2rmNgT2jMy5bFheIerI1rMNyb2l/8X3reVSBL6/AWqpxbKFNX5e4hFSIpfLGTljFjNV7lvM9YnN3wz1GcvliAY3y8c8qVtFTi4wLFIEXADqpCsPfMZiYOMByYNSvpGbxbn1RpGwFZZQRGDydA9OhJghd2KvKZiTJFsB/OlJs60EVWH4Ei+hvaYxrdEg0j3hg9qFsHRtwGVwxzGKt6+QmDPIhx8JEIEVGm5xtybAayDo6GO0/NmY7JK1EHjdTAxrUXPbkcFBZ7DCsA90p8yqkAgR1LIS6Q+DV2MnE3YOAqX/3qwbmBrt08OasDvxCwzzyLif7B/zuaqWY+LIrI1BgJ1v1jFoyQNqvrk1+i79c4bgpBTbQ8kqgwP9FQ913/cbL0mf0e6diTZ/CvOsVWXu7sWuixs2Sk8C7SIvmwU/ZfnBJhvxCj1AiTeNptrdLYYKDBe+mF0G+/YFEOoPdEvGv7PP+xNikK+Tvw=
+  on:
+    tags: true
+  distributions: sdist bdist_wheel
+  skip_existing: true

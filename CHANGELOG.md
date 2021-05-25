@@ -10,6 +10,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 ### Removed
+
+## [0.6.0](https://github.com/drewtchrist/obscurepy/releases/tag/v0.6.0) - 2021-05-24
+### Added
+* Added deployment scripts for pypi and testpypi
+* Added a license
+* Added a NameHandler class (unimplemented)
+* Added a ConstantHandler class, it now obscures strings, integers and floats
+* Added tests for obscure.py
+
+### Changed
+* Updated readme
+* Updated travis.yml to deploy to pypi
+
+### Removed
+
 ## [0.5.0](https://github.com/drewtchrist/obscurepy/releases/tag/v0.5.0) - 2021-05-23
 ### Added
 * Added better functionality for ClassDefHandler building dictionaries of classes

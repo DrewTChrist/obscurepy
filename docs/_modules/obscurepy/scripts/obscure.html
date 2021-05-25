@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>obscurepy.scripts.obscure &mdash; obscurepy 0.5.0 documentation</title>
+  <title>obscurepy.scripts.obscure &mdash; obscurepy 0.6.0 documentation</title>
 
 
 
@@ -158,7 +158,6 @@
   <h1>Source code for obscurepy.scripts.obscure</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">obscurepy.obfuscator</span> <span class="kn">import</span> <span class="n">Obfuscator</span>
 <span class="kn">import</span> <span class="nn">click</span>
-<span class="kn">import</span> <span class="nn">sys</span>
 
 
 <span class="nd">@click</span><span class="o">.</span><span class="n">command</span><span class="p">()</span>
@@ -167,11 +166,13 @@
 <span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">&#39;--project_dir&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;The directory of the project to obscure&#39;</span><span class="p">)</span>
 <span class="nd">@click</span><span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s1">&#39;--output_dir&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;The directory to output the obscured code&#39;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">obscure</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">project</span><span class="p">,</span> <span class="n">project_dir</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Accepts command line arguments and passes them to the Obfuscator&quot;&quot;&quot;</span>
     <span class="n">check_bad_option_usage</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">project</span><span class="p">,</span> <span class="n">project_dir</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">)</span>
     <span class="n">Obfuscator</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">project</span><span class="p">,</span> <span class="n">project_dir</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">)</span><span class="o">.</span><span class="n">obscure</span><span class="p">()</span>
 
 
 <div class="viewcode-block" id="check_bad_option_usage"><a class="viewcode-back" href="../../../obscurepy.scripts.html#obscurepy.scripts.obscure.check_bad_option_usage">[docs]</a><span class="k">def</span> <span class="nf">check_bad_option_usage</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">project</span><span class="p">,</span> <span class="n">project_dir</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Validates the arguments passed to the Obfuscator&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">filepath</span> <span class="ow">and</span> <span class="n">project</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">click</span><span class="o">.</span><span class="n">BadOptionUsage</span><span class="p">(</span><span class="s1">&#39;project&#39;</span><span class="p">,</span>
                                    <span class="s1">&#39;You should not enable the project flag if filepath is provided&#39;</span><span class="p">)</span>
@@ -183,11 +184,10 @@
                                    <span class="s1">&#39;If the project flag is enabled a project directory must be provided&#39;</span><span class="p">)</span>
     <span class="k">elif</span> <span class="ow">not</span> <span class="n">project</span> <span class="ow">and</span> <span class="n">project_dir</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">click</span><span class="o">.</span><span class="n">BadOptionUsage</span><span class="p">(</span><span class="s1">&#39;project&#39;</span><span class="p">,</span>
-                                   <span class="s1">&#39;If a project directory is provided the project flag must be enabled&#39;</span><span class="p">)</span></div>
-
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="n">obscure</span><span class="p">()</span>
+                                   <span class="s1">&#39;If a project directory is provided the project flag must be enabled&#39;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="ow">not</span> <span class="n">filepath</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">project</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">project_dir</span> <span class="ow">and</span> <span class="p">(</span><span class="n">output_dir</span> <span class="o">==</span> <span class="s1">&#39;.&#39;</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="n">click</span><span class="o">.</span><span class="n">MissingParameter</span><span class="p">(</span>
+            <span class="s1">&#39;You must provide some arguments to obscure&#39;</span><span class="p">)</span></div>
 </pre></div>
 
            </div>
