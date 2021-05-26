@@ -2,6 +2,7 @@ import ast
 import unittest
 from obscurepy.utils.definition_tracker import DefinitionTracker
 from obscurepy.utils.loader import *
+from obscurepy.treeutils.general import add_parents
 
 
 class CompleteChainTest(unittest.TestCase):
@@ -19,7 +20,8 @@ class CompleteChainTest(unittest.TestCase):
                       'SecondFunction()\n\n' \
                       'a = SecondClass()\n\n' \
                       'c = 42'
+        self.tree = ast.parse(self.source)
+        add_parents(self.tree)
 
     def test_complete_chain(self):
-        tree = ast.parse(self.source)
-        tree = self.fixture.handle(tree)
+        self.tree = self.fixture.handle(self.tree)

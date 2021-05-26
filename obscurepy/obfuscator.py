@@ -3,6 +3,7 @@ import astunparse
 import os
 import sys
 from obscurepy.utils.loader import load_handlers, load_file
+from obscurepy.treeutils.general import add_parents
 
 
 class Obfuscator:
@@ -71,6 +72,7 @@ class Obfuscator:
         """
         text = load_file(filepath)
         self.tree = ast.parse(text)
+        add_parents(self.tree)
 
     def build_output_directories(self):
         """Recreates the project directory structure in the output directory"""
