@@ -53,10 +53,11 @@ def handle_global_scope(node, tracker):
 def handle_class_scope(node, tracker):
     if is_in_class_scope(node):
         for class_ in tracker.definitions['classes'].values():
-            if node.name in class_['methods'] and class_['prev_name'] == node.parent.name:
+            if node.name in class_['methods'] and class_['new_name'] == node.parent.name:
                 func_dict = create_function_dictionary(node)
                 func_dict['new_name'] = class_['methods'][node.name]
                 class_['methods'][node.name] = func_dict
+                node.name = class_['methods'][node.name]['new_name']
     return node
 
 

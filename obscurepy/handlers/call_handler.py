@@ -24,9 +24,4 @@ class CallHandler(Handler):
             **node (:obj: `ast.Call`)**: The current Call node to be modified
         """
         tracker = DefinitionTracker.get_instance()
-        if isinstance(node.func.id, str):
-            if node.func.id in tracker.definitions['classes']:
-                node.func.id = tracker.definitions['classes'][node.func.id]['new_name']
-            elif node.func.id in tracker.definitions['functions']:
-                node.func.id = tracker.definitions['functions'][node.func.id]['new_name']
         return node

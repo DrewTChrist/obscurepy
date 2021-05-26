@@ -1,8 +1,10 @@
 import ast
+import keyword
 from obscurepy.handlers.handler import Handler
 from obscurepy.utils.definition_tracker import DefinitionTracker
 from obscurepy.treeutils.class_scope_utils import *
 from obscurepy.treeutils.function_scope_utils import *
+from obscurepy.nameutils.name import hex_name
 
 
 def obscure_class_bases(node, tracker):
@@ -16,9 +18,24 @@ def obscure_class_bases(node, tracker):
     Returns:
         The obscured ast.Name node if it is the child of a ClassDef node, otherwise it is not obscured
     """
-    if type(node.parent) == ast.ClassDef and node in node.parent.bases:
+    if is_in_class_scope(node) and type(node.parent) != ast.Assign and node in node.parent.bases:
         if node.id in tracker.definitions['classes']:
             node.id = tracker.definitions['classes'][node.id]['new_name']
+
+    return node
+
+
+def handle_class_properties(node, tracker):
+    if node.id == 'self':
+        for class_ in tracker.definitions['classes'].values():
+            if node.parent.attr in class_['properties']:
+                class_['properties'][node.parent.attr] = {'prev_name': node.parent.attr,
+                                                          'new_name': class_['properties'][node.parent.attr]}
+                node.parent.attr = class_[
+                    'properties'][node.parent.attr]['new_name']
+            else:
+                class_['properties'][node.parent.attr] = {
+                    'prev_name': node.parent.attr, 'new_name': hex_name(node.parent.attr)}
 
     return node
 
@@ -29,9 +46,10 @@ def handle_function_scope(node, tracker):
     Args:
         **node (:obj: `ast.Name`)**: Current Name node
     """
-    if is_in_function_scope(node):
-        if node.id in tracker.definitions['functions']['variables']:
-            node.id = tracker.definitions['functions']['variables'][node.id]
+    if is_in_function_scope(node.parent):
+        for function in tracker.definitions['functions'].values():
+            if node.id in function['variables'] and node.id not in tracker.definitions['classes']:
+                node.id = function['variables'][node.id]
 
     return node
 
@@ -42,9 +60,14 @@ def handle_global_scope(node, tracker):
     Args:
         **node (:obj: `ast.Name`)**: Current Name  node
     """
-    if not is_in_function_scope(node) and not is_in_class_scope(node):
-        if node.id in tracker.definitions['variables']:
-            node.id = tracker.definitions['variables'][node.id]
+    if not is_in_function_scope(node.parent) and not is_in_class_scope(node.parent):
+        if node.id != 'self':
+            if node.id in tracker.definitions['variables']:
+                node.id = tracker.definitions['variables'][node.id]['new_name']
+            elif node.id not in [x['new_name'] for x in tracker.definitions['classes'].values()]:
+                tracker.add_variable(
+                    {'prev_name': node.id, 'new_name': hex_name(node.id)})
+                node.id = tracker.definitions['variables'][node.id]['new_name']
 
     return node
 
@@ -55,9 +78,11 @@ def handle_class_scope(node, tracker):
     Args:
         **node (:obj: `ast.Name`)**: Current Name node
     """
-    if is_in_class_scope(node):
-        if node.id in tracker.definitions['classes']['variables']:
-            node.id = tracker.definitions['classes']['variables'][node.id]
+    if is_in_class_scope(node.parent):
+        for class_ in tracker.definitions['classes'].values():
+            if node.id in class_['variables'] and node.id not in tracker.definitions['classes']:
+                node.id = tracker.definitions['classes'][class_[
+                    'prev_name']]['variables'][node.id]
 
     return node
 
@@ -90,8 +115,9 @@ class NameHandler(Handler):
         tracker = DefinitionTracker.get_instance()
         if isinstance(node.id, str):
             node = obscure_class_bases(node, tracker)
-            #node = handle_global_scope(node, tracker)
-            #node = handle_class_scope(node, tracker)
-            #node = handle_function_scope(node, tracker)
+            node = handle_global_scope(node, tracker)
+            node = handle_class_scope(node, tracker)
+            node = handle_function_scope(node, tracker)
+            node = handle_class_properties(node, tracker)
 
         return node

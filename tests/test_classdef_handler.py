@@ -33,7 +33,6 @@ class ClassDefHandlerTest(unittest.TestCase):
         self.assertEqual(class_['prev_name'], 'TestClass')
         self.assertEqual(class_['variables']['eighty_four'], '_0x4a5')
         self.assertEqual(class_['properties']['forty_two'], '_0x3ed')
-        self.assertEqual(class_['methods']['__init__'], '_0x330')
         self.assertEqual(class_['bases'][0], 'BaseClass')
 
     def test_get_variables(self):
@@ -56,7 +55,6 @@ class ClassDefHandlerTest(unittest.TestCase):
 
     def test_get_methods(self):
         methods = get_methods(self.tree.body[0])
-        self.assertEqual(methods['__init__'], '_0x330')
 
     def test_get_methods_none(self):
         tree = ast.parse('class TestClass:\n\tpass')

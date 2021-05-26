@@ -33,7 +33,8 @@ def get_methods(node):
     methods = {}
     for method in node.body:
         if type(method) == ast.FunctionDef:
-            methods[method.name] = hex_name(method.name)
+            if method.name != '__init__':
+                methods[method.name] = hex_name(method.name)
     return methods
 
 
