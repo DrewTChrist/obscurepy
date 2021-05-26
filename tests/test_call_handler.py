@@ -16,5 +16,5 @@ class CallHandlerTest(unittest.TestCase):
 
     def test_visitCall(self):
         self.tree = self.fixture.handle(self.tree)
-        self.assertTrue(self.tree.body[0].name == '_0x397')
-        self.assertTrue(self.tree.body[1].value.func.id == '_0x397')
+        self.assertTrue(self.tree.body[0].name == '_0x396')
+        self.assertTrue(self.tree.body[1].value.func.id == '_0x396')

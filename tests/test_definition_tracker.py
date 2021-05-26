@@ -22,7 +22,8 @@ class TestDefinitionTracker(unittest.TestCase):
             'args': [],
             'return': 'some_variable'
         }
-        self.test_variable = {'name': 'test_variable'}
+        self.test_variable = {'prev_name': 'test_variable',
+                              'new_name': 'new_test_variable'}
 
     def test_singleton(self):
         with self.assertRaises(Exception):
@@ -35,7 +36,7 @@ class TestDefinitionTracker(unittest.TestCase):
     def test_get_class(self):
         self.fixture.add_class(self.test_class)
         class_ = self.fixture.get_class("TestClass")
-        self.assertEqual(class_['new_name'], "_0x397")
+        self.assertEqual(class_['new_name'], "NewClassName")
 
     def test_add_function(self):
         self.fixture.add_function(self.test_function)
@@ -44,13 +45,13 @@ class TestDefinitionTracker(unittest.TestCase):
     def test_get_function(self):
         self.fixture.add_function(self.test_function)
         function = self.fixture.get_function("TestFunction")
-        self.assertEqual(function['new_name'], "_0x4e7")
+        self.assertEqual(function['new_name'], "NewFunctionName")
 
     def test_add_variable(self):
-        self.fixture.add_variable("TestVariable")
+        self.fixture.add_variable(self.test_variable)
         self.assertEqual(len(self.fixture.definitions['variables']), 1)
 
     def test_get_variable(self):
-        self.fixture.add_variable("TestVariable")
-        variable = self.fixture.get_variable("TestVariable")
-        self.assertEqual(variable, "_0x4c6")
+        self.fixture.add_variable(self.test_variable)
+        variable = self.fixture.get_variable("test_variable")
+        self.assertEqual(variable['new_name'], "new_test_variable")

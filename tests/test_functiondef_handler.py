@@ -5,6 +5,7 @@ from obscurepy.utils.definition_tracker import DefinitionTracker
 from obscurepy.handlers.functiondef_handler import get_args
 from obscurepy.handlers.functiondef_handler import get_variables
 from obscurepy.handlers.functiondef_handler import get_return
+from obscurepy.treeutils.general import add_parents
 
 
 class FunctionDefHandlerTest(unittest.TestCase):
@@ -17,21 +18,22 @@ class FunctionDefHandlerTest(unittest.TestCase):
                       'second_variable = param_1 + param_2\n\t' \
                       'return second_variable'
         self.tree = ast.parse(self.source)
+        add_parents(self.tree)
 
     def test_visitFunctionDef(self):
         self.tree = self.fixture.handle(self.tree)
         self.assertEqual(len(self.tracker.definitions['functions']), 1)
         function = self.tracker.definitions['functions']['FirstFunction']
-        self.assertEqual(function['new_name'], '_0x54f')
+        self.assertEqual(function['new_name'], '_0x54e')
         self.assertEqual(function['prev_name'], 'FirstFunction')
-        self.assertEqual(function['variables'][0], 'first_variable')
-        self.assertEqual(function['args'][0], 'param_1')
-        self.assertEqual(function['return'], 'second_variable')
+        self.assertEqual(function['variables']['first_variable'], '_0x5cd')
+        self.assertEqual(function['args']['param_1'], '_0x2a1')
+        self.assertEqual(function['return']['second_variable'], '_0x621')
 
     def test_get_args(self):
         args = get_args(self.tree.body[0])
-        self.assertEqual(args[0], 'param_1')
-        self.assertEqual(args[1], 'param_2')
+        self.assertEqual(args['param_1'], '_0x2a1')
+        self.assertEqual(args['param_2'], '_0x2a2')
 
     def test_get_args_none(self):
         tree = ast.parse('def FirstFunction():\n\tpass')
@@ -40,8 +42,8 @@ class FunctionDefHandlerTest(unittest.TestCase):
 
     def test_get_variables(self):
         variables = get_variables(self.tree.body[0])
-        self.assertEqual(variables[0], 'first_variable')
-        self.assertEqual(variables[1], 'second_variable')
+        self.assertEqual(variables['first_variable'], '_0x5cd')
+        self.assertEqual(variables['second_variable'], '_0x621')
 
     def test_get_variables_none(self):
         tree = ast.parse('def FirstFunction():\n\tpass')
@@ -50,12 +52,12 @@ class FunctionDefHandlerTest(unittest.TestCase):
 
     def test_get_return(self):
         return_ = get_return(self.tree.body[0])
-        self.assertEqual(return_, 'second_variable')
+        self.assertEqual(return_['second_variable'], '_0x621')
 
     def test_get_return_none(self):
         tree = ast.parse('def FirstFunction():\n\tpass')
         return_ = get_return(tree.body[0])
-        self.assertEqual(return_, None)
+        self.assertEqual(len(return_), 0)
 
     def _handle_global_scope(self):
         pass

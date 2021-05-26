@@ -1,5 +1,6 @@
 from abc import ABC
 import ast
+from obscurepy.treeutils.general import add_parents
 
 
 class Handler(ABC, ast.NodeTransformer):
@@ -45,6 +46,7 @@ class Handler(ABC, ast.NodeTransformer):
             The modified tree
         """
         tree = self.visit(tree)
+        add_parents(tree)
 
         if self.next is not None:
             return self.next.handle(tree)

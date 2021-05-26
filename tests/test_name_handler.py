@@ -22,8 +22,8 @@ class TestNameHandler(unittest.TestCase):
     def test_visitName(self):
         self.tree = self.classdef_handler.handle(self.tree)
         self.tree = self.fixture.handle(self.tree)
-        self.assertEqual(self.tree.body[2].bases[0].id, '_0x1ad')
-        self.assertEqual(self.tree.body[2].bases[1].id, '_0x1af')
+        self.assertEqual(self.tree.body[2].bases[0].id, '_0x1ac')
+        self.assertEqual(self.tree.body[2].bases[1].id, '_0x1ad')
 
     def test_obscure_class_bases(self):
         tree = ast.parse('class SomeClass(Base1, Base2):\n\tpass')

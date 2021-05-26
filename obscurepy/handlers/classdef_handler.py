@@ -2,6 +2,7 @@ import ast
 
 from obscurepy.handlers.handler import Handler
 from obscurepy.utils.definition_tracker import DefinitionTracker
+from obscurepy.nameutils.name import hex_name
 
 
 def get_base_classes(node):
@@ -29,10 +30,10 @@ def get_methods(node):
     Returns:
         List of class methods (str), or empty list if none
     """
-    methods = []
+    methods = {}
     for method in node.body:
         if type(method) == ast.FunctionDef:
-            methods.append(method.name)
+            methods[method.name] = hex_name(method.name)
     return methods
 
 
@@ -45,7 +46,7 @@ def get_properties(node):
     Returns:
         List of class properties (str), or empty list if none
     """
-    properties = []
+    properties = {}
     for method in node.body:
         if type(method) == ast.FunctionDef:
             # This needs to check for all 'self' properties no just those in __init__
@@ -54,7 +55,7 @@ def get_properties(node):
                     if type(assign) == ast.Assign:
                         for target in assign.targets:
                             if target.value.id == 'self':
-                                properties.append(target.attr)
+                                properties[target.attr] = hex_name(target.attr)
     return properties
 
 
@@ -67,18 +68,18 @@ def get_variables(node):
     Returns:
         List of class variables (str), or empty list if none
     """
-    variables = []
+    variables = {}
     for variable in node.body:
         if type(variable) == ast.Assign:
             for target in variable.targets:
                 if type(target) == ast.Name:
-                    variables.append(target.id)
+                    variables[target.id] = hex_name(target.id)
     return variables
 
 
 def create_class_dictionary(node):
     class_dict = {
-        'new_name': "",
+        'new_name': hex_name(node.name),
         'prev_name': node.name,
         'variables': get_variables(node),
         'properties': get_properties(node),
