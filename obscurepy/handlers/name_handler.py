@@ -23,21 +23,6 @@ def obscure_class_bases(node, tracker):
     return node
 
 
-def handle_class_properties(node, tracker):
-    if node.id == 'self':
-        for class_ in tracker.definitions['classes'].values():
-            if node.parent.attr in class_['properties']:
-                class_['properties'][node.parent.attr] = {'prev_name': node.parent.attr,
-                                                          'new_name': class_['properties'][node.parent.attr]}
-                node.parent.attr = class_[
-                    'properties'][node.parent.attr]['new_name']
-            else:
-                class_['properties'][node.parent.attr] = {
-                    'prev_name': node.parent.attr, 'new_name': hex_name(node.parent.attr)}
-
-    return node
-
-
 def handle_function_scope(node, tracker):
     """Internal method for handling names within the scope of a function
 
@@ -116,6 +101,5 @@ class NameHandler(Handler):
             node = handle_global_scope(node, tracker)
             node = handle_class_scope(node, tracker)
             node = handle_function_scope(node, tracker)
-            node = handle_class_properties(node, tracker)
 
         return node

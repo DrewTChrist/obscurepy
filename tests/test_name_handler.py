@@ -2,7 +2,7 @@ import ast
 import unittest
 from obscurepy.handlers.name_handler import NameHandler
 from obscurepy.handlers.name_handler import obscure_class_bases, \
-    handle_class_properties, handle_class_scope, handle_global_scope, handle_function_scope
+    handle_class_scope, handle_global_scope, handle_function_scope
 from obscurepy.handlers.classdef_handler import ClassDefHandler
 from obscurepy.utils.definition_tracker import DefinitionTracker
 from obscurepy.utils.tree import add_parents
@@ -40,12 +40,6 @@ class TestNameHandler(unittest.TestCase):
             bases.append(obscure_class_bases(base, tracker))
         self.assertEqual(bases[0].id, 'ObscuredBase1')
         self.assertEqual(bases[1].id, 'ObscuredBase2')
-
-    def test_handle_class_properties(self):
-        pass
-
-    def test_handle_class_properties_none(self):
-        pass
 
     def test_handle_function_scope(self):
         pass

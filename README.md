@@ -29,8 +29,9 @@ As this program is still in active development, there are many limitations. Belo
 can't do, along with an example.
 
 ### Things that obscurepy can currently do:
-* Obscure class definitions (without bases)
+* Obscure class definitions
 * Obscure class calls (without arguments)
+* Obscure class properties
 * Obscure function definitions (without parameters)
 * Obscure function calls (without arguments)
 * Obscure string constants
@@ -46,9 +47,15 @@ class FirstClass:
     pass
 
 
-class SecondClass:
+class SecondClass(FirstClass):
     # this is a comment
-    pass
+    class_variable = 6
+
+    def __init__(self):
+        self.my_property = 8
+
+    def class_function(self):
+        self.new_property = 10
 
 
 def first_function():
@@ -67,33 +74,34 @@ b = SecondClass()
 
 first_function()
 
-second_function()
-
-third_function()
-
-a = SecondClass()
 ```
 ```python
-class _0x3ff:
+class _0x3fe:
     pass
 
-class _0x454:
-    pass
+class _0x452(_0x3fe):
+    _0x5bb = int('0x6', 16)
 
-def _0x5ee():
+    def __init__(self):
+        self._0x4ca = int('0x8', 16)
+
+    def _0x5db(self):
+        self._0x52e = int('0xa', 16)
+
+def _0x5ed():
     _0x63 = int('0x2a', 16)
 
-def _0x643():
-    _0x65 = ''.join([chr(x) for x in [115, 116, 114, 105, 110, 103]])
+def _0x641():
+    _0x64 = ''.join([chr(x) for x in [115, 116, 114, 105, 110, 103]])
 
-def _0x5e3():
-    _0x67 = float.fromhex('0x1.9000000000000p+6')
-_0x64 = _0x3ff()
-_0x66 = _0x454()
-_0x5ee()
-_0x643()
-_0x5e3()
-_0x64 = _0x454()
+def _0x5e0():
+    _0x65 = float.fromhex('0x1.9000000000000p+6')
+_0x61 = _0x3fe()
+_0x62 = _0x452()
+_0x5ed()
+_0x641()
+_0x5e0()
+_0x61 = _0x452()
 ```
 
 ## Usage

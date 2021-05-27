@@ -51,12 +51,11 @@ def get_properties(node):
     for method in node.body:
         if type(method) == ast.FunctionDef:
             # This needs to check for all 'self' properties no just those in __init__
-            if method.name == '__init__':
-                for assign in method.body:
-                    if type(assign) == ast.Assign:
-                        for target in assign.targets:
-                            if target.value.id == 'self':
-                                properties[target.attr] = hex_name(target.attr)
+            for assign in method.body:
+                if type(assign) == ast.Assign:
+                    for target in assign.targets:
+                        if target.value.id == 'self' and target.attr not in properties:
+                            properties[target.attr] = hex_name(target.attr)
     return properties
 
 
