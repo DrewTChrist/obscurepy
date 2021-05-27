@@ -2,7 +2,7 @@ import ast
 
 from obscurepy.handlers.handler import Handler
 from obscurepy.utils.definition_tracker import DefinitionTracker
-from obscurepy.nameutils.name import hex_name
+from obscurepy.utils.name import hex_name
 
 
 def get_base_classes(node):

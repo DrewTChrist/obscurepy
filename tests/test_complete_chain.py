@@ -2,7 +2,7 @@ import ast
 import unittest
 from obscurepy.utils.definition_tracker import DefinitionTracker
 from obscurepy.utils.loader import *
-from obscurepy.treeutils.general import add_parents
+from obscurepy.utils.tree import add_parents
 
 
 class CompleteChainTest(unittest.TestCase):

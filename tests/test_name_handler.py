@@ -3,7 +3,7 @@ import unittest
 from obscurepy.handlers.name_handler import NameHandler, obscure_class_bases
 from obscurepy.handlers.classdef_handler import ClassDefHandler
 from obscurepy.utils.definition_tracker import DefinitionTracker
-from obscurepy.treeutils.general import add_parents
+from obscurepy.utils.tree import add_parents
 
 
 class TestNameHandler(unittest.TestCase):

@@ -1,6 +1,6 @@
 from abc import ABC
 import ast
-from obscurepy.treeutils.general import add_parents
+from obscurepy.utils.tree import add_parents
 from obscurepy.utils.log import get_verbose_logger, get_file_logger
 
 

@@ -1,6 +1,6 @@
 import ast
 import unittest
-from obscurepy.treeutils.function_scope_utils import *
+from obscurepy.utils.tree import *
 
 
 class FunctionScopeUtilsTest(unittest.TestCase):

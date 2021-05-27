@@ -1,9 +1,8 @@
 import ast
 from obscurepy.handlers.handler import Handler
 from obscurepy.utils.definition_tracker import DefinitionTracker
-from obscurepy.treeutils.function_scope_utils import *
-from obscurepy.treeutils.class_scope_utils import *
-from obscurepy.nameutils.name import hex_name
+from obscurepy.utils.tree import is_in_class_scope, is_in_function_scope
+from obscurepy.utils.name import hex_name
 
 
 def get_variables(node):

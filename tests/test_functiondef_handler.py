@@ -5,7 +5,7 @@ from obscurepy.utils.definition_tracker import DefinitionTracker
 from obscurepy.handlers.functiondef_handler import get_args
 from obscurepy.handlers.functiondef_handler import get_variables
 from obscurepy.handlers.functiondef_handler import get_return
-from obscurepy.treeutils.general import add_parents
+from obscurepy.utils.tree import add_parents
 
 
 class FunctionDefHandlerTest(unittest.TestCase):

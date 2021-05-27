@@ -3,7 +3,7 @@ import astunparse
 import os
 import sys
 from obscurepy.utils.loader import load_handlers, load_file
-from obscurepy.treeutils.general import add_parents
+from obscurepy.utils.tree import add_parents
 from obscurepy.utils.log import get_verbose_logger, get_file_logger
 
 

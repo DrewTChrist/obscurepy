@@ -1,7 +1,6 @@
 import ast
 import unittest
-from obscurepy.treeutils.class_scope_utils import *
-from obscurepy.treeutils.general import add_parents
+from obscurepy.utils.tree import *
 
 
 class ClassScopeUtilsTest(unittest.TestCase):
