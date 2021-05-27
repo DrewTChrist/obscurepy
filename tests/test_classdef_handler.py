@@ -18,7 +18,9 @@ class ClassDefHandlerTest(unittest.TestCase):
         self.source = 'class TestClass(BaseClass):\n\t' \
                       'eighty_four = 84\n\t' \
                       'def __init__(self):\n\t\t' \
-                      'self.forty_two = 42'
+                      'self.forty_two = 42\n\t' \
+                      'def some_method(self):\n\t\t' \
+                      'pass'
         self.tree = ast.parse(self.source)
 
     def test_visitClassDef(self):
@@ -33,6 +35,7 @@ class ClassDefHandlerTest(unittest.TestCase):
         self.assertEqual(class_['prev_name'], 'TestClass')
         self.assertEqual(class_['variables']['eighty_four'], '_0x4a5')
         self.assertEqual(class_['properties']['forty_two'], '_0x3ed')
+        self.assertEqual(class_['methods']['some_method'], '_0x494')
         self.assertEqual(class_['bases'][0], 'BaseClass')
 
     def test_get_variables(self):
@@ -55,6 +58,7 @@ class ClassDefHandlerTest(unittest.TestCase):
 
     def test_get_methods(self):
         methods = get_methods(self.tree.body[0])
+        self.assertEqual(methods['some_method'], '_0x494')
 
     def test_get_methods_none(self):
         tree = ast.parse('class TestClass:\n\tpass')

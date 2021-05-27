@@ -6,7 +6,7 @@ from obscurepy.utils.name import hex_name
 
 
 def get_base_classes(node):
-    """An ugly function that gets a list of classes inhereted from
+    """An ugly function that gets a list of classes inherited from
 
     Args:
         **node (:obj: `ast.ClassDef`)**: The ClassDef node for which to get the base classes of
