@@ -1,5 +1,4 @@
 import ast
-import keyword
 from obscurepy.handlers.handler import Handler
 from obscurepy.utils.definition_tracker import DefinitionTracker
 from obscurepy.treeutils.class_scope_utils import *
@@ -96,10 +95,9 @@ class NameHandler(Handler):
         **execution_priority (int)**: Used to determine when NameHandler should be executed
     """
 
-    def __init__(self):
+    def __init__(self, verbose=False):
         """Creates a new instance of a NameHandler"""
-        super(NameHandler, self).__init__()
-        self._debug_name = 'NameHandler'
+        super(NameHandler, self).__init__(verbose)
         self.execution_priority = 6
 
     def visit_Name(self, node):
@@ -112,6 +110,7 @@ class NameHandler(Handler):
             Returns:
                 The modified Name node
         """
+        self.logger.info('visit_Name')
         tracker = DefinitionTracker.get_instance()
         if isinstance(node.id, str):
             node = obscure_class_bases(node, tracker)

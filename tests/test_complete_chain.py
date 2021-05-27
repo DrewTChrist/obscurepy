@@ -8,7 +8,7 @@ from obscurepy.treeutils.general import add_parents
 class CompleteChainTest(unittest.TestCase):
 
     def setUp(self):
-        self.fixture = load_handlers()
+        self.fixture = load_handlers(False)
         self.tracker = DefinitionTracker.get_instance()
         self.source = 'class FirstClass:\n\tpass\n\n' \
                       'class SecondClass:\n\tpass\n\n' \

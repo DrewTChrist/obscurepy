@@ -76,10 +76,9 @@ class FunctionDefHandler(Handler):
         **execution_priority (int)**: Used to determine when FunctionHandler should be executed
     """
 
-    def __init__(self):
+    def __init__(self, verbose=False):
         """Creates a new instance of a FunctionHandler"""
-        super(FunctionDefHandler, self).__init__()
-        self._debug_name = 'FunctionDefHandler'
+        super(FunctionDefHandler, self).__init__(verbose)
         self.execution_priority = 2
 
     def visit_FunctionDef(self, node):
@@ -92,6 +91,7 @@ class FunctionDefHandler(Handler):
         Returns:
             The modified FunctionDef node
         """
+        self.logger.info('visit_FunctionDef')
         tracker = DefinitionTracker.get_instance()
         if isinstance(node.name, str):
             node = handle_global_scope(node, tracker)

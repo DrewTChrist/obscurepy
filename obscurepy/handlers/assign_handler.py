@@ -10,10 +10,9 @@ class AssignHandler(Handler):
         **execution_priority (int)**: Used to determine when AssignHandler should be executed
     """
 
-    def __init__(self):
+    def __init__(self, verbose=False):
         """Creates a new instance of an AssignHandler"""
-        super(AssignHandler, self).__init__()
-        self._debug_name = 'AssignHandler'
+        super(AssignHandler, self).__init__(verbose)
         self.execution_priority = 5
 
     def visit_Assign(self, node):
@@ -26,4 +25,5 @@ class AssignHandler(Handler):
         Returns:
             The modified Assign node
         """
+        self.logger.info('visit_Assign')
         return node

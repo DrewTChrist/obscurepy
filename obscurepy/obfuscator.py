@@ -4,6 +4,7 @@ import os
 import sys
 from obscurepy.utils.loader import load_handlers, load_file
 from obscurepy.treeutils.general import add_parents
+from obscurepy.utils.log import get_verbose_logger, get_file_logger
 
 
 class Obfuscator:
@@ -34,7 +35,7 @@ class Obfuscator:
         **output_directory (str)**: The directory to output the obscured code
     """
 
-    def __init__(self, filepath=None, is_project=False, project_directory=None, output_directory='.'):
+    def __init__(self, filepath=None, is_project=False, project_directory=None, output_directory='.', verbose=False):
         """Creates an instance of an Obfuscator"""
         self.filepath = filepath
         self.is_project = is_project
@@ -43,6 +44,10 @@ class Obfuscator:
         self.filepaths = []
         self.chain = None
         self.tree = None
+        self.verbose = verbose
+        self.logger = None
+
+        self.setup_logging()
 
         self.build_chain()
 
@@ -50,12 +55,20 @@ class Obfuscator:
             raise Exception(
                 'Improper configuration for both single file and projects')
 
+    def setup_logging(self):
+        if self.verbose:
+            self.logger = get_verbose_logger(self.__class__.__name__)
+        else:
+            self.logger = get_file_logger(self.__class__.__name__)
+
     def build_chain(self):
         """Loads handlers and assigns the first one to the chain property"""
-        self.chain = load_handlers()
+        self.logger.info('Building handlers chain')
+        self.chain = load_handlers(self.verbose)
 
     def get_project_filepaths(self):
         """Sets the filepaths property to a list of filepaths found in the project directory"""
+        self.logger.info('Getting project file paths')
         filepaths = []
         for dp, dn, filenames in os.walk(self.project_directory):
             if '__pycache__' in dn:
@@ -70,12 +83,14 @@ class Obfuscator:
         Args:
             **filepath (str)**: File path of which to get the tree
         """
+        self.logger.info('Setting the tree')
         text = load_file(filepath)
         self.tree = ast.parse(text)
         add_parents(self.tree)
 
     def build_output_directories(self):
         """Recreates the project directory structure in the output directory"""
+        self.logger.info('Building output directories')
         if self.is_multi_file():
             os.mkdir(os.path.join(self.output_directory, 'obscurepy_out'))
             directories = []
@@ -99,6 +114,7 @@ class Obfuscator:
         Args:
             **filepath (str)**: The location to save the source of the ast
         """
+        self.logger.info('Writing tree to file')
         if sys.version_info < (3, 9):
             text = astunparse.unparse(self.tree)
         else:
@@ -109,6 +125,7 @@ class Obfuscator:
 
     def obscure(self):
         """Obscures the project or single file as defined in the class properties"""
+        self.logger.info('Obscuring')
         if self.is_multi_file():
             self.obscure_project()
         elif self.is_single_file():
@@ -116,6 +133,7 @@ class Obfuscator:
 
     def obscure_file(self):
         """Obscures a single file"""
+        self.logger.info('Obscuring single file')
         self.set_tree(self.filepath)
         self.tree = self.chain.handle(self.tree)
         self.build_output_directories()
@@ -129,6 +147,7 @@ class Obfuscator:
 
     def obscure_project(self):
         """Obscures a multi file project"""
+        self.logger.info('Obscuring project')
         self.get_project_filepaths()
         self.build_output_directories()
         for filepath in self.filepaths:

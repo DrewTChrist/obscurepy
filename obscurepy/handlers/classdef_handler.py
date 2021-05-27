@@ -99,10 +99,9 @@ class ClassDefHandler(Handler):
         **execution_priority (int)**: Used to determine when ClassHandler should be executed
     """
 
-    def __init__(self):
+    def __init__(self, verbose=False):
         """Creates a new instance of a ClassHandler"""
-        super(ClassDefHandler, self).__init__()
-        self._debug_name = 'ClassDefHandler'
+        super(ClassDefHandler, self).__init__(verbose)
         self.execution_priority = 1
 
     def visit_ClassDef(self, node):
@@ -115,6 +114,7 @@ class ClassDefHandler(Handler):
             Returns:
                 The modified ClassDef node
         """
+        self.logger.info('visit_ClassDef')
         tracker = DefinitionTracker.get_instance()
         # Check to make sure this node is not already in tracker definitions
         if isinstance(node.name, str):
