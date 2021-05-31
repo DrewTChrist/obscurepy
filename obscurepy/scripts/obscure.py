@@ -7,12 +7,13 @@ import click
 @click.option('-p', '--project', is_flag=True, help='Enable this flag if you wish to obscure a multi file project')
 @click.option('--project_dir', help='The directory of the project to obscure')
 @click.option('--output_dir', default='.', help='The directory to output the obscured code')
+@click.option('-l', '--log', is_flag=True, default=False, help='Enable this flag to turn on logging')
 @click.option('-v', '--verbose', is_flag=True, default=False, help='Enable this flag to write logging to stdout')
-def obscure(filepath, project, project_dir, output_dir, verbose):
-    """Accepts command line arguments and passes them to the Obfuscator"""
+def obscure(filepath, project, project_dir, output_dir, log, verbose):
+    """Make your Python code difficult to read"""
     check_bad_option_usage(filepath, project, project_dir, output_dir)
     Obfuscator(filepath, project, project_dir,
-               output_dir, verbose=verbose).obscure()
+               output_dir, log, verbose).obscure()
 
 
 def check_bad_option_usage(filepath, project, project_dir, output_dir):

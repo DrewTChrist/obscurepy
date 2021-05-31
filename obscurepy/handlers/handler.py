@@ -1,7 +1,7 @@
 from abc import ABC
 import ast
 from obscurepy.utils.tree import add_parents
-from obscurepy.utils.log import get_verbose_logger, get_file_logger
+from obscurepy.utils.log import get_verbose_logger, get_file_logger, get_null_logger
 
 
 class Handler(ABC, ast.NodeTransformer):
@@ -15,16 +15,19 @@ class Handler(ABC, ast.NodeTransformer):
         **execution_priority (int)**: Value used to determine when a handler should be executed
     """
 
-    def __init__(self, verbose):
+    def __init__(self, log, verbose):
         """Defines attributes necessary for sub classes"""
         self.next = None
         self.execution_priority = 0
+        self.log = log
         self.verbose = verbose
         self.logger = None
         self.setup_logging()
 
     def setup_logging(self):
-        if self.verbose:
+        if not self.log:
+            self.logger = get_null_logger(self.__class__.__name__)
+        elif self.verbose:
             self.logger = get_verbose_logger(self.__class__.__name__)
         else:
             self.logger = get_file_logger(self.__class__.__name__)

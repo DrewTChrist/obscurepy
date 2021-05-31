@@ -4,13 +4,13 @@ import sys
 import yaml
 
 
-def load_handlers(verbose):
+def load_handlers(log, verbose):
     """Dynamically loads handler classes
 
     Returns:
         The first handler in the chain of handlers
     """
-    handlers = __create_handlers(verbose)
+    handlers = __create_handlers(log, verbose)
 
     for i in range(0, len(handlers) - 1):
         handlers[i].set_next(handlers[i + 1])
@@ -18,7 +18,7 @@ def load_handlers(verbose):
     return handlers[0]
 
 
-def __create_handlers(verbose):
+def __create_handlers(log, verbose):
     """Dynamically creates handler classes
 
     Returns:
@@ -27,7 +27,7 @@ def __create_handlers(verbose):
     handlers = []
     for name, obj in inspect.getmembers(sys.modules[__name__]):
         if inspect.isclass(obj):
-            handlers.append(obj(verbose))
+            handlers.append(obj(log, verbose))
 
     handlers.sort(key=lambda x: x.execution_priority)
 

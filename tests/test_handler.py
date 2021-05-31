@@ -5,8 +5,8 @@ from obscurepy.handlers.handler import Handler
 
 class TestHandler(Handler):
 
-    def __init__(self, verbose=False):
-        super(TestHandler, self).__init__(verbose)
+    def __init__(self, log=False, verbose=False):
+        super(TestHandler, self).__init__(log, verbose)
 
 
 class HandlerTest(unittest.TestCase):

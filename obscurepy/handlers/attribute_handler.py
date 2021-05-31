@@ -24,9 +24,9 @@ class AttributeHandler(Handler):
         **execution_priority (int)**: Used to determine when AttributeHandler should be executed
     """
 
-    def __init__(self, verbose=False):
+    def __init__(self, log=False, verbose=False):
         """Creates a new instance of an AttributeHandler"""
-        super(AttributeHandler, self).__init__(verbose)
+        super(AttributeHandler, self).__init__(log, verbose)
         self.execution_priority = 5
 
     def visit_Attribute(self, node):

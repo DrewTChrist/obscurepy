@@ -10,9 +10,9 @@ class CallHandler(Handler):
         **execution_priority (int)**: Used to determine when CallHandler should be executed
     """
 
-    def __init__(self, verbose=False):
+    def __init__(self, log=False, verbose=False):
         """Creates a new instance of a CallHandler"""
-        super(CallHandler, self).__init__(verbose)
+        super(CallHandler, self).__init__(log, verbose)
         self.execution_priority = 3
 
     def visit_Call(self, node):

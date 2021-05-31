@@ -98,9 +98,9 @@ class ClassDefHandler(Handler):
         **execution_priority (int)**: Used to determine when ClassHandler should be executed
     """
 
-    def __init__(self, verbose=False):
+    def __init__(self, log=False, verbose=False):
         """Creates a new instance of a ClassHandler"""
-        super(ClassDefHandler, self).__init__(verbose)
+        super(ClassDefHandler, self).__init__(log, verbose)
         self.execution_priority = 1
 
     def visit_ClassDef(self, node):

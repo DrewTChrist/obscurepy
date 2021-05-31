@@ -106,9 +106,9 @@ class ConstantHandler(Handler):
         **execution_priority (int)**: Used to determine when ConstantHandler should be executed
     """
 
-    def __init__(self, verbose=False):
+    def __init__(self, log=False, verbose=False):
         """Creates a new instance of a ConstantHandler"""
-        super(ConstantHandler, self).__init__(verbose)
+        super(ConstantHandler, self).__init__(log, verbose)
         self.execution_priority = 7
 
     def visit_Constant(self, node):

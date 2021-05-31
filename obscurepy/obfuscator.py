@@ -4,7 +4,7 @@ import os
 import sys
 from obscurepy.utils.loader import load_handlers, load_file
 from obscurepy.utils.tree import add_parents
-from obscurepy.utils.log import get_verbose_logger, get_file_logger
+from obscurepy.utils.log import get_verbose_logger, get_file_logger, get_null_logger
 
 
 class Obfuscator:
@@ -35,7 +35,8 @@ class Obfuscator:
         **output_directory (str)**: The directory to output the obscured code
     """
 
-    def __init__(self, filepath=None, is_project=False, project_directory=None, output_directory='.', verbose=False):
+    def __init__(self, filepath=None, is_project=False, project_directory=None,
+                 output_directory='.', log=False, verbose=False):
         """Creates an instance of an Obfuscator"""
         self.filepath = filepath
         self.is_project = is_project
@@ -44,6 +45,7 @@ class Obfuscator:
         self.filepaths = []
         self.chain = None
         self.tree = None
+        self.log = log
         self.verbose = verbose
         self.logger = None
 
@@ -56,7 +58,10 @@ class Obfuscator:
                 'Improper configuration for both single file and projects')
 
     def setup_logging(self):
-        if self.verbose:
+        """Sets the Obfuscator logger based on user configuration"""
+        if not self.log:
+            self.logger = get_null_logger(self.__class__.__name__)
+        elif self.verbose:
             self.logger = get_verbose_logger(self.__class__.__name__)
         else:
             self.logger = get_file_logger(self.__class__.__name__)
@@ -64,7 +69,7 @@ class Obfuscator:
     def build_chain(self):
         """Loads handlers and assigns the first one to the chain property"""
         self.logger.info('Building handlers chain')
-        self.chain = load_handlers(self.verbose)
+        self.chain = load_handlers(self.log, self.verbose)
 
     def get_project_filepaths(self):
         """Sets the filepaths property to a list of filepaths found in the project directory"""

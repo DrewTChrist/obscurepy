@@ -79,9 +79,9 @@ class NameHandler(Handler):
         **execution_priority (int)**: Used to determine when NameHandler should be executed
     """
 
-    def __init__(self, verbose=False):
+    def __init__(self, log=False, verbose=False):
         """Creates a new instance of a NameHandler"""
-        super(NameHandler, self).__init__(verbose)
+        super(NameHandler, self).__init__(log, verbose)
         self.execution_priority = 6
 
     def visit_Name(self, node):

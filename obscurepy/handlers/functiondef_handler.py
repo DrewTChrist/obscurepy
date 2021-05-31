@@ -75,9 +75,9 @@ class FunctionDefHandler(Handler):
         **execution_priority (int)**: Used to determine when FunctionHandler should be executed
     """
 
-    def __init__(self, verbose=False):
+    def __init__(self, log=False, verbose=False):
         """Creates a new instance of a FunctionHandler"""
-        super(FunctionDefHandler, self).__init__(verbose)
+        super(FunctionDefHandler, self).__init__(log, verbose)
         self.execution_priority = 2
 
     def visit_FunctionDef(self, node):
