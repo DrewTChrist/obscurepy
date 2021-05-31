@@ -13,6 +13,7 @@ class ObfuscatorTest(unittest.TestCase):
         self.fixture = Obfuscator('tests/my_module.py')
         self.fixture.filepath = None
         self.dynamic_fixture = None
+        self.log = False
 
     def tearDown(self):
         pass

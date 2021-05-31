@@ -1,3 +1,4 @@
+import os
 import unittest
 from obscurepy.utils.log import *
 
@@ -21,7 +22,9 @@ class UtilsLogTest(unittest.TestCase):
         self.assertTrue(isinstance(self.logger, logging.Logger))
         self.assertTrue(isinstance(
             self.logger.handlers[0], logging.FileHandler))
+        self.assertTrue(os.path.exists('obscurepy.log'))
         self.logger.handlers[0].close()
+        os.remove('obscurepy.log')
 
     def test_get_null_logger(self):
         self.logger = get_null_logger('null')
