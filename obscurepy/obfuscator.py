@@ -96,22 +96,25 @@ class Obfuscator:
     def build_output_directories(self):
         """Recreates the project directory structure in the output directory"""
         self.logger.info('Building output directories')
-        if self.is_multi_file():
-            os.mkdir(os.path.join(self.output_directory, 'obscurepy_out'))
-            directories = []
-            for dp, dn, filenames in os.walk(self.project_directory):
-                if '__pycache__' not in dp:
-                    directories.append(dp)
-            for directory in directories:
-                if self.output_directory in directory:
-                    os.mkdir(os.path.join(self.output_directory,
-                                          'obscurepy_out',
-                                          directory.replace(f"{self.output_directory}/", "")))
-                else:
-                    os.mkdir(os.path.join(self.output_directory,
-                             'obscurepy_out', directory))
-        elif self.is_single_file():
-            os.mkdir(os.path.join(self.output_directory, 'obscurepy_out'))
+        try:
+            if self.is_multi_file():
+                os.mkdir(os.path.join(self.output_directory, 'obscurepy_out'))
+                directories = []
+                for dp, dn, filenames in os.walk(self.project_directory):
+                    if '__pycache__' not in dp:
+                        directories.append(dp)
+                for directory in directories:
+                    if self.output_directory in directory:
+                        os.mkdir(os.path.join(self.output_directory,
+                                              'obscurepy_out',
+                                              directory.replace(f"{self.output_directory}/", "")))
+                    else:
+                        os.mkdir(os.path.join(self.output_directory,
+                                 'obscurepy_out', directory))
+            elif self.is_single_file():
+                os.mkdir(os.path.join(self.output_directory, 'obscurepy_out'))
+        except FileExistsError:
+            print('obscurepy_out already exists, delete the directory and try again')
 
     def write_tree_to_file(self, filepath):
         """Writes unparsed abstract syntax trees to files
