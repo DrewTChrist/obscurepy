@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>obscurepy &mdash; obscurepy 0.6.0 documentation</title>
+  <title>obscurepy &mdash; obscurepy 0.7.0 documentation</title>
 
 
 
@@ -209,8 +209,9 @@ can’t do, along with an example.</p>
 <div class="section" id="things-that-obscurepy-can-currently-do">
 <h3>Things that obscurepy can currently do:<a class="headerlink" href="#things-that-obscurepy-can-currently-do" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li><p>Obscure class definitions (without bases)</p></li>
+<li><p>Obscure class definitions</p></li>
 <li><p>Obscure class calls (without arguments)</p></li>
+<li><p>Obscure class properties</p></li>
 <li><p>Obscure function definitions (without parameters)</p></li>
 <li><p>Obscure function calls (without arguments)</p></li>
 <li><p>Obscure string constants</p></li>
@@ -230,9 +231,15 @@ can’t do, along with an example.</p>
     <span class="k">pass</span>
 
 
-<span class="k">class</span> <span class="nc">SecondClass</span><span class="p">:</span>
+<span class="k">class</span> <span class="nc">SecondClass</span><span class="p">(</span><span class="n">FirstClass</span><span class="p">):</span>
     <span class="c1"># this is a comment</span>
-    <span class="k">pass</span>
+    <span class="n">class_variable</span> <span class="o">=</span> <span class="mi">6</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">my_property</span> <span class="o">=</span> <span class="mi">8</span>
+
+    <span class="k">def</span> <span class="nf">class_function</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">new_property</span> <span class="o">=</span> <span class="mi">10</span>
 
 
 <span class="k">def</span> <span class="nf">first_function</span><span class="p">():</span>
@@ -250,34 +257,34 @@ can’t do, along with an example.</p>
 <span class="n">b</span> <span class="o">=</span> <span class="n">SecondClass</span><span class="p">()</span>
 
 <span class="n">first_function</span><span class="p">()</span>
-
-<span class="n">second_function</span><span class="p">()</span>
-
-<span class="n">third_function</span><span class="p">()</span>
-
-<span class="n">a</span> <span class="o">=</span> <span class="n">SecondClass</span><span class="p">()</span>
 </pre></div>
 </div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">_0x3ff</span><span class="p">:</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">_0x3fe</span><span class="p">:</span>
     <span class="k">pass</span>
 
-<span class="k">class</span> <span class="nc">_0x454</span><span class="p">:</span>
-    <span class="k">pass</span>
+<span class="k">class</span> <span class="nc">_0x452</span><span class="p">(</span><span class="n">_0x3fe</span><span class="p">):</span>
+    <span class="n">_0x5bb</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="s1">&#39;0x6&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">_0x5ee</span><span class="p">():</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_0x4ca</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="s1">&#39;0x8&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_0x5db</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_0x52e</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="s1">&#39;0xa&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">_0x5ed</span><span class="p">():</span>
     <span class="n">_0x63</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="s1">&#39;0x2a&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">_0x643</span><span class="p">():</span>
-    <span class="n">_0x65</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">chr</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">115</span><span class="p">,</span> <span class="mi">116</span><span class="p">,</span> <span class="mi">114</span><span class="p">,</span> <span class="mi">105</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">103</span><span class="p">]])</span>
+<span class="k">def</span> <span class="nf">_0x641</span><span class="p">():</span>
+    <span class="n">_0x64</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">chr</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">115</span><span class="p">,</span> <span class="mi">116</span><span class="p">,</span> <span class="mi">114</span><span class="p">,</span> <span class="mi">105</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">103</span><span class="p">]])</span>
 
-<span class="k">def</span> <span class="nf">_0x5e3</span><span class="p">():</span>
-    <span class="n">_0x67</span> <span class="o">=</span> <span class="nb">float</span><span class="o">.</span><span class="n">fromhex</span><span class="p">(</span><span class="s1">&#39;0x1.9000000000000p+6&#39;</span><span class="p">)</span>
-<span class="n">_0x64</span> <span class="o">=</span> <span class="n">_0x3ff</span><span class="p">()</span>
-<span class="n">_0x66</span> <span class="o">=</span> <span class="n">_0x454</span><span class="p">()</span>
-<span class="n">_0x5ee</span><span class="p">()</span>
-<span class="n">_0x643</span><span class="p">()</span>
-<span class="n">_0x5e3</span><span class="p">()</span>
-<span class="n">_0x64</span> <span class="o">=</span> <span class="n">_0x454</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">_0x5e0</span><span class="p">():</span>
+    <span class="n">_0x65</span> <span class="o">=</span> <span class="nb">float</span><span class="o">.</span><span class="n">fromhex</span><span class="p">(</span><span class="s1">&#39;0x1.9000000000000p+6&#39;</span><span class="p">)</span>
+<span class="n">_0x61</span> <span class="o">=</span> <span class="n">_0x3fe</span><span class="p">()</span>
+<span class="n">_0x62</span> <span class="o">=</span> <span class="n">_0x452</span><span class="p">()</span>
+<span class="n">_0x5ed</span><span class="p">()</span>
+<span class="n">_0x641</span><span class="p">()</span>
+<span class="n">_0x5e0</span><span class="p">()</span>
+<span class="n">_0x61</span> <span class="o">=</span> <span class="n">_0x452</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>

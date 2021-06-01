@@ -12,6 +12,14 @@ obscurepy.handlers.assign\_handler module
    :undoc-members:
    :show-inheritance:
 
+obscurepy.handlers.attribute\_handler module
+--------------------------------------------
+
+.. automodule:: obscurepy.handlers.attribute_handler
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 obscurepy.handlers.call\_handler module
 ---------------------------------------
 

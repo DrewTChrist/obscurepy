@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>obscurepy.handlers.name_handler &mdash; obscurepy 0.6.0 documentation</title>
+  <title>obscurepy.handlers.name_handler &mdash; obscurepy 0.7.0 documentation</title>
 
 
 
@@ -156,26 +156,109 @@
            <div itemprop="articleBody">
 
   <h1>Source code for obscurepy.handlers.name_handler</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">obscurepy.handlers.handler</span> <span class="kn">import</span> <span class="n">Handler</span>
+<span></span><span class="kn">import</span> <span class="nn">ast</span>
+<span class="kn">from</span> <span class="nn">obscurepy.handlers.handler</span> <span class="kn">import</span> <span class="n">Handler</span>
 <span class="kn">from</span> <span class="nn">obscurepy.utils.definition_tracker</span> <span class="kn">import</span> <span class="n">DefinitionTracker</span>
-<span class="kn">from</span> <span class="nn">obscurepy.treeutils.class_scope_utils</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">obscurepy.utils.tree</span> <span class="kn">import</span> <span class="n">is_in_function_scope</span><span class="p">,</span> <span class="n">is_in_class_scope</span>
+<span class="kn">from</span> <span class="nn">obscurepy.utils.name</span> <span class="kn">import</span> <span class="n">hex_name</span>
 
 
-<div class="viewcode-block" id="obscure_class_bases"><a class="viewcode-back" href="../../../obscurepy.handlers.html#obscurepy.handlers.name_handler.obscure_class_bases">[docs]</a><span class="k">def</span> <span class="nf">obscure_class_bases</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
-    <span class="k">pass</span></div>
+<div class="viewcode-block" id="obscure_class_bases"><a class="viewcode-back" href="../../../obscurepy.handlers.html#obscurepy.handlers.name_handler.obscure_class_bases">[docs]</a><span class="k">def</span> <span class="nf">obscure_class_bases</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">tracker</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Obscures the Name nodes of a ClassDef node</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        **node (:obj: `ast.Name`)**: Current node to be obscured</span>
+
+<span class="sd">        **tracker (:obj: `DefinitionTracker`)**: The instance of the definition tracker for checking if bases exist</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The obscured ast.Name node if it is the child of a ClassDef node, otherwise it is not obscured</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">is_in_class_scope</span><span class="p">(</span><span class="n">node</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">type</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">)</span> <span class="o">!=</span> <span class="n">ast</span><span class="o">.</span><span class="n">Assign</span> <span class="ow">and</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">bases</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">id</span> <span class="ow">in</span> <span class="n">tracker</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;classes&#39;</span><span class="p">]:</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">tracker</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;classes&#39;</span><span class="p">][</span><span class="n">node</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="s1">&#39;new_name&#39;</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">node</span></div>
+
+
+<div class="viewcode-block" id="handle_function_scope"><a class="viewcode-back" href="../../../obscurepy.handlers.html#obscurepy.handlers.name_handler.handle_function_scope">[docs]</a><span class="k">def</span> <span class="nf">handle_function_scope</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">tracker</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Internal method for handling names within the scope of a function</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        **node (:obj: `ast.Name`)**: Current Name node</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">is_in_function_scope</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">function</span> <span class="ow">in</span> <span class="n">tracker</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;functions&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">id</span> <span class="ow">in</span> <span class="n">function</span><span class="p">[</span><span class="s1">&#39;variables&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="n">node</span><span class="o">.</span><span class="n">id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">tracker</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;classes&#39;</span><span class="p">]:</span>
+                <span class="n">node</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">function</span><span class="p">[</span><span class="s1">&#39;variables&#39;</span><span class="p">][</span><span class="n">node</span><span class="o">.</span><span class="n">id</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">node</span></div>
+
+
+<div class="viewcode-block" id="handle_global_scope"><a class="viewcode-back" href="../../../obscurepy.handlers.html#obscurepy.handlers.name_handler.handle_global_scope">[docs]</a><span class="k">def</span> <span class="nf">handle_global_scope</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">tracker</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Internal method for handling names within the global scope</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        **node (:obj: `ast.Name`)**: Current Name  node</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">is_in_function_scope</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">is_in_class_scope</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">id</span> <span class="o">!=</span> <span class="s1">&#39;self&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">id</span> <span class="ow">in</span> <span class="n">tracker</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;variables&#39;</span><span class="p">]:</span>
+                <span class="n">node</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">tracker</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;variables&#39;</span><span class="p">][</span><span class="n">node</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="s1">&#39;new_name&#39;</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="n">node</span><span class="o">.</span><span class="n">id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="s1">&#39;new_name&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">tracker</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;classes&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">()]:</span>
+                <span class="n">tracker</span><span class="o">.</span><span class="n">add_variable</span><span class="p">(</span>
+                    <span class="p">{</span><span class="s1">&#39;prev_name&#39;</span><span class="p">:</span> <span class="n">node</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s1">&#39;new_name&#39;</span><span class="p">:</span> <span class="n">hex_name</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">id</span><span class="p">)})</span>
+                <span class="n">node</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">tracker</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;variables&#39;</span><span class="p">][</span><span class="n">node</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="s1">&#39;new_name&#39;</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">node</span></div>
+
+
+<div class="viewcode-block" id="handle_class_scope"><a class="viewcode-back" href="../../../obscurepy.handlers.html#obscurepy.handlers.name_handler.handle_class_scope">[docs]</a><span class="k">def</span> <span class="nf">handle_class_scope</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">tracker</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Internal method for handling names within the scope of a class</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        **node (:obj: `ast.Name`)**: Current Name node</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">is_in_class_scope</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">class_</span> <span class="ow">in</span> <span class="n">tracker</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;classes&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">id</span> <span class="ow">in</span> <span class="n">class_</span><span class="p">[</span><span class="s1">&#39;variables&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="n">node</span><span class="o">.</span><span class="n">id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">tracker</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;classes&#39;</span><span class="p">]:</span>
+                <span class="n">node</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">tracker</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;classes&#39;</span><span class="p">][</span><span class="n">class_</span><span class="p">[</span>
+                    <span class="s1">&#39;prev_name&#39;</span><span class="p">]][</span><span class="s1">&#39;variables&#39;</span><span class="p">][</span><span class="n">node</span><span class="o">.</span><span class="n">id</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">node</span></div>
 
 
 <div class="viewcode-block" id="NameHandler"><a class="viewcode-back" href="../../../obscurepy.handlers.html#obscurepy.handlers.name_handler.NameHandler">[docs]</a><span class="k">class</span> <span class="nc">NameHandler</span><span class="p">(</span><span class="n">Handler</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Class to traverse and modify Name nodes in an ast</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">NameHandler</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_debug_name</span> <span class="o">=</span> <span class="s1">&#39;NameHandler&#39;</span>
+<span class="sd">    Attributes:</span>
+<span class="sd">        **_debug_name (str)**: Name of class used for debugging purposes</span>
+
+<span class="sd">        **execution_priority (int)**: Used to determine when NameHandler should be executed</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Creates a new instance of a NameHandler&quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">NameHandler</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">log</span><span class="p">,</span> <span class="n">verbose</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">execution_priority</span> <span class="o">=</span> <span class="mi">6</span>
 
 <div class="viewcode-block" id="NameHandler.visit_Name"><a class="viewcode-back" href="../../../obscurepy.handlers.html#obscurepy.handlers.name_handler.NameHandler.visit_Name">[docs]</a>    <span class="k">def</span> <span class="nf">visit_Name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Overrides the NodeTransformer visit_Name method. This method makes modifications</span>
+<span class="sd">           to the abstract syntax tree  when it encounters a Name node</span>
+
+<span class="sd">           Args:</span>
+<span class="sd">               **node (:obj: `ast.Name`)**: The current Name node to be modified</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                The modified Name node</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;visit_Name&#39;</span><span class="p">)</span>
         <span class="n">tracker</span> <span class="o">=</span> <span class="n">DefinitionTracker</span><span class="o">.</span><span class="n">get_instance</span><span class="p">()</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-            <span class="n">obscure_class_bases</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+            <span class="n">node</span> <span class="o">=</span> <span class="n">obscure_class_bases</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">tracker</span><span class="p">)</span>
+            <span class="n">node</span> <span class="o">=</span> <span class="n">handle_global_scope</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">tracker</span><span class="p">)</span>
+            <span class="n">node</span> <span class="o">=</span> <span class="n">handle_class_scope</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">tracker</span><span class="p">)</span>
+            <span class="n">node</span> <span class="o">=</span> <span class="n">handle_function_scope</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">tracker</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">node</span></div></div>
 </pre></div>

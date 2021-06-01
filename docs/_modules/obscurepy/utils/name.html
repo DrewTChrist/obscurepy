@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>obscurepy.treeutils.function_scope_utils &mdash; obscurepy 0.6.0 documentation</title>
+  <title>obscurepy.utils.name &mdash; obscurepy 0.7.0 documentation</title>
 
 
 
@@ -140,7 +140,7 @@
 
           <li><a href="../../index.html">Module code</a> &raquo;</li>
 
-      <li>obscurepy.treeutils.function_scope_utils</li>
+      <li>obscurepy.utils.name</li>
 
 
       <li class="wy-breadcrumbs-aside">
@@ -155,39 +155,33 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
 
-  <h1>Source code for obscurepy.treeutils.function_scope_utils</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">ast</span>
-<span class="kn">from</span> <span class="nn">obscurepy.treeutils.general</span> <span class="kn">import</span> <span class="o">*</span>
-
-
-<div class="viewcode-block" id="is_in_function_scope"><a class="viewcode-back" href="../../../obscurepy.treeutils.html#obscurepy.treeutils.function_scope_utils.is_in_function_scope">[docs]</a><span class="k">def</span> <span class="nf">is_in_function_scope</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Checks if a node is within the scope of a function</span>
+  <h1>Source code for obscurepy.utils.name</h1><div class="highlight"><pre>
+<div class="viewcode-block" id="hex_name"><a class="viewcode-back" href="../../../obscurepy.utils.html#obscurepy.utils.name.hex_name">[docs]</a><span></span><span class="k">def</span> <span class="nf">hex_name</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Generates an obscure name based on the class name hex value added to the length of the classes definition</span>
+<span class="sd">       dictionary</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        **node (:obj:)**: node for which to check the scope</span>
+<span class="sd">        **text (str)**: name of the class to be obscured</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        True if the node is within the scope of a function, False otherwise</span>
+<span class="sd">        An obscured name for a class</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">has_parent_of_type</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">ast</span><span class="o">.</span><span class="n">FunctionDef</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;_</span><span class="si">{</span><span class="nb">hex</span><span class="p">(</span><span class="n">get_ascii_sum</span><span class="p">(</span><span class="n">text</span><span class="p">))</span><span class="si">}</span><span class="s2">&quot;</span></div>
 
 
-<div class="viewcode-block" id="get_parent_function_name"><a class="viewcode-back" href="../../../obscurepy.treeutils.html#obscurepy.treeutils.function_scope_utils.get_parent_function_name">[docs]</a><span class="k">def</span> <span class="nf">get_parent_function_name</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Gets the name of the parent node if it is a function</span>
+<div class="viewcode-block" id="get_ascii_sum"><a class="viewcode-back" href="../../../obscurepy.utils.html#obscurepy.utils.name.get_ascii_sum">[docs]</a><span class="k">def</span> <span class="nf">get_ascii_sum</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns the sum of the ascii values of a string</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        **node (:obj:)**: node of which to get the parent function name</span>
+<span class="sd">        **text (str)**: string of which to get the ascii value</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        The name of the parent function if node is within the scope of a function</span>
-
-<span class="sd">    Raises:</span>
-<span class="sd">        Exception if the node is not within the scope of a function</span>
+<span class="sd">        The sum of the ascii values of the string provided</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">is_in_function_scope</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">name</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;This node is not within the scope of a function&quot;</span><span class="p">)</span></div>
+    <span class="nb">sum</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">text</span><span class="p">:</span>
+        <span class="nb">sum</span> <span class="o">+=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
+    <span class="k">return</span> <span class="nb">sum</span></div>
 </pre></div>
 
            </div>

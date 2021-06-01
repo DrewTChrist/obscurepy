@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>obscurepy.utils.loader &mdash; obscurepy 0.6.0 documentation</title>
+  <title>obscurepy.utils.loader &mdash; obscurepy 0.7.0 documentation</title>
 
 
 
@@ -162,13 +162,13 @@
 <span class="kn">import</span> <span class="nn">yaml</span>
 
 
-<div class="viewcode-block" id="load_handlers"><a class="viewcode-back" href="../../../obscurepy.utils.html#obscurepy.utils.loader.load_handlers">[docs]</a><span class="k">def</span> <span class="nf">load_handlers</span><span class="p">():</span>
+<div class="viewcode-block" id="load_handlers"><a class="viewcode-back" href="../../../obscurepy.utils.html#obscurepy.utils.loader.load_handlers">[docs]</a><span class="k">def</span> <span class="nf">load_handlers</span><span class="p">(</span><span class="n">log</span><span class="p">,</span> <span class="n">verbose</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Dynamically loads handler classes</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        The first handler in the chain of handlers</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">handlers</span> <span class="o">=</span> <span class="n">__create_handlers</span><span class="p">()</span>
+    <span class="n">handlers</span> <span class="o">=</span> <span class="n">__create_handlers</span><span class="p">(</span><span class="n">log</span><span class="p">,</span> <span class="n">verbose</span><span class="p">)</span>
 
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">handlers</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
         <span class="n">handlers</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_next</span><span class="p">(</span><span class="n">handlers</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span>
@@ -176,7 +176,7 @@
     <span class="k">return</span> <span class="n">handlers</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
 
 
-<span class="k">def</span> <span class="nf">__create_handlers</span><span class="p">():</span>
+<span class="k">def</span> <span class="nf">__create_handlers</span><span class="p">(</span><span class="n">log</span><span class="p">,</span> <span class="n">verbose</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Dynamically creates handler classes</span>
 
 <span class="sd">    Returns:</span>
@@ -185,7 +185,7 @@
     <span class="n">handlers</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getmembers</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="vm">__name__</span><span class="p">]):</span>
         <span class="k">if</span> <span class="n">inspect</span><span class="o">.</span><span class="n">isclass</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
-            <span class="n">handlers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">obj</span><span class="p">())</span>
+            <span class="n">handlers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">obj</span><span class="p">(</span><span class="n">log</span><span class="p">,</span> <span class="n">verbose</span><span class="p">))</span>
 
     <span class="n">handlers</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">execution_priority</span><span class="p">)</span>
 

@@ -9,7 +9,6 @@ Subpackages
 
    obscurepy.handlers
    obscurepy.scripts
-   obscurepy.treeutils
    obscurepy.utils
 
 Submodules

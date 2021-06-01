@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>obscurepy.handlers.assign_handler &mdash; obscurepy 0.6.0 documentation</title>
+  <title>obscurepy.handlers.assign_handler &mdash; obscurepy 0.7.0 documentation</title>
 
 
 
@@ -156,9 +156,7 @@
            <div itemprop="articleBody">
 
   <h1>Source code for obscurepy.handlers.assign_handler</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">ast</span> <span class="kn">import</span> <span class="n">FunctionDef</span><span class="p">,</span> <span class="n">ClassDef</span>
-<span class="kn">from</span> <span class="nn">obscurepy.handlers.handler</span> <span class="kn">import</span> <span class="n">Handler</span>
-<span class="kn">from</span> <span class="nn">obscurepy.utils.definition_tracker</span> <span class="kn">import</span> <span class="n">DefinitionTracker</span>
+<span></span><span class="kn">from</span> <span class="nn">obscurepy.handlers.handler</span> <span class="kn">import</span> <span class="n">Handler</span>
 
 
 <div class="viewcode-block" id="AssignHandler"><a class="viewcode-back" href="../../../obscurepy.handlers.html#obscurepy.handlers.assign_handler.AssignHandler">[docs]</a><span class="k">class</span> <span class="nc">AssignHandler</span><span class="p">(</span><span class="n">Handler</span><span class="p">):</span>
@@ -170,10 +168,9 @@
 <span class="sd">        **execution_priority (int)**: Used to determine when AssignHandler should be executed</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Creates a new instance of an AssignHandler&quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">AssignHandler</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_debug_name</span> <span class="o">=</span> <span class="s1">&#39;AssignHandler&#39;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">AssignHandler</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">log</span><span class="p">,</span> <span class="n">verbose</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">execution_priority</span> <span class="o">=</span> <span class="mi">5</span>
 
 <div class="viewcode-block" id="AssignHandler.visit_Assign"><a class="viewcode-back" href="../../../obscurepy.handlers.html#obscurepy.handlers.assign_handler.AssignHandler.visit_Assign">[docs]</a>    <span class="k">def</span> <span class="nf">visit_Assign</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
@@ -186,35 +183,8 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            The modified Assign node</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">tracker</span> <span class="o">=</span> <span class="n">DefinitionTracker</span><span class="o">.</span><span class="n">get_instance</span><span class="p">()</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">targets</span><span class="p">)):</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-                <span class="n">previous_name</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">id</span>
-                <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">tracker</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;variables&#39;</span><span class="p">]:</span>
-                    <span class="n">tracker</span><span class="o">.</span><span class="n">add_variable</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
-                <span class="n">node</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">tracker</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;variables&#39;</span><span class="p">][</span><span class="n">previous_name</span><span class="p">]</span>
-        <span class="k">return</span> <span class="n">node</span></div>
-
-    <span class="k">def</span> <span class="nf">_handle_function_scope_assignments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Internal method for handling assignments within the scope of a function</span>
-<span class="sd">        Args:</span>
-<span class="sd">            **node (:obj: `ast.Assign`)**: Current Assign node</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">pass</span>
-
-    <span class="k">def</span> <span class="nf">_handle_global_scope_assignments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Internal method for handling assignments within the global scope</span>
-<span class="sd">        Args:</span>
-<span class="sd">            **node (:obj: `ast.Assign`)**: Current Assign node</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">pass</span>
-
-    <span class="k">def</span> <span class="nf">_handle_class_scope_assignments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Internal method for handling assignments within the scope of a class</span>
-<span class="sd">        Args:</span>
-<span class="sd">            **node (:obj: `ast.Assign`)**: Current Assign node</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">pass</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;visit_Assign&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">node</span></div></div>
 </pre></div>
 
            </div>
