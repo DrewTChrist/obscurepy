@@ -1,6 +1,5 @@
 import ast
 from obscurepy.handlers.handler import Handler
-from obscurepy.utils.definition_tracker import DefinitionTracker
 
 
 def handle_str(node):
@@ -107,10 +106,9 @@ class ConstantHandler(Handler):
         **execution_priority (int)**: Used to determine when ConstantHandler should be executed
     """
 
-    def __init__(self):
+    def __init__(self, log=False, verbose=False):
         """Creates a new instance of a ConstantHandler"""
-        super(ConstantHandler, self).__init__()
-        self._debug_name = 'StrHandler'
+        super(ConstantHandler, self).__init__(log, verbose)
         self.execution_priority = 7
 
     def visit_Constant(self, node):
@@ -122,4 +120,5 @@ class ConstantHandler(Handler):
             Returns:
                 The obscured node
         """
+        self.logger.info('visit_Constant')
         return handle_constant_types(node)

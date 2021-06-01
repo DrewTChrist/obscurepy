@@ -1,4 +1,5 @@
 from obscurepy.handlers.assign_handler import AssignHandler
+from obscurepy.handlers.attribute_handler import AttributeHandler
 from obscurepy.handlers.call_handler import CallHandler
 from obscurepy.handlers.classdef_handler import ClassDefHandler
 from obscurepy.handlers.functiondef_handler import FunctionDefHandler

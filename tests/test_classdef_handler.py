@@ -18,7 +18,9 @@ class ClassDefHandlerTest(unittest.TestCase):
         self.source = 'class TestClass(BaseClass):\n\t' \
                       'eighty_four = 84\n\t' \
                       'def __init__(self):\n\t\t' \
-                      'self.forty_two = 42'
+                      'self.forty_two = 42\n\t' \
+                      'def some_method(self):\n\t\t' \
+                      'pass'
         self.tree = ast.parse(self.source)
 
     def test_visitClassDef(self):
@@ -29,16 +31,16 @@ class ClassDefHandlerTest(unittest.TestCase):
         class_dict = create_class_dictionary(self.tree.body[0])
         self.tracker.add_class(class_dict)
         class_ = self.tracker.definitions['classes']['TestClass']
-        self.assertEqual(class_['new_name'], '_0x397')
+        self.assertEqual(class_['new_name'], '_0x396')
         self.assertEqual(class_['prev_name'], 'TestClass')
-        self.assertEqual(class_['variables'][0], 'eighty_four')
-        self.assertEqual(class_['properties'][0], 'forty_two')
-        self.assertEqual(class_['methods'][0], '__init__')
+        self.assertEqual(class_['variables']['eighty_four'], '_0x4a5')
+        self.assertEqual(class_['properties']['forty_two'], '_0x3ed')
+        self.assertEqual(class_['methods']['some_method'], '_0x494')
         self.assertEqual(class_['bases'][0], 'BaseClass')
 
     def test_get_variables(self):
         variables = get_variables(self.tree.body[0])
-        self.assertEqual(variables[0], 'eighty_four')
+        self.assertEqual(variables['eighty_four'], '_0x4a5')
 
     def test_get_variables_none(self):
         tree = ast.parse('class TestClass:\n\tpass')
@@ -47,7 +49,7 @@ class ClassDefHandlerTest(unittest.TestCase):
 
     def test_get_properties(self):
         properties = get_properties(self.tree.body[0])
-        self.assertEqual(properties[0], 'forty_two')
+        self.assertEqual(properties['forty_two'], '_0x3ed')
 
     def test_get_properties_none(self):
         tree = ast.parse('class TestClass:\n\tpass')
@@ -56,7 +58,7 @@ class ClassDefHandlerTest(unittest.TestCase):
 
     def test_get_methods(self):
         methods = get_methods(self.tree.body[0])
-        self.assertEqual(methods[0], '__init__')
+        self.assertEqual(methods['some_method'], '_0x494')
 
     def test_get_methods_none(self):
         tree = ast.parse('class TestClass:\n\tpass')

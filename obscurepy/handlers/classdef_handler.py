@@ -2,10 +2,11 @@ import ast
 
 from obscurepy.handlers.handler import Handler
 from obscurepy.utils.definition_tracker import DefinitionTracker
+from obscurepy.utils.name import hex_name
 
 
 def get_base_classes(node):
-    """An ugly function that gets a list of classes inhereted from
+    """An ugly function that gets a list of classes inherited from
 
     Args:
         **node (:obj: `ast.ClassDef`)**: The ClassDef node for which to get the base classes of
@@ -29,10 +30,11 @@ def get_methods(node):
     Returns:
         List of class methods (str), or empty list if none
     """
-    methods = []
+    methods = {}
     for method in node.body:
         if type(method) == ast.FunctionDef:
-            methods.append(method.name)
+            if method.name != '__init__':
+                methods[method.name] = hex_name(method.name)
     return methods
 
 
@@ -45,16 +47,15 @@ def get_properties(node):
     Returns:
         List of class properties (str), or empty list if none
     """
-    properties = []
+    properties = {}
     for method in node.body:
         if type(method) == ast.FunctionDef:
             # This needs to check for all 'self' properties no just those in __init__
-            if method.name == '__init__':
-                for assign in method.body:
-                    if type(assign) == ast.Assign:
-                        for target in assign.targets:
-                            if target.value.id == 'self':
-                                properties.append(target.attr)
+            for assign in method.body:
+                if type(assign) == ast.Assign:
+                    for target in assign.targets:
+                        if target.value.id == 'self' and target.attr not in properties:
+                            properties[target.attr] = hex_name(target.attr)
     return properties
 
 
@@ -67,18 +68,18 @@ def get_variables(node):
     Returns:
         List of class variables (str), or empty list if none
     """
-    variables = []
+    variables = {}
     for variable in node.body:
         if type(variable) == ast.Assign:
             for target in variable.targets:
                 if type(target) == ast.Name:
-                    variables.append(target.id)
+                    variables[target.id] = hex_name(target.id)
     return variables
 
 
 def create_class_dictionary(node):
     class_dict = {
-        'new_name': "",
+        'new_name': hex_name(node.name),
         'prev_name': node.name,
         'variables': get_variables(node),
         'properties': get_properties(node),
@@ -97,10 +98,9 @@ class ClassDefHandler(Handler):
         **execution_priority (int)**: Used to determine when ClassHandler should be executed
     """
 
-    def __init__(self):
+    def __init__(self, log=False, verbose=False):
         """Creates a new instance of a ClassHandler"""
-        super(ClassDefHandler, self).__init__()
-        self._debug_name = 'ClassDefHandler'
+        super(ClassDefHandler, self).__init__(log, verbose)
         self.execution_priority = 1
 
     def visit_ClassDef(self, node):
@@ -113,6 +113,7 @@ class ClassDefHandler(Handler):
             Returns:
                 The modified ClassDef node
         """
+        self.logger.info('visit_ClassDef')
         tracker = DefinitionTracker.get_instance()
         # Check to make sure this node is not already in tracker definitions
         if isinstance(node.name, str):

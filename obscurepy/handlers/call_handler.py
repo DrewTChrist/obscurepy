@@ -10,10 +10,9 @@ class CallHandler(Handler):
         **execution_priority (int)**: Used to determine when CallHandler should be executed
     """
 
-    def __init__(self):
+    def __init__(self, log=False, verbose=False):
         """Creates a new instance of a CallHandler"""
-        super(CallHandler, self).__init__()
-        self._debug_name = 'CallHandler'
+        super(CallHandler, self).__init__(log, verbose)
         self.execution_priority = 3
 
     def visit_Call(self, node):
@@ -23,10 +22,6 @@ class CallHandler(Handler):
         Args:
             **node (:obj: `ast.Call`)**: The current Call node to be modified
         """
+        self.logger.info('visit_Call')
         tracker = DefinitionTracker.get_instance()
-        if isinstance(node.func.id, str):
-            if node.func.id in tracker.definitions['classes']:
-                node.func.id = tracker.definitions['classes'][node.func.id]['new_name']
-            elif node.func.id in tracker.definitions['functions']:
-                node.func.id = tracker.definitions['functions'][node.func.id]['new_name']
         return node

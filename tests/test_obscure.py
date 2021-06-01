@@ -80,3 +80,11 @@ class ObscureTest(unittest.TestCase):
     def test_obscure_no_args(self):
         result = self.runner.invoke(obscure, [])
         self.assertTrue(result.exit_code > 0)
+
+    def test_obscure_file_logging(self):
+        with self.runner.isolated_filesystem():
+            self.create_test_file()
+            result = self.runner.invoke(
+                obscure, ['--filepath=my_module.py', '-l'])
+            self.assertEqual(result.exit_code, 0)
+            self.assertTrue(os.path.exists('obscurepy.log'))
