@@ -22,6 +22,15 @@ def get_args(node):
     return args
 
 
+def get_functions(node):
+    functions = {}
+    for function in node.body:
+        if type(function) == ast.FunctionDef:
+            func_dict = create_function_dictionary(function)
+            functions[function.name] = func_dict
+    return functions
+
+
 def get_return(node):
     return_ = {}
     for nd in node.body:
@@ -35,6 +44,7 @@ def create_function_dictionary(node):
         'new_name': hex_name(node.name),
         'prev_name': node.name,
         'variables': get_variables(node),
+        'functions': get_functions(node),
         'args': get_args(node),
         'return': get_return(node),
     }
@@ -62,7 +72,13 @@ def handle_class_scope(node, tracker):
 
 def handle_function_scope(node, tracker):
     if is_in_function_scope(node):
-        pass
+        for function in tracker.definitions['functions'].values():
+            if node.name in function['functions']:
+                node.name = function['functions'][node.name]['new_name']
+            elif node.parent.name == function['new_name']:
+                func_dict = create_function_dictionary(node)
+                function['functions'][func_dict['prev_name']] = func_dict
+                node.name = function['functions'][node.name]['new_name']
     return node
 
 
@@ -70,8 +86,6 @@ class FunctionDefHandler(Handler):
     """Class to traverse and modify FunctionDef nodes in an ast
 
     Attributes:
-        **_debug_name (str)**: Name of class used for debugging purposes
-
         **execution_priority (int)**: Used to determine when FunctionHandler should be executed
     """
 
@@ -96,5 +110,6 @@ class FunctionDefHandler(Handler):
             node = handle_global_scope(node, tracker)
             node = handle_class_scope(node, tracker)
             node = handle_function_scope(node, tracker)
+            self.generic_visit(node)
 
         return node
