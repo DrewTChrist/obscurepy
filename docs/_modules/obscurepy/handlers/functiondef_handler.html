@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>obscurepy.handlers.functiondef_handler &mdash; obscurepy 0.6.0 documentation</title>
+  <title>obscurepy.handlers.functiondef_handler &mdash; obscurepy 0.7.0 documentation</title>
 
 
 
@@ -159,59 +159,97 @@
 <span></span><span class="kn">import</span> <span class="nn">ast</span>
 <span class="kn">from</span> <span class="nn">obscurepy.handlers.handler</span> <span class="kn">import</span> <span class="n">Handler</span>
 <span class="kn">from</span> <span class="nn">obscurepy.utils.definition_tracker</span> <span class="kn">import</span> <span class="n">DefinitionTracker</span>
-<span class="kn">from</span> <span class="nn">obscurepy.treeutils.function_scope_utils</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">obscurepy.treeutils.class_scope_utils</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">obscurepy.utils.tree</span> <span class="kn">import</span> <span class="n">is_in_class_scope</span><span class="p">,</span> <span class="n">is_in_function_scope</span>
+<span class="kn">from</span> <span class="nn">obscurepy.utils.name</span> <span class="kn">import</span> <span class="n">hex_name</span>
 
 
 <div class="viewcode-block" id="get_variables"><a class="viewcode-back" href="../../../obscurepy.handlers.html#obscurepy.handlers.functiondef_handler.get_variables">[docs]</a><span class="k">def</span> <span class="nf">get_variables</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
-    <span class="n">variables</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">variables</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">for</span> <span class="n">variable</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">body</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">variable</span><span class="p">)</span> <span class="o">==</span> <span class="n">ast</span><span class="o">.</span><span class="n">Assign</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">variable</span><span class="o">.</span><span class="n">targets</span><span class="p">:</span>
                 <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">target</span><span class="p">)</span> <span class="o">==</span> <span class="n">ast</span><span class="o">.</span><span class="n">Name</span><span class="p">:</span>
-                    <span class="n">variables</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">target</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+                    <span class="n">variables</span><span class="p">[</span><span class="n">target</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">hex_name</span><span class="p">(</span><span class="n">target</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">variables</span></div>
 
 
 <div class="viewcode-block" id="get_args"><a class="viewcode-back" href="../../../obscurepy.handlers.html#obscurepy.handlers.functiondef_handler.get_args">[docs]</a><span class="k">def</span> <span class="nf">get_args</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
-    <span class="n">args</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">args</span><span class="p">:</span>
-        <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">arg</span><span class="o">.</span><span class="n">arg</span><span class="p">)</span>
+        <span class="n">args</span><span class="p">[</span><span class="n">arg</span><span class="o">.</span><span class="n">arg</span><span class="p">]</span> <span class="o">=</span> <span class="n">hex_name</span><span class="p">(</span><span class="n">arg</span><span class="o">.</span><span class="n">arg</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">args</span></div>
 
 
+<div class="viewcode-block" id="get_functions"><a class="viewcode-back" href="../../../obscurepy.handlers.html#obscurepy.handlers.functiondef_handler.get_functions">[docs]</a><span class="k">def</span> <span class="nf">get_functions</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
+    <span class="n">functions</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">function</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">body</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">function</span><span class="p">)</span> <span class="o">==</span> <span class="n">ast</span><span class="o">.</span><span class="n">FunctionDef</span><span class="p">:</span>
+            <span class="n">func_dict</span> <span class="o">=</span> <span class="n">create_function_dictionary</span><span class="p">(</span><span class="n">function</span><span class="p">)</span>
+            <span class="n">functions</span><span class="p">[</span><span class="n">function</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">func_dict</span>
+    <span class="k">return</span> <span class="n">functions</span></div>
+
+
 <div class="viewcode-block" id="get_return"><a class="viewcode-back" href="../../../obscurepy.handlers.html#obscurepy.handlers.functiondef_handler.get_return">[docs]</a><span class="k">def</span> <span class="nf">get_return</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
-    <span class="n">return_</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">return_</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">for</span> <span class="n">nd</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">body</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">nd</span><span class="p">)</span> <span class="o">==</span> <span class="n">ast</span><span class="o">.</span><span class="n">Return</span><span class="p">:</span>
-            <span class="n">return_</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">id</span>
+            <span class="n">return_</span><span class="p">[</span><span class="n">nd</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">hex_name</span><span class="p">(</span><span class="n">nd</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">return_</span></div>
 
 
 <div class="viewcode-block" id="create_function_dictionary"><a class="viewcode-back" href="../../../obscurepy.handlers.html#obscurepy.handlers.functiondef_handler.create_function_dictionary">[docs]</a><span class="k">def</span> <span class="nf">create_function_dictionary</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
     <span class="n">func_dict</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s1">&#39;new_name&#39;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="s1">&#39;new_name&#39;</span><span class="p">:</span> <span class="n">hex_name</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">name</span><span class="p">),</span>
         <span class="s1">&#39;prev_name&#39;</span><span class="p">:</span> <span class="n">node</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
         <span class="s1">&#39;variables&#39;</span><span class="p">:</span> <span class="n">get_variables</span><span class="p">(</span><span class="n">node</span><span class="p">),</span>
+        <span class="s1">&#39;functions&#39;</span><span class="p">:</span> <span class="n">get_functions</span><span class="p">(</span><span class="n">node</span><span class="p">),</span>
         <span class="s1">&#39;args&#39;</span><span class="p">:</span> <span class="n">get_args</span><span class="p">(</span><span class="n">node</span><span class="p">),</span>
         <span class="s1">&#39;return&#39;</span><span class="p">:</span> <span class="n">get_return</span><span class="p">(</span><span class="n">node</span><span class="p">),</span>
     <span class="p">}</span>
     <span class="k">return</span> <span class="n">func_dict</span></div>
 
 
+<div class="viewcode-block" id="handle_global_scope"><a class="viewcode-back" href="../../../obscurepy.handlers.html#obscurepy.handlers.functiondef_handler.handle_global_scope">[docs]</a><span class="k">def</span> <span class="nf">handle_global_scope</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">tracker</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">is_in_function_scope</span><span class="p">(</span><span class="n">node</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">is_in_class_scope</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
+        <span class="n">func_dict</span> <span class="o">=</span> <span class="n">create_function_dictionary</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+        <span class="n">tracker</span><span class="o">.</span><span class="n">add_function</span><span class="p">(</span><span class="n">func_dict</span><span class="p">)</span>
+        <span class="n">node</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">tracker</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;functions&#39;</span><span class="p">][</span><span class="n">node</span><span class="o">.</span><span class="n">name</span><span class="p">][</span><span class="s1">&#39;new_name&#39;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">node</span></div>
+
+
+<div class="viewcode-block" id="handle_class_scope"><a class="viewcode-back" href="../../../obscurepy.handlers.html#obscurepy.handlers.functiondef_handler.handle_class_scope">[docs]</a><span class="k">def</span> <span class="nf">handle_class_scope</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">tracker</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">is_in_class_scope</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">class_</span> <span class="ow">in</span> <span class="n">tracker</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;classes&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">class_</span><span class="p">[</span><span class="s1">&#39;methods&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="n">class_</span><span class="p">[</span><span class="s1">&#39;new_name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+                <span class="n">func_dict</span> <span class="o">=</span> <span class="n">create_function_dictionary</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+                <span class="n">func_dict</span><span class="p">[</span><span class="s1">&#39;new_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">class_</span><span class="p">[</span><span class="s1">&#39;methods&#39;</span><span class="p">][</span><span class="n">node</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+                <span class="n">class_</span><span class="p">[</span><span class="s1">&#39;methods&#39;</span><span class="p">][</span><span class="n">node</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">func_dict</span>
+                <span class="n">node</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">class_</span><span class="p">[</span><span class="s1">&#39;methods&#39;</span><span class="p">][</span><span class="n">node</span><span class="o">.</span><span class="n">name</span><span class="p">][</span><span class="s1">&#39;new_name&#39;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">node</span></div>
+
+
+<div class="viewcode-block" id="handle_function_scope"><a class="viewcode-back" href="../../../obscurepy.handlers.html#obscurepy.handlers.functiondef_handler.handle_function_scope">[docs]</a><span class="k">def</span> <span class="nf">handle_function_scope</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">tracker</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">is_in_function_scope</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">function</span> <span class="ow">in</span> <span class="n">tracker</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;functions&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">function</span><span class="p">[</span><span class="s1">&#39;functions&#39;</span><span class="p">]:</span>
+                <span class="n">node</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">function</span><span class="p">[</span><span class="s1">&#39;functions&#39;</span><span class="p">][</span><span class="n">node</span><span class="o">.</span><span class="n">name</span><span class="p">][</span><span class="s1">&#39;new_name&#39;</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">function</span><span class="p">[</span><span class="s1">&#39;new_name&#39;</span><span class="p">]:</span>
+                <span class="n">func_dict</span> <span class="o">=</span> <span class="n">create_function_dictionary</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+                <span class="n">function</span><span class="p">[</span><span class="s1">&#39;functions&#39;</span><span class="p">][</span><span class="n">func_dict</span><span class="p">[</span><span class="s1">&#39;prev_name&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">func_dict</span>
+                <span class="n">node</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">function</span><span class="p">[</span><span class="s1">&#39;functions&#39;</span><span class="p">][</span><span class="n">node</span><span class="o">.</span><span class="n">name</span><span class="p">][</span><span class="s1">&#39;new_name&#39;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">node</span></div>
+
+
 <div class="viewcode-block" id="FunctionDefHandler"><a class="viewcode-back" href="../../../obscurepy.handlers.html#obscurepy.handlers.functiondef_handler.FunctionDefHandler">[docs]</a><span class="k">class</span> <span class="nc">FunctionDefHandler</span><span class="p">(</span><span class="n">Handler</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Class to traverse and modify FunctionDef nodes in an ast</span>
 
 <span class="sd">    Attributes:</span>
-<span class="sd">        **_debug_name (str)**: Name of class used for debugging purposes</span>
-
 <span class="sd">        **execution_priority (int)**: Used to determine when FunctionHandler should be executed</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Creates a new instance of a FunctionHandler&quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">FunctionDefHandler</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_debug_name</span> <span class="o">=</span> <span class="s1">&#39;FunctionDefHandler&#39;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">FunctionDefHandler</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">log</span><span class="p">,</span> <span class="n">verbose</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">execution_priority</span> <span class="o">=</span> <span class="mi">2</span>
 
 <div class="viewcode-block" id="FunctionDefHandler.visit_FunctionDef"><a class="viewcode-back" href="../../../obscurepy.handlers.html#obscurepy.handlers.functiondef_handler.FunctionDefHandler.visit_FunctionDef">[docs]</a>    <span class="k">def</span> <span class="nf">visit_FunctionDef</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
@@ -224,33 +262,15 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            The modified FunctionDef node</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;visit_FunctionDef&#39;</span><span class="p">)</span>
         <span class="n">tracker</span> <span class="o">=</span> <span class="n">DefinitionTracker</span><span class="o">.</span><span class="n">get_instance</span><span class="p">()</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-            <span class="n">func_dict</span> <span class="o">=</span> <span class="n">create_function_dictionary</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
-            <span class="n">tracker</span><span class="o">.</span><span class="n">add_function</span><span class="p">(</span><span class="n">func_dict</span><span class="p">)</span>
-            <span class="n">node</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">tracker</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;functions&#39;</span><span class="p">][</span><span class="n">node</span><span class="o">.</span><span class="n">name</span><span class="p">][</span><span class="s1">&#39;new_name&#39;</span><span class="p">]</span>
-        <span class="k">return</span> <span class="n">node</span></div>
+            <span class="n">node</span> <span class="o">=</span> <span class="n">handle_global_scope</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">tracker</span><span class="p">)</span>
+            <span class="n">node</span> <span class="o">=</span> <span class="n">handle_class_scope</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">tracker</span><span class="p">)</span>
+            <span class="n">node</span> <span class="o">=</span> <span class="n">handle_function_scope</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">tracker</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">generic_visit</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_handle_global_scope</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">is_in_function_scope</span><span class="p">(</span><span class="n">node</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">is_in_class_scope</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
-            <span class="c1"># handle global function</span>
-            <span class="k">pass</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;This FunctionDef is not in the global scope&#39;</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">_handle_class_scope</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">is_in_class_scope</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
-            <span class="c1"># handle class function</span>
-            <span class="k">pass</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;This FunctionDef is not in a class scope&#39;</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">_handle_function_scope</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">is_in_function_scope</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
-            <span class="c1"># handle function within a function</span>
-            <span class="k">pass</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;This FunctionDef is not in a function scope&#39;</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">node</span></div></div>
 </pre></div>
 
            </div>

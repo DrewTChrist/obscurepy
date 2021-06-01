@@ -11,6 +11,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
+## [0.7.0](https://github.com/drewtchrist/obscurepy/releases/tag/v0.7.0) - 2021-06-01
+### Added
+* Release script to handle updating version numbers and changelog
+
+### Changed
+* NameHandler now obscures base classes and handles all ast.Names
+* AttributeHandler handles class properties now
+* All utilities go in their own module in the utils package
+* Logging is optional with the -l flag
+* FunctionDefHandler now handles functions inside of functions becuase.. python
+
+### Removed
+
 ## [0.6.0](https://github.com/drewtchrist/obscurepy/releases/tag/v0.6.0) - 2021-05-24
 ### Added
 * Added deployment scripts for pypi and testpypi

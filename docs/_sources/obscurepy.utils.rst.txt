@@ -20,6 +20,30 @@ obscurepy.utils.loader module
    :undoc-members:
    :show-inheritance:
 
+obscurepy.utils.log module
+--------------------------
+
+.. automodule:: obscurepy.utils.log
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+obscurepy.utils.name module
+---------------------------
+
+.. automodule:: obscurepy.utils.name
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+obscurepy.utils.tree module
+---------------------------
+
+.. automodule:: obscurepy.utils.tree
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Module contents
 ---------------
 

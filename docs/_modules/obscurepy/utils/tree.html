@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>obscurepy.treeutils.general &mdash; obscurepy 0.6.0 documentation</title>
+  <title>obscurepy.utils.tree &mdash; obscurepy 0.7.0 documentation</title>
 
 
 
@@ -140,7 +140,7 @@
 
           <li><a href="../../index.html">Module code</a> &raquo;</li>
 
-      <li>obscurepy.treeutils.general</li>
+      <li>obscurepy.utils.tree</li>
 
 
       <li class="wy-breadcrumbs-aside">
@@ -155,11 +155,11 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
 
-  <h1>Source code for obscurepy.treeutils.general</h1><div class="highlight"><pre>
+  <h1>Source code for obscurepy.utils.tree</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">ast</span>
 
 
-<div class="viewcode-block" id="add_parents"><a class="viewcode-back" href="../../../obscurepy.treeutils.html#obscurepy.treeutils.general.add_parents">[docs]</a><span class="k">def</span> <span class="nf">add_parents</span><span class="p">(</span><span class="n">root</span><span class="p">):</span>
+<div class="viewcode-block" id="add_parents"><a class="viewcode-back" href="../../../obscurepy.utils.html#obscurepy.utils.tree.add_parents">[docs]</a><span class="k">def</span> <span class="nf">add_parents</span><span class="p">(</span><span class="n">root</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Helper function to add parent property to ast tree nodes</span>
 <span class="sd">       Credit goes to this answer here: https://stackoverflow.com/a/43311383</span>
 
@@ -171,7 +171,7 @@
             <span class="n">child</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">node</span></div>
 
 
-<div class="viewcode-block" id="get_node_type"><a class="viewcode-back" href="../../../obscurepy.treeutils.html#obscurepy.treeutils.general.get_node_type">[docs]</a><span class="k">def</span> <span class="nf">get_node_type</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
+<div class="viewcode-block" id="get_node_type"><a class="viewcode-back" href="../../../obscurepy.utils.html#obscurepy.utils.tree.get_node_type">[docs]</a><span class="k">def</span> <span class="nf">get_node_type</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Simply gets the type of an ast node</span>
 
 <span class="sd">    Args:</span>
@@ -184,7 +184,7 @@
     <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="n">node</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="has_parent_of_type"><a class="viewcode-back" href="../../../obscurepy.treeutils.html#obscurepy.treeutils.general.has_parent_of_type">[docs]</a><span class="k">def</span> <span class="nf">has_parent_of_type</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">type_</span><span class="p">):</span>
+<div class="viewcode-block" id="has_parent_of_type"><a class="viewcode-back" href="../../../obscurepy.utils.html#obscurepy.utils.tree.has_parent_of_type">[docs]</a><span class="k">def</span> <span class="nf">has_parent_of_type</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">type_</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Simply checks if the parent of a node is of a certain type</span>
 
 <span class="sd">    Args:</span>
@@ -196,6 +196,66 @@
 <span class="sd">        True if node is of type type_, False otherwise</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">get_node_type</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">)</span> <span class="o">==</span> <span class="n">type_</span></div>
+
+
+<div class="viewcode-block" id="is_in_function_scope"><a class="viewcode-back" href="../../../obscurepy.utils.html#obscurepy.utils.tree.is_in_function_scope">[docs]</a><span class="k">def</span> <span class="nf">is_in_function_scope</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Checks if a node is within the scope of a function</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        **node (:obj:)**: node for which to check the scope</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        True if the node is within the scope of a function, False otherwise</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">has_parent_of_type</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">ast</span><span class="o">.</span><span class="n">FunctionDef</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_parent_function_name"><a class="viewcode-back" href="../../../obscurepy.utils.html#obscurepy.utils.tree.get_parent_function_name">[docs]</a><span class="k">def</span> <span class="nf">get_parent_function_name</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Gets the name of the parent node if it is a function</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        **node (:obj:)**: node of which to get the parent function name</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The name of the parent function if node is within the scope of a function</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        Exception if the node is not within the scope of a function</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">is_in_function_scope</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">name</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;This node is not within the scope of a function&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="is_in_class_scope"><a class="viewcode-back" href="../../../obscurepy.utils.html#obscurepy.utils.tree.is_in_class_scope">[docs]</a><span class="k">def</span> <span class="nf">is_in_class_scope</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Checks if a node is within the scope of a class</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        **node (:obj:)**: node for which to check the scope</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        True if the node is within the scope of a class, False otherwise</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">has_parent_of_type</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">ast</span><span class="o">.</span><span class="n">ClassDef</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_parent_class_name"><a class="viewcode-back" href="../../../obscurepy.utils.html#obscurepy.utils.tree.get_parent_class_name">[docs]</a><span class="k">def</span> <span class="nf">get_parent_class_name</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Gets the name of the parent node if it is a class</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        **node (:obj:)**: node of which to get the parent class name</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The name of the parent class if node is within the scope of a class</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        Exception if the node is not within the scope of a class</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">is_in_class_scope</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">name</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;This node is not within a class scope&quot;</span><span class="p">)</span></div>
 </pre></div>
 
            </div>
