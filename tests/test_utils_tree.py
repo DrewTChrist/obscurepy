@@ -45,6 +45,16 @@ class GeneralTest(unittest.TestCase):
     def test_is_in_class_scope(self):
         self.assertTrue(is_in_class_scope(self.class_tree.body[0].body[0]))
 
+    def test_is_in_call(self):
+        tree = ast.parse('a = some_function()')
+        add_parents(tree)
+        self.assertTrue(is_in_call(tree.body[0].value.func))
+
+    def test_is_in_call_outside(self):
+        tree = ast.parse('a = some_function()')
+        add_parents(tree)
+        self.assertFalse(is_in_call(tree.body[0]))
+
     def test_get_parent_class_name(self):
         self.assertTrue(get_parent_class_name(
             self.class_tree.body[0].body[0]), "TestClass")

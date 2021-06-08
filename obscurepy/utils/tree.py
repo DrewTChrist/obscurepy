@@ -82,6 +82,18 @@ def is_in_class_scope(node):
     return has_parent_of_type(node, ast.ClassDef)
 
 
+def is_in_call(node):
+    """Checks if a node is inside of an ast.Call node
+
+    Args:
+        **node (:obj:)**: node to check
+
+    Returns:
+        True if node has a parent of ast.Call, else False
+    """
+    return has_parent_of_type(node, ast.Call)
+
+
 def get_parent_class_name(node):
     """Gets the name of the parent node if it is a class
 
