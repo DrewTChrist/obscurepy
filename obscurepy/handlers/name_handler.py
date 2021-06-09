@@ -35,9 +35,12 @@ def handle_function_scope(node, tracker):
         An ast node
     """
     if is_in_function_scope(node.parent):
-        for function in tracker.definitions['functions'].values():
-            if node.id in function['variables'] and node.id not in tracker.definitions['classes']:
-                node.id = function['variables'][node.id]
+        if tracker.get_nested_in_function('variables', node.id):
+            node.id = tracker.get_nested_in_function(
+                'variables', node.id)['new_name']
+        elif tracker.get_double_nested_in_function('variables', node.id):
+            node.id = tracker.get_double_nested_in_function(
+                'variables', node.id)['new_name']
 
     return node
 
@@ -81,7 +84,7 @@ def handle_class_scope(node, tracker):
         for class_ in tracker.definitions['classes'].values():
             if node.id in class_['variables'] and node.id not in tracker.definitions['classes']:
                 node.id = tracker.definitions['classes'][class_[
-                    'prev_name']]['variables'][node.id]
+                    'prev_name']]['variables'][node.id]['new_name']
 
     return node
 
@@ -102,10 +105,9 @@ def handle_calls(node, tracker):
             node.id = tracker.definitions['classes'][node.id]['new_name']
         elif node.id in tracker.definitions['functions']:
             node.id = tracker.definitions['functions'][node.id]['new_name']
-        else:
-            for function in tracker.definitions['functions'].values():
-                if node.id in function['functions']:
-                    node.id = function['functions'][node.id]['new_name']
+        elif tracker.get_nested_in_function('functions', node.id):
+            node.id = tracker.get_nested_in_function(
+                'functions', node.id)['new_name']
 
     return node
 
@@ -135,14 +137,12 @@ def handle_returns(node, tracker):
             node.id = tracker.definitions['functions'][node.id]['new_name']
         elif node.id in tracker.definitions['variables']:
             node.id = tracker.definitions['variables'][node.id]['new_name']
-        else:
-            for function in tracker.definitions['functions'].values():
-                if node.id in function['functions']:
-                    node.id = function['functions'][node.id]['new_name']
-
-            for function in tracker.definitions['functions'].values():
-                if node.id in function['variables']:
-                    node.id = function['variables'][node.id]
+        elif tracker.get_nested_in_function('functions', node.id):
+            node.id = tracker.get_nested_in_function(
+                'functions', node.id)['new_name']
+        elif tracker.get_nested_in_function('variables', node.id):
+            node.id = tracker.get_nested_in_function(
+                'variables', node.id)['new_name']
 
     return node
 

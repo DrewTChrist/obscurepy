@@ -19,7 +19,8 @@ def get_variables(node):
         if type(variable) == ast.Assign:
             for target in variable.targets:
                 if type(target) == ast.Name:
-                    variables[target.id] = hex_name(target.id)
+                    variables[target.id] = {'new_name': hex_name(
+                        target.id), 'prev_name': target.id}
 
     return variables
 
@@ -74,8 +75,9 @@ def get_return(node):
                 return_[current_node.value.id] = hex_name(
                     current_node.value.id)
             elif type(current_node.value) == ast.Call:
-                return_[current_node.value.func.id] = hex_name(
-                    current_node.value.func.id)
+                if hasattr(current_node.value.func, 'id'):
+                    return_[current_node.value.func.id] = hex_name(
+                        current_node.value.func.id)
 
     return return_
 

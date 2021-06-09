@@ -34,7 +34,8 @@ class FunctionDefHandlerTest(unittest.TestCase):
         function = self.tracker.definitions['functions']['FirstFunction']
         self.assertEqual(function['new_name'], '_0x54e')
         self.assertEqual(function['prev_name'], 'FirstFunction')
-        self.assertEqual(function['variables']['first_variable'], '_0x5cd')
+        self.assertEqual(function['variables']
+                         ['first_variable']['new_name'], '_0x5cd')
         self.assertEqual(function['args']['param_1'], '_0x2a1')
         self.assertEqual(function['return']['second_variable'], '_0x621')
 
@@ -50,8 +51,8 @@ class FunctionDefHandlerTest(unittest.TestCase):
 
     def test_get_variables(self):
         variables = get_variables(self.tree.body[0])
-        self.assertEqual(variables['first_variable'], '_0x5cd')
-        self.assertEqual(variables['second_variable'], '_0x621')
+        self.assertEqual(variables['first_variable']['new_name'], '_0x5cd')
+        self.assertEqual(variables['second_variable']['new_name'], '_0x621')
 
     def test_get_variables_none(self):
         tree = ast.parse('def FirstFunction():\n\tpass')

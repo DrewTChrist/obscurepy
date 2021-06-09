@@ -11,37 +11,40 @@ def handle_str(node):
     Returns:
         A new obscured node with updated locations
     """
-    new_node = ast.Call(
-        func=ast.Attribute(
-            value=ast.Constant(value='', kind=None),
-            attr='join',
-            ctx=ast.Load(),
-        ),
-        args=[
-            ast.ListComp(
-                elt=ast.Call(
-                    func=ast.Name(id='chr', ctx=ast.Load()),
-                    args=[ast.Name(id='x', ctx=ast.Load())],
-                    keywords=[]
-                ),
-                generators=[
-                    ast.comprehension(
-                        target=ast.Name(id='x', ctx=ast.Store()),
-                        iter=ast.List(
-                            elts=[
-                                ast.Constant(value=ord(x), kind=None) for x in node.value
-                            ],
-                            ctx=ast.Load(),
-                        ),
-                        ifs=[],
-                        is_async=0,
-                    ),
-                ],
+    if type(node.parent) != ast.FormattedValue and type(node.parent.parent) != ast.FormattedValue and type(node.parent) != ast.JoinedStr and type(node.parent.parent) != ast.JoinedStr:
+        new_node = ast.Call(
+            func=ast.Attribute(
+                value=ast.Constant(value='', kind=None),
+                attr='join',
+                ctx=ast.Load(),
             ),
-        ],
-        keywords=[]
-    )
-    return ast.copy_location(new_node, node)
+            args=[
+                ast.ListComp(
+                    elt=ast.Call(
+                        func=ast.Name(id='chr', ctx=ast.Load()),
+                        args=[ast.Name(id='x', ctx=ast.Load())],
+                        keywords=[]
+                    ),
+                    generators=[
+                        ast.comprehension(
+                            target=ast.Name(id='x', ctx=ast.Store()),
+                            iter=ast.List(
+                                elts=[
+                                    ast.Constant(value=ord(x), kind=None) for x in node.value
+                                ],
+                                ctx=ast.Load(),
+                            ),
+                            ifs=[],
+                            is_async=0,
+                        ),
+                    ],
+                ),
+            ],
+            keywords=[]
+        )
+        return ast.copy_location(new_node, node)
+    else:
+        return node
 
 
 def handle_int(node):

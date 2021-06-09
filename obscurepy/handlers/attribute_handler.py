@@ -5,15 +5,10 @@ from obscurepy.utils.tree import is_in_function_scope
 
 
 def handle_class_properties(node, tracker):
-    if node.value.id == 'self':
+    if hasattr(node, 'value') and hasattr(node.value, 'id') and node.value.id == 'self':
         for class_ in tracker.definitions['classes'].values():
             if node.attr in class_['properties']:
-                class_['properties'][node.attr] = {
-                    'prev_name': node.attr, 'new_name': class_['properties'][node.attr]}
-                node.attr = class_['properties'][node.attr]['new_name']
-            else:
-                class_['properties'][node.attr] = {
-                    'prev_name': node.attr, 'new_name': hex_name(node.attr)}
+                node.attr = class_['properties'][node.attr]
     return node
 
 

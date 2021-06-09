@@ -1,6 +1,7 @@
 import ast
 import unittest
 from obscurepy.handlers.constant_handler import *
+from obscurepy.utils.tree import add_parents
 
 
 class ConstantHandlerTest(unittest.TestCase):
@@ -11,6 +12,7 @@ class ConstantHandlerTest(unittest.TestCase):
                       'b = 42\n' \
                       'c = 100.0'
         self.tree = ast.parse(self.source)
+        add_parents(self.tree)
         self.tree = self.fixture.handle(self.tree)
 
     def test_visit_constant(self):
@@ -29,6 +31,7 @@ class ConstantHandlerTest(unittest.TestCase):
 
     def test_handle_str(self):
         tree = ast.parse('a = "literal"')
+        add_parents(tree)
         tree = handle_str(tree.body[0].value)
         source = ast.unparse(tree)
         self.assertEqual(
