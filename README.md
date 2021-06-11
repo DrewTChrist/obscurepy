@@ -10,7 +10,8 @@ A tool for obscuring, or making python source code difficult to read.
 1. [Installation](#installation)
 2. [Limitations](#limitations)
 3. [Usage](#usage)
-4. [License](#license)
+4. [Disclaimer](#disclaimer)
+5. [License](#license)
 
 ## Installation
 This command will install obscurepy:
@@ -122,6 +123,14 @@ obscure --filepath=my_module.py --output_dir=desired_output_directory
 ```shell
 obscure --project_dir=my_project --output_dir=desired_output_directory
 ```
+
+## Disclaimer
+Obscurepy is no substitution for standard security practices. Obscurepy will not protect your code, nor will it
+protect the constants within your code. Python is an interpreted language and by nature anyone with access
+to your source code can reverse engineer it or simply extract any constant replacement to determine the value.
+Obscurepy is not meant to be used with security in mind. Obscurepy can make your source code difficult to read and it
+may deter people from trying. It will not stop any determined person from figuring out what your code does. I suggest
+looking into [PyArmor](https://github.com/dashingsoft/pyarmor) if a more sophisticated method of obfuscation is required.
 
 ## License
 MIT License
