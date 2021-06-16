@@ -4,6 +4,14 @@ from obscurepy.utils.name import hex_name
 from obscurepy.utils.tree import is_in_function_scope
 
 
+def handle_class_method_calls(node, tracker):
+    if tracker.get_nested_in_class('methods', node.attr):
+        node.attr = tracker.get_nested_in_class(
+            'methods', node.attr)['new_name']
+
+    return node
+
+
 def handle_class_properties(node, tracker):
     if hasattr(node, 'value') and hasattr(node.value, 'id') and node.value.id == 'self':
         for class_ in tracker.definitions['classes'].values():
@@ -37,4 +45,5 @@ class AttributeHandler(Handler):
         self.logger.info('visit_Attribute')
         tracker = DefinitionTracker.get_instance()
         node = handle_class_properties(node, tracker)
+        node = handle_class_method_calls(node, tracker)
         return node
