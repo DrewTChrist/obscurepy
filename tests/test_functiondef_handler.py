@@ -36,13 +36,13 @@ class FunctionDefHandlerTest(unittest.TestCase):
         self.assertEqual(function['prev_name'], 'FirstFunction')
         self.assertEqual(function['variables']
                          ['first_variable']['new_name'], '_0x5cd')
-        self.assertEqual(function['args']['param_1'], '_0x2a1')
+        self.assertEqual(function['args']['param_1']['new_name'], '_0x2a1')
         self.assertEqual(function['return']['second_variable'], '_0x621')
 
     def test_get_args(self):
         args = get_args(self.tree.body[0])
-        self.assertEqual(args['param_1'], '_0x2a1')
-        self.assertEqual(args['param_2'], '_0x2a2')
+        self.assertEqual(args['param_1']['new_name'], '_0x2a1')
+        self.assertEqual(args['param_2']['new_name'], '_0x2a2')
 
     def test_get_args_none(self):
         tree = ast.parse('def FirstFunction():\n\tpass')

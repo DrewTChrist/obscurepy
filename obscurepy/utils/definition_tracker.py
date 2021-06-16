@@ -58,6 +58,9 @@ class DefinitionTracker:
     def get_nested_in_class(self, nested_type, name):
         return self.get_nested_item('classes', nested_type, name)
 
+    def get_nested_in_class_method(self, nested_type, name):
+        return self.get_double_nested_item('classes', 'methods', nested_type, name)
+
     def add_function(self, function):
         """Adds a function found in the ast to the definitions dictionary along with an obscure name
 

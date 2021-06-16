@@ -1,7 +1,5 @@
 from obscurepy.handlers.handler import Handler
 from obscurepy.utils.definition_tracker import DefinitionTracker
-from obscurepy.utils.name import hex_name
-from obscurepy.utils.tree import is_in_function_scope
 
 
 def handle_class_method_calls(node, tracker):
@@ -30,7 +28,7 @@ class AttributeHandler(Handler):
     def __init__(self, log=False, verbose=False):
         """Creates a new instance of an AttributeHandler"""
         super(AttributeHandler, self).__init__(log, verbose)
-        self.execution_priority = 5
+        self.execution_priority = 4
 
     def visit_Attribute(self, node):
         """Overrides the NodeTransformer visit_Attribute method. This method makes modifications

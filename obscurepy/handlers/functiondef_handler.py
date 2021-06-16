@@ -36,7 +36,8 @@ def get_args(node):
     """
     args = {}
     for arg in node.args.args:
-        args[arg.arg] = hex_name(arg.arg)
+        args[arg.arg] = {'prev_name': arg.arg,
+                         'new_name': hex_name(arg.arg)}
 
     return args
 
