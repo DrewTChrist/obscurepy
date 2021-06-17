@@ -31,6 +31,17 @@ class GeneralTest(unittest.TestCase):
     def test_is_in_function_scope(self):
         self.assertTrue(is_in_function_scope(self.func_tree.body[0].body[0]))
 
+    def test_is_in_function_scope_nested(self):
+        tree = ast.parse('def some_function():\n\tsome_other_function_call()')
+        add_parents(tree)
+        self.assertTrue(is_in_function_scope_nested(
+            tree.body[0].body[0].value.func))
+
+    def test_is_in_function_scope_nested_outside(self):
+        tree = ast.parse('def some_function():\n\tpass\na = 1')
+        add_parents(tree)
+        self.assertFalse(is_in_function_scope_nested(tree.body[1].targets[0]))
+
     def test_get_parent_function_name(self):
         self.assertEqual(get_parent_function_name(
             self.func_tree.body[0].body[0]), "test_function")
@@ -44,6 +55,23 @@ class GeneralTest(unittest.TestCase):
 
     def test_is_in_class_scope(self):
         self.assertTrue(is_in_class_scope(self.class_tree.body[0].body[0]))
+
+    def test_is_in_class_scope_outside(self):
+        tree = ast.parse('a = 1')
+        add_parents(tree)
+        self.assertFalse(is_in_class_scope(tree.body[0]))
+
+    def test_is_in_class_scope_nested(self):
+        tree = ast.parse(
+            'class SomeClass:\n\tdef class_func(self):\n\t\ta = 1')
+        add_parents(tree)
+        self.assertTrue(is_in_class_scope_nested(
+            tree.body[0].body[0].body[0].targets[0]))
+
+    def test_is_in_class_scope_nested_outside(self):
+        tree = ast.parse('class SomeClass:\n\tpass\na = 1')
+        add_parents(tree)
+        self.assertFalse(is_in_class_scope_nested(tree.body[1].targets[0]))
 
     def test_is_in_call(self):
         tree = ast.parse('a = some_function()')
