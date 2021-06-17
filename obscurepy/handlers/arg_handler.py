@@ -7,7 +7,7 @@ from obscurepy.utils.definition_tracker import DefinitionTracker
 def handle_args(node, tracker):
     if tracker.get_nested_in_function('args', node.arg):
         node.arg = tracker.get_nested_in_function('args', node.arg)['new_name']
-    elif tracker.get_nested_in_class_method('args', node.arg)['new_name']:
+    elif tracker.get_nested_in_class_method('args', node.arg):
         node.arg = tracker.get_nested_in_class_method('args', node.arg)[
             'new_name']
 

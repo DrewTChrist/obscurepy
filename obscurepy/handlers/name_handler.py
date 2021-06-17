@@ -1,7 +1,8 @@
 import ast
 from obscurepy.handlers.handler import Handler
 from obscurepy.utils.definition_tracker import DefinitionTracker
-from obscurepy.utils.tree import is_in_function_scope, is_in_class_scope, is_in_call
+from obscurepy.utils.tree import is_in_function_scope, is_in_function_scope_nested, is_in_class_scope, \
+    is_in_class_scope_nested, is_in_call
 from obscurepy.utils.name import hex_name
 
 
@@ -34,10 +35,13 @@ def handle_function_scope(node, tracker):
     Returns:
         An ast node
     """
-    if is_in_function_scope(node.parent):
+    if is_in_function_scope_nested(node):
         if tracker.get_nested_in_function('variables', node.id):
             node.id = tracker.get_nested_in_function(
                 'variables', node.id)['new_name']
+        elif tracker.get_nested_in_class_method('args', node.id):
+            node.id = tracker.get_nested_in_class_method(
+                'args', node.id)['new_name']
         elif tracker.get_double_nested_in_function('variables', node.id):
             node.id = tracker.get_double_nested_in_function(
                 'variables', node.id)['new_name']
@@ -56,15 +60,15 @@ def handle_global_scope(node, tracker):
     Returns:
         An ast node
     """
-    if not is_in_function_scope(node.parent) and not is_in_class_scope(node.parent):
-        if node.id != 'self':
-            if node.id in tracker.definitions['variables']:
-                node.id = tracker.definitions['variables'][node.id]['new_name']
-            elif node.id not in tracker.definitions['classes'] and node.id not in tracker.definitions['functions'] and type(node.parent) != ast.Call \
-                    and type(node.parent) != ast.ClassDef:
-                tracker.add_variable(
-                    {'prev_name': node.id, 'new_name': hex_name(node.id)})
-                node.id = tracker.definitions['variables'][node.id]['new_name']
+    if not is_in_function_scope_nested(node) and not is_in_class_scope_nested(node):
+        if node.id in tracker.definitions['variables']:
+            node.id = tracker.definitions['variables'][node.id]['new_name']
+        elif node.id not in tracker.definitions['classes'] and node.id not in tracker.definitions['functions'] and type(
+                node.parent) != ast.Call \
+                and type(node.parent) != ast.ClassDef:
+            tracker.add_variable(
+                {'prev_name': node.id, 'new_name': hex_name(node.id)})
+            node.id = tracker.definitions['variables'][node.id]['new_name']
 
     return node
 

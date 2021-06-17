@@ -52,6 +52,15 @@ def is_in_function_scope(node):
     return has_parent_of_type(node, ast.FunctionDef)
 
 
+def is_in_function_scope_nested(node):
+    while hasattr(node, 'parent') and node.parent:
+        if get_node_type(node.parent) == ast.FunctionDef:
+            return True
+        node = node.parent
+
+    return False
+
+
 def get_parent_function_name(node):
     """Gets the name of the parent node if it is a function
 
@@ -80,6 +89,15 @@ def is_in_class_scope(node):
         True if the node is within the scope of a class, False otherwise
     """
     return has_parent_of_type(node, ast.ClassDef)
+
+
+def is_in_class_scope_nested(node):
+    while hasattr(node, 'parent') and node.parent:
+        if get_node_type(node.parent) == ast.ClassDef:
+            return True
+        node = node.parent
+
+    return False
 
 
 def is_in_call(node):
