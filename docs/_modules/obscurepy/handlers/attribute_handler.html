@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>obscurepy.handlers.attribute_handler &mdash; obscurepy 0.7.0 documentation</title>
+  <title>obscurepy.handlers.attribute_handler &mdash; obscurepy 0.8.0 documentation</title>
 
 
 
@@ -158,20 +158,21 @@
   <h1>Source code for obscurepy.handlers.attribute_handler</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">obscurepy.handlers.handler</span> <span class="kn">import</span> <span class="n">Handler</span>
 <span class="kn">from</span> <span class="nn">obscurepy.utils.definition_tracker</span> <span class="kn">import</span> <span class="n">DefinitionTracker</span>
-<span class="kn">from</span> <span class="nn">obscurepy.utils.name</span> <span class="kn">import</span> <span class="n">hex_name</span>
-<span class="kn">from</span> <span class="nn">obscurepy.utils.tree</span> <span class="kn">import</span> <span class="n">is_in_function_scope</span>
+
+
+<div class="viewcode-block" id="handle_class_method_calls"><a class="viewcode-back" href="../../../obscurepy.handlers.html#obscurepy.handlers.attribute_handler.handle_class_method_calls">[docs]</a><span class="k">def</span> <span class="nf">handle_class_method_calls</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">tracker</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">tracker</span><span class="o">.</span><span class="n">get_nested_in_class</span><span class="p">(</span><span class="s1">&#39;methods&#39;</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">attr</span><span class="p">):</span>
+        <span class="n">node</span><span class="o">.</span><span class="n">attr</span> <span class="o">=</span> <span class="n">tracker</span><span class="o">.</span><span class="n">get_nested_in_class</span><span class="p">(</span>
+            <span class="s1">&#39;methods&#39;</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">attr</span><span class="p">)[</span><span class="s1">&#39;new_name&#39;</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">node</span></div>
 
 
 <div class="viewcode-block" id="handle_class_properties"><a class="viewcode-back" href="../../../obscurepy.handlers.html#obscurepy.handlers.attribute_handler.handle_class_properties">[docs]</a><span class="k">def</span> <span class="nf">handle_class_properties</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">tracker</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="s1">&#39;self&#39;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">node</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="s1">&#39;self&#39;</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">class_</span> <span class="ow">in</span> <span class="n">tracker</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;classes&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
             <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">attr</span> <span class="ow">in</span> <span class="n">class_</span><span class="p">[</span><span class="s1">&#39;properties&#39;</span><span class="p">]:</span>
-                <span class="n">class_</span><span class="p">[</span><span class="s1">&#39;properties&#39;</span><span class="p">][</span><span class="n">node</span><span class="o">.</span><span class="n">attr</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-                    <span class="s1">&#39;prev_name&#39;</span><span class="p">:</span> <span class="n">node</span><span class="o">.</span><span class="n">attr</span><span class="p">,</span> <span class="s1">&#39;new_name&#39;</span><span class="p">:</span> <span class="n">class_</span><span class="p">[</span><span class="s1">&#39;properties&#39;</span><span class="p">][</span><span class="n">node</span><span class="o">.</span><span class="n">attr</span><span class="p">]}</span>
-                <span class="n">node</span><span class="o">.</span><span class="n">attr</span> <span class="o">=</span> <span class="n">class_</span><span class="p">[</span><span class="s1">&#39;properties&#39;</span><span class="p">][</span><span class="n">node</span><span class="o">.</span><span class="n">attr</span><span class="p">][</span><span class="s1">&#39;new_name&#39;</span><span class="p">]</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">class_</span><span class="p">[</span><span class="s1">&#39;properties&#39;</span><span class="p">][</span><span class="n">node</span><span class="o">.</span><span class="n">attr</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-                    <span class="s1">&#39;prev_name&#39;</span><span class="p">:</span> <span class="n">node</span><span class="o">.</span><span class="n">attr</span><span class="p">,</span> <span class="s1">&#39;new_name&#39;</span><span class="p">:</span> <span class="n">hex_name</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">attr</span><span class="p">)}</span>
+                <span class="n">node</span><span class="o">.</span><span class="n">attr</span> <span class="o">=</span> <span class="n">class_</span><span class="p">[</span><span class="s1">&#39;properties&#39;</span><span class="p">][</span><span class="n">node</span><span class="o">.</span><span class="n">attr</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">node</span></div>
 
 
@@ -185,7 +186,7 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Creates a new instance of an AttributeHandler&quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">AttributeHandler</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">log</span><span class="p">,</span> <span class="n">verbose</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">execution_priority</span> <span class="o">=</span> <span class="mi">5</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">execution_priority</span> <span class="o">=</span> <span class="mi">4</span>
 
 <div class="viewcode-block" id="AttributeHandler.visit_Attribute"><a class="viewcode-back" href="../../../obscurepy.handlers.html#obscurepy.handlers.attribute_handler.AttributeHandler.visit_Attribute">[docs]</a>    <span class="k">def</span> <span class="nf">visit_Attribute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Overrides the NodeTransformer visit_Attribute method. This method makes modifications</span>
@@ -200,6 +201,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;visit_Attribute&#39;</span><span class="p">)</span>
         <span class="n">tracker</span> <span class="o">=</span> <span class="n">DefinitionTracker</span><span class="o">.</span><span class="n">get_instance</span><span class="p">()</span>
         <span class="n">node</span> <span class="o">=</span> <span class="n">handle_class_properties</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">tracker</span><span class="p">)</span>
+        <span class="n">node</span> <span class="o">=</span> <span class="n">handle_class_method_calls</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">tracker</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">node</span></div></div>
 </pre></div>
 

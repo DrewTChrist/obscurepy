@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>obscurepy.handlers.name_handler &mdash; obscurepy 0.7.0 documentation</title>
+  <title>obscurepy.handlers.name_handler &mdash; obscurepy 0.8.0 documentation</title>
 
 
 
@@ -159,7 +159,8 @@
 <span></span><span class="kn">import</span> <span class="nn">ast</span>
 <span class="kn">from</span> <span class="nn">obscurepy.handlers.handler</span> <span class="kn">import</span> <span class="n">Handler</span>
 <span class="kn">from</span> <span class="nn">obscurepy.utils.definition_tracker</span> <span class="kn">import</span> <span class="n">DefinitionTracker</span>
-<span class="kn">from</span> <span class="nn">obscurepy.utils.tree</span> <span class="kn">import</span> <span class="n">is_in_function_scope</span><span class="p">,</span> <span class="n">is_in_class_scope</span>
+<span class="kn">from</span> <span class="nn">obscurepy.utils.tree</span> <span class="kn">import</span> <span class="n">is_in_function_scope</span><span class="p">,</span> <span class="n">is_in_function_scope_nested</span><span class="p">,</span> <span class="n">is_in_class_scope</span><span class="p">,</span> \
+    <span class="n">is_in_class_scope_nested</span><span class="p">,</span> <span class="n">is_in_call</span>
 <span class="kn">from</span> <span class="nn">obscurepy.utils.name</span> <span class="kn">import</span> <span class="n">hex_name</span>
 
 
@@ -186,11 +187,22 @@
 
 <span class="sd">    Args:</span>
 <span class="sd">        **node (:obj: `ast.Name`)**: Current Name node</span>
+
+<span class="sd">        **tracker (:obj: `DefinitionTracker`)**: The instance of the definition tracker for checking scope</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        An ast node</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">is_in_function_scope</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">function</span> <span class="ow">in</span> <span class="n">tracker</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;functions&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
-            <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">id</span> <span class="ow">in</span> <span class="n">function</span><span class="p">[</span><span class="s1">&#39;variables&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="n">node</span><span class="o">.</span><span class="n">id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">tracker</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;classes&#39;</span><span class="p">]:</span>
-                <span class="n">node</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">function</span><span class="p">[</span><span class="s1">&#39;variables&#39;</span><span class="p">][</span><span class="n">node</span><span class="o">.</span><span class="n">id</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">is_in_function_scope_nested</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">tracker</span><span class="o">.</span><span class="n">get_nested_in_function</span><span class="p">(</span><span class="s1">&#39;variables&#39;</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">id</span><span class="p">):</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">tracker</span><span class="o">.</span><span class="n">get_nested_in_function</span><span class="p">(</span>
+                <span class="s1">&#39;variables&#39;</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">id</span><span class="p">)[</span><span class="s1">&#39;new_name&#39;</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">tracker</span><span class="o">.</span><span class="n">get_nested_in_class_method</span><span class="p">(</span><span class="s1">&#39;args&#39;</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">id</span><span class="p">):</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">tracker</span><span class="o">.</span><span class="n">get_nested_in_class_method</span><span class="p">(</span>
+                <span class="s1">&#39;args&#39;</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">id</span><span class="p">)[</span><span class="s1">&#39;new_name&#39;</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">tracker</span><span class="o">.</span><span class="n">get_double_nested_in_function</span><span class="p">(</span><span class="s1">&#39;variables&#39;</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">id</span><span class="p">):</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">tracker</span><span class="o">.</span><span class="n">get_double_nested_in_function</span><span class="p">(</span>
+                <span class="s1">&#39;variables&#39;</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">id</span><span class="p">)[</span><span class="s1">&#39;new_name&#39;</span><span class="p">]</span>
 
     <span class="k">return</span> <span class="n">node</span></div>
 
@@ -200,15 +212,21 @@
 
 <span class="sd">    Args:</span>
 <span class="sd">        **node (:obj: `ast.Name`)**: Current Name  node</span>
+
+<span class="sd">        **tracker (:obj: `DefinitionTracker`)**: The instance of the definition tracker for checking scope</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        An ast node</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">is_in_function_scope</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">is_in_class_scope</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">id</span> <span class="o">!=</span> <span class="s1">&#39;self&#39;</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">id</span> <span class="ow">in</span> <span class="n">tracker</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;variables&#39;</span><span class="p">]:</span>
-                <span class="n">node</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">tracker</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;variables&#39;</span><span class="p">][</span><span class="n">node</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="s1">&#39;new_name&#39;</span><span class="p">]</span>
-            <span class="k">elif</span> <span class="n">node</span><span class="o">.</span><span class="n">id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="s1">&#39;new_name&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">tracker</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;classes&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">()]:</span>
-                <span class="n">tracker</span><span class="o">.</span><span class="n">add_variable</span><span class="p">(</span>
-                    <span class="p">{</span><span class="s1">&#39;prev_name&#39;</span><span class="p">:</span> <span class="n">node</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s1">&#39;new_name&#39;</span><span class="p">:</span> <span class="n">hex_name</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">id</span><span class="p">)})</span>
-                <span class="n">node</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">tracker</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;variables&#39;</span><span class="p">][</span><span class="n">node</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="s1">&#39;new_name&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">is_in_function_scope_nested</span><span class="p">(</span><span class="n">node</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">is_in_class_scope_nested</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">id</span> <span class="ow">in</span> <span class="n">tracker</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;variables&#39;</span><span class="p">]:</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">tracker</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;variables&#39;</span><span class="p">][</span><span class="n">node</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="s1">&#39;new_name&#39;</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">node</span><span class="o">.</span><span class="n">id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">tracker</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;classes&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="n">node</span><span class="o">.</span><span class="n">id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">tracker</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;functions&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="nb">type</span><span class="p">(</span>
+                <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">)</span> <span class="o">!=</span> <span class="n">ast</span><span class="o">.</span><span class="n">Call</span> \
+                <span class="ow">and</span> <span class="nb">type</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">)</span> <span class="o">!=</span> <span class="n">ast</span><span class="o">.</span><span class="n">ClassDef</span><span class="p">:</span>
+            <span class="n">tracker</span><span class="o">.</span><span class="n">add_variable</span><span class="p">(</span>
+                <span class="p">{</span><span class="s1">&#39;prev_name&#39;</span><span class="p">:</span> <span class="n">node</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s1">&#39;new_name&#39;</span><span class="p">:</span> <span class="n">hex_name</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">id</span><span class="p">)})</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">tracker</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;variables&#39;</span><span class="p">][</span><span class="n">node</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="s1">&#39;new_name&#39;</span><span class="p">]</span>
 
     <span class="k">return</span> <span class="n">node</span></div>
 
@@ -218,12 +236,75 @@
 
 <span class="sd">    Args:</span>
 <span class="sd">        **node (:obj: `ast.Name`)**: Current Name node</span>
+
+<span class="sd">        **tracker (:obj: `DefinitionTracker`)**: The instance of the definition tracker for checking scope</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        An ast node</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">is_in_class_scope</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">class_</span> <span class="ow">in</span> <span class="n">tracker</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;classes&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
             <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">id</span> <span class="ow">in</span> <span class="n">class_</span><span class="p">[</span><span class="s1">&#39;variables&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="n">node</span><span class="o">.</span><span class="n">id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">tracker</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;classes&#39;</span><span class="p">]:</span>
                 <span class="n">node</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">tracker</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;classes&#39;</span><span class="p">][</span><span class="n">class_</span><span class="p">[</span>
-                    <span class="s1">&#39;prev_name&#39;</span><span class="p">]][</span><span class="s1">&#39;variables&#39;</span><span class="p">][</span><span class="n">node</span><span class="o">.</span><span class="n">id</span><span class="p">]</span>
+                    <span class="s1">&#39;prev_name&#39;</span><span class="p">]][</span><span class="s1">&#39;variables&#39;</span><span class="p">][</span><span class="n">node</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="s1">&#39;new_name&#39;</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">node</span></div>
+
+
+<div class="viewcode-block" id="handle_calls"><a class="viewcode-back" href="../../../obscurepy.handlers.html#obscurepy.handlers.name_handler.handle_calls">[docs]</a><span class="k">def</span> <span class="nf">handle_calls</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">tracker</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Internal method for handling names inside ast.Call nodes</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        **node (:obj: `ast.Name`)**: Current Name node</span>
+
+<span class="sd">        **tracker (:obj: `DefinitionTracker`)**: The instance of the definition tracker for checking scope</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        An ast node</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">is_in_call</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">id</span> <span class="ow">in</span> <span class="n">tracker</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;classes&#39;</span><span class="p">]:</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">tracker</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;classes&#39;</span><span class="p">][</span><span class="n">node</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="s1">&#39;new_name&#39;</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">node</span><span class="o">.</span><span class="n">id</span> <span class="ow">in</span> <span class="n">tracker</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;functions&#39;</span><span class="p">]:</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">tracker</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;functions&#39;</span><span class="p">][</span><span class="n">node</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="s1">&#39;new_name&#39;</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">tracker</span><span class="o">.</span><span class="n">get_nested_in_function</span><span class="p">(</span><span class="s1">&#39;functions&#39;</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">id</span><span class="p">):</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">tracker</span><span class="o">.</span><span class="n">get_nested_in_function</span><span class="p">(</span>
+                <span class="s1">&#39;functions&#39;</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">id</span><span class="p">)[</span><span class="s1">&#39;new_name&#39;</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">node</span></div>
+
+
+<div class="viewcode-block" id="handle_returns"><a class="viewcode-back" href="../../../obscurepy.handlers.html#obscurepy.handlers.name_handler.handle_returns">[docs]</a><span class="k">def</span> <span class="nf">handle_returns</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">tracker</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Internal method for handling names inside ast.Return nodes</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        **node (:obj: `ast.Name`)**: Current Name node</span>
+
+<span class="sd">        **tracker (:obj: `DefinitionTracker`)**: The instance of the definition tracker for checking scope</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        An ast node</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">)</span> <span class="o">==</span> <span class="n">ast</span><span class="o">.</span><span class="n">Return</span><span class="p">:</span>
+        <span class="c1"># constant or variable</span>
+        <span class="n">parent</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span>
+    <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span><span class="p">)</span> <span class="o">==</span> <span class="n">ast</span><span class="o">.</span><span class="n">Return</span><span class="p">:</span>
+        <span class="c1"># call</span>
+        <span class="n">parent</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">id</span> <span class="ow">in</span> <span class="n">tracker</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;classes&#39;</span><span class="p">]:</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">tracker</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;classes&#39;</span><span class="p">][</span><span class="n">node</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="s1">&#39;new_name&#39;</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">node</span><span class="o">.</span><span class="n">id</span> <span class="ow">in</span> <span class="n">tracker</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;functions&#39;</span><span class="p">]:</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">tracker</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;functions&#39;</span><span class="p">][</span><span class="n">node</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="s1">&#39;new_name&#39;</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">node</span><span class="o">.</span><span class="n">id</span> <span class="ow">in</span> <span class="n">tracker</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;variables&#39;</span><span class="p">]:</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">tracker</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;variables&#39;</span><span class="p">][</span><span class="n">node</span><span class="o">.</span><span class="n">id</span><span class="p">][</span><span class="s1">&#39;new_name&#39;</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">tracker</span><span class="o">.</span><span class="n">get_nested_in_function</span><span class="p">(</span><span class="s1">&#39;functions&#39;</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">id</span><span class="p">):</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">tracker</span><span class="o">.</span><span class="n">get_nested_in_function</span><span class="p">(</span>
+                <span class="s1">&#39;functions&#39;</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">id</span><span class="p">)[</span><span class="s1">&#39;new_name&#39;</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">tracker</span><span class="o">.</span><span class="n">get_nested_in_function</span><span class="p">(</span><span class="s1">&#39;variables&#39;</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">id</span><span class="p">):</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">tracker</span><span class="o">.</span><span class="n">get_nested_in_function</span><span class="p">(</span>
+                <span class="s1">&#39;variables&#39;</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">id</span><span class="p">)[</span><span class="s1">&#39;new_name&#39;</span><span class="p">]</span>
 
     <span class="k">return</span> <span class="n">node</span></div>
 
@@ -232,8 +313,6 @@
     <span class="sd">&quot;&quot;&quot;Class to traverse and modify Name nodes in an ast</span>
 
 <span class="sd">    Attributes:</span>
-<span class="sd">        **_debug_name (str)**: Name of class used for debugging purposes</span>
-
 <span class="sd">        **execution_priority (int)**: Used to determine when NameHandler should be executed</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -246,11 +325,11 @@
         <span class="sd">&quot;&quot;&quot;Overrides the NodeTransformer visit_Name method. This method makes modifications</span>
 <span class="sd">           to the abstract syntax tree  when it encounters a Name node</span>
 
-<span class="sd">           Args:</span>
-<span class="sd">               **node (:obj: `ast.Name`)**: The current Name node to be modified</span>
+<span class="sd">        Args:</span>
+<span class="sd">           **node (:obj: `ast.Name`)**: The current Name node to be modified</span>
 
-<span class="sd">            Returns:</span>
-<span class="sd">                The modified Name node</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            The modified Name node</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;visit_Name&#39;</span><span class="p">)</span>
         <span class="n">tracker</span> <span class="o">=</span> <span class="n">DefinitionTracker</span><span class="o">.</span><span class="n">get_instance</span><span class="p">()</span>
@@ -259,6 +338,9 @@
             <span class="n">node</span> <span class="o">=</span> <span class="n">handle_global_scope</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">tracker</span><span class="p">)</span>
             <span class="n">node</span> <span class="o">=</span> <span class="n">handle_class_scope</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">tracker</span><span class="p">)</span>
             <span class="n">node</span> <span class="o">=</span> <span class="n">handle_function_scope</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">tracker</span><span class="p">)</span>
+            <span class="n">node</span> <span class="o">=</span> <span class="n">handle_calls</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">tracker</span><span class="p">)</span>
+            <span class="n">node</span> <span class="o">=</span> <span class="n">handle_returns</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">tracker</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">generic_visit</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">node</span></div></div>
 </pre></div>

@@ -4,6 +4,14 @@ obscurepy.handlers package
 Submodules
 ----------
 
+obscurepy.handlers.arg\_handler module
+--------------------------------------
+
+.. automodule:: obscurepy.handlers.arg_handler
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 obscurepy.handlers.assign\_handler module
 -----------------------------------------
 
