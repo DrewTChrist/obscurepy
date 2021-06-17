@@ -11,6 +11,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
+## [0.8.1](https://github.com/drewtchrist/obscurepy/releases/tag/v0.8.1) - 2021-06-17
+### Added
+
+### Changed
+* Rebuilding for travis ci
+
+### Removed
+
 ## [0.8.0](https://github.com/drewtchrist/obscurepy/releases/tag/v0.8.0) - 2021-06-17
 ### Added
 * NameHandler handles calls and returns now
