@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>obscurepy.utils.tree &mdash; obscurepy 0.7.0 documentation</title>
+  <title>obscurepy.utils.tree &mdash; obscurepy 0.8.0 documentation</title>
 
 
 
@@ -210,6 +210,15 @@
     <span class="k">return</span> <span class="n">has_parent_of_type</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">ast</span><span class="o">.</span><span class="n">FunctionDef</span><span class="p">)</span></div>
 
 
+<div class="viewcode-block" id="is_in_function_scope_nested"><a class="viewcode-back" href="../../../obscurepy.utils.html#obscurepy.utils.tree.is_in_function_scope_nested">[docs]</a><span class="k">def</span> <span class="nf">is_in_function_scope_nested</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
+    <span class="k">while</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="s1">&#39;parent&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">get_node_type</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">)</span> <span class="o">==</span> <span class="n">ast</span><span class="o">.</span><span class="n">FunctionDef</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="n">node</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span>
+
+    <span class="k">return</span> <span class="kc">False</span></div>
+
+
 <div class="viewcode-block" id="get_parent_function_name"><a class="viewcode-back" href="../../../obscurepy.utils.html#obscurepy.utils.tree.get_parent_function_name">[docs]</a><span class="k">def</span> <span class="nf">get_parent_function_name</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Gets the name of the parent node if it is a function</span>
 
@@ -238,6 +247,27 @@
 <span class="sd">        True if the node is within the scope of a class, False otherwise</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">has_parent_of_type</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">ast</span><span class="o">.</span><span class="n">ClassDef</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="is_in_class_scope_nested"><a class="viewcode-back" href="../../../obscurepy.utils.html#obscurepy.utils.tree.is_in_class_scope_nested">[docs]</a><span class="k">def</span> <span class="nf">is_in_class_scope_nested</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
+    <span class="k">while</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="s1">&#39;parent&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">get_node_type</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">)</span> <span class="o">==</span> <span class="n">ast</span><span class="o">.</span><span class="n">ClassDef</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="n">node</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span>
+
+    <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="is_in_call"><a class="viewcode-back" href="../../../obscurepy.utils.html#obscurepy.utils.tree.is_in_call">[docs]</a><span class="k">def</span> <span class="nf">is_in_call</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Checks if a node is inside of an ast.Call node</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        **node (:obj:)**: node to check</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        True if node has a parent of ast.Call, else False</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">has_parent_of_type</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">ast</span><span class="o">.</span><span class="n">Call</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="get_parent_class_name"><a class="viewcode-back" href="../../../obscurepy.utils.html#obscurepy.utils.tree.get_parent_class_name">[docs]</a><span class="k">def</span> <span class="nf">get_parent_class_name</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>

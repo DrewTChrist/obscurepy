@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>obscurepy.handlers.call_handler &mdash; obscurepy 0.8.0 documentation</title>
+  <title>obscurepy.handlers.arg_handler &mdash; obscurepy 0.8.0 documentation</title>
 
 
 
@@ -140,7 +140,7 @@
 
           <li><a href="../../index.html">Module code</a> &raquo;</li>
 
-      <li>obscurepy.handlers.call_handler</li>
+      <li>obscurepy.handlers.arg_handler</li>
 
 
       <li class="wy-breadcrumbs-aside">
@@ -155,33 +155,48 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
 
-  <h1>Source code for obscurepy.handlers.call_handler</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">obscurepy.handlers.handler</span> <span class="kn">import</span> <span class="n">Handler</span>
+  <h1>Source code for obscurepy.handlers.arg_handler</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">ast</span>
+<span class="kn">import</span> <span class="nn">pprint</span>
+<span class="kn">from</span> <span class="nn">obscurepy.handlers.handler</span> <span class="kn">import</span> <span class="n">Handler</span>
 <span class="kn">from</span> <span class="nn">obscurepy.utils.definition_tracker</span> <span class="kn">import</span> <span class="n">DefinitionTracker</span>
 
 
-<div class="viewcode-block" id="CallHandler"><a class="viewcode-back" href="../../../obscurepy.handlers.html#obscurepy.handlers.call_handler.CallHandler">[docs]</a><span class="k">class</span> <span class="nc">CallHandler</span><span class="p">(</span><span class="n">Handler</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Class to traverse and modify Call nodes in an ast</span>
+<div class="viewcode-block" id="handle_args"><a class="viewcode-back" href="../../../obscurepy.handlers.html#obscurepy.handlers.arg_handler.handle_args">[docs]</a><span class="k">def</span> <span class="nf">handle_args</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">tracker</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">tracker</span><span class="o">.</span><span class="n">get_nested_in_function</span><span class="p">(</span><span class="s1">&#39;args&#39;</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">arg</span><span class="p">):</span>
+        <span class="n">node</span><span class="o">.</span><span class="n">arg</span> <span class="o">=</span> <span class="n">tracker</span><span class="o">.</span><span class="n">get_nested_in_function</span><span class="p">(</span><span class="s1">&#39;args&#39;</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">arg</span><span class="p">)[</span><span class="s1">&#39;new_name&#39;</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="n">tracker</span><span class="o">.</span><span class="n">get_nested_in_class_method</span><span class="p">(</span><span class="s1">&#39;args&#39;</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">arg</span><span class="p">):</span>
+        <span class="n">node</span><span class="o">.</span><span class="n">arg</span> <span class="o">=</span> <span class="n">tracker</span><span class="o">.</span><span class="n">get_nested_in_class_method</span><span class="p">(</span><span class="s1">&#39;args&#39;</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">arg</span><span class="p">)[</span>
+            <span class="s1">&#39;new_name&#39;</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">node</span></div>
+
+
+<div class="viewcode-block" id="ArgHandler"><a class="viewcode-back" href="../../../obscurepy.handlers.html#obscurepy.handlers.arg_handler.ArgHandler">[docs]</a><span class="k">class</span> <span class="nc">ArgHandler</span><span class="p">(</span><span class="n">Handler</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Class to traverse and modify arg nodes in an ast</span>
 
 <span class="sd">    Attributes:</span>
-<span class="sd">        **_debug_name (str)**: Name of class used for debugging purposes</span>
-<span class="sd">        **execution_priority (int)**: Used to determine when CallHandler should be executed</span>
+<span class="sd">        **execution_priority (int)**: Used to determine when ArgHandler should be executed</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Creates a new instance of a CallHandler&quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">CallHandler</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">log</span><span class="p">,</span> <span class="n">verbose</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">execution_priority</span> <span class="o">=</span> <span class="mi">3</span>
+        <span class="sd">&quot;&quot;&quot;Creates a new instance of an ArgHandler&quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ArgHandler</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">log</span><span class="p">,</span> <span class="n">verbose</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">execution_priority</span> <span class="o">=</span> <span class="mi">8</span>
 
-<div class="viewcode-block" id="CallHandler.visit_Call"><a class="viewcode-back" href="../../../obscurepy.handlers.html#obscurepy.handlers.call_handler.CallHandler.visit_Call">[docs]</a>    <span class="k">def</span> <span class="nf">visit_Call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Overrides the NodeTransformer visit_Call method. This method makes modifications</span>
-<span class="sd">           to the abstract syntax tree and stores assignments with the DefinitionTracker class</span>
+<div class="viewcode-block" id="ArgHandler.visit_arg"><a class="viewcode-back" href="../../../obscurepy.handlers.html#obscurepy.handlers.arg_handler.ArgHandler.visit_arg">[docs]</a>    <span class="k">def</span> <span class="nf">visit_arg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Overrides the NodeTransformer visit_arg method. This method makes modifications</span>
+<span class="sd">           to arg nodes in an abstract syntax tree</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            **node (:obj: `ast.Call`)**: The current Call node to be modified</span>
+<span class="sd">            **node (:obj: `ast.Assign`)**: The current arg node to be modified</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            The modified arg node</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;visit_Call&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;visit_arg&#39;</span><span class="p">)</span>
         <span class="n">tracker</span> <span class="o">=</span> <span class="n">DefinitionTracker</span><span class="o">.</span><span class="n">get_instance</span><span class="p">()</span>
+        <span class="n">node</span> <span class="o">=</span> <span class="n">handle_args</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">tracker</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">node</span></div></div>
 </pre></div>
 

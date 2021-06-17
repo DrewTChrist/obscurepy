@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>obscurepy &mdash; obscurepy 0.7.0 documentation</title>
+  <title>obscurepy &mdash; obscurepy 0.8.0 documentation</title>
 
 
 
@@ -94,13 +94,12 @@
 <li class="toctree-l2"><a class="reference internal" href="#table-of-contents">Table of Contents</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id1">Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id2">Limitations</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#things-that-obscurepy-can-currently-do">Things that obscurepy can currently do:</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#things-it-cannot-do">Things it cannot do:</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#an-example">An example:</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#id3">Usage</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id4">License</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">Disclaimer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">License</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">Documentation</a></li>
@@ -186,6 +185,7 @@
 <li><p><a class="reference external" href="#installation">Installation</a></p></li>
 <li><p><a class="reference external" href="#limitations">Limitations</a></p></li>
 <li><p><a class="reference external" href="#usage">Usage</a></p></li>
+<li><p><a class="reference external" href="#disclaimer">Disclaimer</a></p></li>
 <li><p><a class="reference external" href="#license">License</a></p></li>
 </ol>
 </div>
@@ -204,27 +204,9 @@ python -m pip install obscurepy
 </div>
 <div class="section" id="id2">
 <h2>Limitations<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
-<p>As this program is still in active development, there are many limitations. Below is a list of things obscurepy can and
-can’t do, along with an example.</p>
-<div class="section" id="things-that-obscurepy-can-currently-do">
-<h3>Things that obscurepy can currently do:<a class="headerlink" href="#things-that-obscurepy-can-currently-do" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li><p>Obscure class definitions</p></li>
-<li><p>Obscure class calls (without arguments)</p></li>
-<li><p>Obscure class properties</p></li>
-<li><p>Obscure function definitions (without parameters)</p></li>
-<li><p>Obscure function calls (without arguments)</p></li>
-<li><p>Obscure string constants</p></li>
-<li><p>Obscure integer constants</p></li>
-<li><p>Obscure float constants</p></li>
-</ul>
-</div>
-<div class="section" id="things-it-cannot-do">
-<h3>Things it cannot do:<a class="headerlink" href="#things-it-cannot-do" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li><p>Anything else</p></li>
-</ul>
-</div>
+<p>As this program is still in active development, there are many limitations. Below are some examples of what obscurepy
+can do. If it isn’t in the example, obscurepy probably can’t do it. This example serves to represent the ablities
+of each release. This example should be functional, both the original source and obscured source should execute.</p>
 <div class="section" id="an-example">
 <h3>An example:<a class="headerlink" href="#an-example" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">FirstClass</span><span class="p">:</span>
@@ -235,26 +217,41 @@ can’t do, along with an example.</p>
     <span class="c1"># this is a comment</span>
     <span class="n">class_variable</span> <span class="o">=</span> <span class="mi">6</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">my_property</span> <span class="o">=</span> <span class="mi">8</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param_1</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">my_property</span> <span class="o">=</span> <span class="n">param_1</span>
 
-    <span class="k">def</span> <span class="nf">class_function</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">new_property</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="k">def</span> <span class="nf">class_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param_1</span><span class="p">,</span> <span class="n">param_2</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">prop_1</span> <span class="o">=</span> <span class="n">param_1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">prop_2</span> <span class="o">=</span> <span class="n">param_2</span>
 
 
 <span class="k">def</span> <span class="nf">first_function</span><span class="p">():</span>
-    <span class="n">c</span> <span class="o">=</span> <span class="mi">42</span>
+    <span class="k">def</span> <span class="nf">with_another</span><span class="p">():</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="mi">42</span>
+        <span class="k">return</span> <span class="n">c</span>
+    <span class="k">return</span> <span class="n">with_another</span><span class="p">()</span>
 
-
-<span class="k">def</span> <span class="nf">second_function</span><span class="p">():</span>
+<span class="k">def</span> <span class="nf">second_function</span><span class="p">(</span><span class="n">param_1</span><span class="p">,</span> <span class="n">param_2</span><span class="p">,</span> <span class="n">param_3</span><span class="p">):</span>
     <span class="n">d</span> <span class="o">=</span> <span class="s1">&#39;string&#39;</span>
+    <span class="k">return</span> <span class="n">d</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">param_1</span><span class="p">)</span>
 
 <span class="k">def</span> <span class="nf">third_function</span><span class="p">():</span>
     <span class="n">e</span> <span class="o">=</span> <span class="mf">100.0</span>
+    <span class="k">return</span> <span class="n">e</span>
 
 <span class="n">a</span> <span class="o">=</span> <span class="n">FirstClass</span><span class="p">()</span>
 
-<span class="n">b</span> <span class="o">=</span> <span class="n">SecondClass</span><span class="p">()</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">SecondClass</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">first_function</span><span class="p">())</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">second_function</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">third_function</span><span class="p">())</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">SecondClass</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">a</span><span class="o">.</span><span class="n">class_function</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 
 <span class="n">first_function</span><span class="p">()</span>
 </pre></div>
@@ -265,26 +262,35 @@ can’t do, along with an example.</p>
 <span class="k">class</span> <span class="nc">_0x452</span><span class="p">(</span><span class="n">_0x3fe</span><span class="p">):</span>
     <span class="n">_0x5bb</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="s1">&#39;0x6&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_0x4ca</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="s1">&#39;0x8&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="n">_0x1aa</span><span class="p">,</span> <span class="n">_0x2a1</span><span class="p">):</span>
+        <span class="n">_0x1aa</span><span class="o">.</span><span class="n">_0x4ca</span> <span class="o">=</span> <span class="n">_0x2a1</span>
 
-    <span class="k">def</span> <span class="nf">_0x5db</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_0x52e</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="s1">&#39;0xa&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_0x5db</span><span class="p">(</span><span class="n">_0x1aa</span><span class="p">,</span> <span class="n">_0x2a1</span><span class="p">,</span> <span class="n">_0x2a2</span><span class="p">):</span>
+        <span class="n">_0x1aa</span><span class="o">.</span><span class="n">_0x251</span> <span class="o">=</span> <span class="n">_0x2a1</span>
+        <span class="n">_0x1aa</span><span class="o">.</span><span class="n">_0x252</span> <span class="o">=</span> <span class="n">_0x2a2</span>
 
 <span class="k">def</span> <span class="nf">_0x5ed</span><span class="p">():</span>
-    <span class="n">_0x63</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="s1">&#39;0x2a&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">_0x641</span><span class="p">():</span>
+    <span class="k">def</span> <span class="nf">_0x50c</span><span class="p">():</span>
+        <span class="n">_0x63</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="s1">&#39;0x2a&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_0x63</span>
+    <span class="k">return</span> <span class="n">_0x50c</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">_0x641</span><span class="p">(</span><span class="n">_0x2a1</span><span class="p">,</span> <span class="n">_0x2a2</span><span class="p">,</span> <span class="n">_0x2a3</span><span class="p">):</span>
     <span class="n">_0x64</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">chr</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">115</span><span class="p">,</span> <span class="mi">116</span><span class="p">,</span> <span class="mi">114</span><span class="p">,</span> <span class="mi">105</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">103</span><span class="p">]])</span>
+    <span class="k">return</span> <span class="n">_0x64</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">_0x2a1</span><span class="p">)</span>
 
 <span class="k">def</span> <span class="nf">_0x5e0</span><span class="p">():</span>
     <span class="n">_0x65</span> <span class="o">=</span> <span class="nb">float</span><span class="o">.</span><span class="n">fromhex</span><span class="p">(</span><span class="s1">&#39;0x1.9000000000000p+6&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_0x65</span>
 <span class="n">_0x61</span> <span class="o">=</span> <span class="n">_0x3fe</span><span class="p">()</span>
-<span class="n">_0x62</span> <span class="o">=</span> <span class="n">_0x452</span><span class="p">()</span>
+<span class="n">_0x62</span> <span class="o">=</span> <span class="n">_0x452</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="s1">&#39;0x1&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">_0x5ed</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">_0x641</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="s1">&#39;0x1&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="s1">&#39;0x2&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="s1">&#39;0x3&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">_0x5e0</span><span class="p">())</span>
+<span class="n">_0x61</span> <span class="o">=</span> <span class="n">_0x452</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="s1">&#39;0x1&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span>
+<span class="n">_0x61</span><span class="o">.</span><span class="n">_0x5db</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="s1">&#39;0x1&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="s1">&#39;0x2&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span>
 <span class="n">_0x5ed</span><span class="p">()</span>
-<span class="n">_0x641</span><span class="p">()</span>
-<span class="n">_0x5e0</span><span class="p">()</span>
-<span class="n">_0x61</span> <span class="o">=</span> <span class="n">_0x452</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -308,7 +314,16 @@ can’t do, along with an example.</p>
 </div>
 </div>
 <div class="section" id="id4">
-<h2>License<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<h2>Disclaimer<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p>Obscurepy is no substitution for standard security practices. Obscurepy will not protect your code, nor will it
+protect the constants within your code. Python is an interpreted language and by nature anyone with access
+to your source code can reverse engineer it or simply extract any constant replacement to determine the value.
+Obscurepy is not meant to be used with security in mind. Obscurepy can make your source code difficult to read and it
+may deter people from trying. It will not stop any determined person from figuring out what your code does. I suggest
+looking into <a class="reference external" href="https://github.com/dashingsoft/pyarmor">PyArmor</a> if a more sophisticated method of obfuscation is required.</p>
+</div>
+<div class="section" id="id5">
+<h2>License<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <p>MIT License</p>
 <p>Copyright (c) 2021 Andrew Christiansen</p>
 <p>Permission is hereby granted, free of charge, to any person obtaining a copy
