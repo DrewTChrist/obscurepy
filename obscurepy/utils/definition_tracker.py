@@ -23,6 +23,17 @@ class DefinitionTracker:
                             'functions': {},
                             'variables': {}}
 
+    def get_nested_item(self, definition_type, nested_type, name):
+        for definition in self.definitions[definition_type].values():
+            if name in definition[nested_type]:
+                return self.definitions[definition_type][definition['prev_name']][nested_type][name]
+
+    def get_double_nested_item(self, definition_type, nested_type, second_nested_type, name):
+        for definition in self.definitions[definition_type].values():
+            for nested_definition in definition[nested_type].values():
+                if name in nested_definition[second_nested_type]:
+                    return self.definitions[definition_type][definition['prev_name']][nested_type][nested_definition['prev_name']][second_nested_type][name]
+
     def add_class(self, class_):
         """Adds a class found in the ast to the definitions dictionary along with an obscure name
 
@@ -44,6 +55,12 @@ class DefinitionTracker:
         if class_:
             return self.definitions['classes'][class_]
 
+    def get_nested_in_class(self, nested_type, name):
+        return self.get_nested_item('classes', nested_type, name)
+
+    def get_nested_in_class_method(self, nested_type, name):
+        return self.get_double_nested_item('classes', 'methods', nested_type, name)
+
     def add_function(self, function):
         """Adds a function found in the ast to the definitions dictionary along with an obscure name
 
@@ -64,6 +81,12 @@ class DefinitionTracker:
         """
         if function:
             return self.definitions['functions'][function]
+
+    def get_nested_in_function(self, nested_type, name):
+        return self.get_nested_item('functions', nested_type, name)
+
+    def get_double_nested_in_function(self, second_nested_type, name):
+        return self.get_double_nested_item('functions', 'functions', second_nested_type, name)
 
     def add_variable(self, variable):
         """Adds a variable found in the ast to the definitions dictionary along with an obscure name
@@ -87,6 +110,7 @@ class DefinitionTracker:
             return self.definitions['variables'][variable]
 
     def clear_definitions(self):
+        """Clears all definitions within the DefinitionTracker instance"""
         self.definitions['classes'].clear()
         self.definitions['functions'].clear()
         self.definitions['variables'].clear()

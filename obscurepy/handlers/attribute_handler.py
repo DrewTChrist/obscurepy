@@ -1,19 +1,20 @@
 from obscurepy.handlers.handler import Handler
 from obscurepy.utils.definition_tracker import DefinitionTracker
-from obscurepy.utils.name import hex_name
-from obscurepy.utils.tree import is_in_function_scope
+
+
+def handle_class_method_calls(node, tracker):
+    if tracker.get_nested_in_class('methods', node.attr):
+        node.attr = tracker.get_nested_in_class(
+            'methods', node.attr)['new_name']
+
+    return node
 
 
 def handle_class_properties(node, tracker):
-    if node.value.id == 'self':
+    if hasattr(node, 'value') and hasattr(node.value, 'id') and node.value.id == 'self':
         for class_ in tracker.definitions['classes'].values():
             if node.attr in class_['properties']:
-                class_['properties'][node.attr] = {
-                    'prev_name': node.attr, 'new_name': class_['properties'][node.attr]}
-                node.attr = class_['properties'][node.attr]['new_name']
-            else:
-                class_['properties'][node.attr] = {
-                    'prev_name': node.attr, 'new_name': hex_name(node.attr)}
+                node.attr = class_['properties'][node.attr]
     return node
 
 
@@ -27,7 +28,7 @@ class AttributeHandler(Handler):
     def __init__(self, log=False, verbose=False):
         """Creates a new instance of an AttributeHandler"""
         super(AttributeHandler, self).__init__(log, verbose)
-        self.execution_priority = 5
+        self.execution_priority = 4
 
     def visit_Attribute(self, node):
         """Overrides the NodeTransformer visit_Attribute method. This method makes modifications
@@ -42,4 +43,5 @@ class AttributeHandler(Handler):
         self.logger.info('visit_Attribute')
         tracker = DefinitionTracker.get_instance()
         node = handle_class_properties(node, tracker)
+        node = handle_class_method_calls(node, tracker)
         return node

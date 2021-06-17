@@ -17,7 +17,8 @@ def get_base_classes(node):
     bases = []
     if type(node) == ast.ClassDef:
         for base in node.bases:
-            bases.append(base.id)
+            if hasattr(base, 'id'):
+                bases.append(base.id)
     return bases
 
 
@@ -35,6 +36,8 @@ def get_methods(node):
         if type(method) == ast.FunctionDef:
             if method.name != '__init__':
                 methods[method.name] = hex_name(method.name)
+            else:
+                methods[method.name] = method.name
     return methods
 
 
@@ -54,7 +57,7 @@ def get_properties(node):
             for assign in method.body:
                 if type(assign) == ast.Assign:
                     for target in assign.targets:
-                        if target.value.id == 'self' and target.attr not in properties:
+                        if hasattr(target, 'value') and target.value.id == 'self' and target.attr not in properties:
                             properties[target.attr] = hex_name(target.attr)
     return properties
 
@@ -73,7 +76,8 @@ def get_variables(node):
         if type(variable) == ast.Assign:
             for target in variable.targets:
                 if type(target) == ast.Name:
-                    variables[target.id] = hex_name(target.id)
+                    variables[target.id] = {'new_name': hex_name(
+                        target.id), 'prev_name': target.id}
     return variables
 
 

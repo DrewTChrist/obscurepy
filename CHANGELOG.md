@@ -11,6 +11,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
+## [0.8.0](https://github.com/drewtchrist/obscurepy/releases/tag/v0.8.0) - 2021-06-17
+### Added
+* NameHandler handles calls and returns now
+* Added some methods to DefinitionTracker to reduce the number of checks in handlers
+* Added a disclaimer to the readme
+* Can now handle method calls as attributes
+* Added arg_handler to obscure function parameters
+
+### Changed
+* Treats the self referential as a regular argument so it becomes obscured
+* Obscuring when the output directory already exists no longer throws an error, instead it just notifies the user
+
+### Removed
+
 ## [0.7.0](https://github.com/drewtchrist/obscurepy/releases/tag/v0.7.0) - 2021-06-01
 ### Added
 * Release script to handle updating version numbers and changelog

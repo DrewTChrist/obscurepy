@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>obscurepy.utils.definition_tracker &mdash; obscurepy 0.7.0 documentation</title>
+  <title>obscurepy.utils.definition_tracker &mdash; obscurepy 0.8.0 documentation</title>
 
 
 
@@ -181,6 +181,17 @@
                             <span class="s1">&#39;functions&#39;</span><span class="p">:</span> <span class="p">{},</span>
                             <span class="s1">&#39;variables&#39;</span><span class="p">:</span> <span class="p">{}}</span>
 
+<div class="viewcode-block" id="DefinitionTracker.get_nested_item"><a class="viewcode-back" href="../../../obscurepy.utils.html#obscurepy.utils.definition_tracker.DefinitionTracker.get_nested_item">[docs]</a>    <span class="k">def</span> <span class="nf">get_nested_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">definition_type</span><span class="p">,</span> <span class="n">nested_type</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">definition</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="n">definition_type</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">definition</span><span class="p">[</span><span class="n">nested_type</span><span class="p">]:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="n">definition_type</span><span class="p">][</span><span class="n">definition</span><span class="p">[</span><span class="s1">&#39;prev_name&#39;</span><span class="p">]][</span><span class="n">nested_type</span><span class="p">][</span><span class="n">name</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="DefinitionTracker.get_double_nested_item"><a class="viewcode-back" href="../../../obscurepy.utils.html#obscurepy.utils.definition_tracker.DefinitionTracker.get_double_nested_item">[docs]</a>    <span class="k">def</span> <span class="nf">get_double_nested_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">definition_type</span><span class="p">,</span> <span class="n">nested_type</span><span class="p">,</span> <span class="n">second_nested_type</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">definition</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="n">definition_type</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">nested_definition</span> <span class="ow">in</span> <span class="n">definition</span><span class="p">[</span><span class="n">nested_type</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">nested_definition</span><span class="p">[</span><span class="n">second_nested_type</span><span class="p">]:</span>
+                    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="n">definition_type</span><span class="p">][</span><span class="n">definition</span><span class="p">[</span><span class="s1">&#39;prev_name&#39;</span><span class="p">]][</span><span class="n">nested_type</span><span class="p">][</span><span class="n">nested_definition</span><span class="p">[</span><span class="s1">&#39;prev_name&#39;</span><span class="p">]][</span><span class="n">second_nested_type</span><span class="p">][</span><span class="n">name</span><span class="p">]</span></div>
+
 <div class="viewcode-block" id="DefinitionTracker.add_class"><a class="viewcode-back" href="../../../obscurepy.utils.html#obscurepy.utils.definition_tracker.DefinitionTracker.add_class">[docs]</a>    <span class="k">def</span> <span class="nf">add_class</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">class_</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Adds a class found in the ast to the definitions dictionary along with an obscure name</span>
 
@@ -202,6 +213,12 @@
         <span class="k">if</span> <span class="n">class_</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;classes&#39;</span><span class="p">][</span><span class="n">class_</span><span class="p">]</span></div>
 
+<div class="viewcode-block" id="DefinitionTracker.get_nested_in_class"><a class="viewcode-back" href="../../../obscurepy.utils.html#obscurepy.utils.definition_tracker.DefinitionTracker.get_nested_in_class">[docs]</a>    <span class="k">def</span> <span class="nf">get_nested_in_class</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nested_type</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_nested_item</span><span class="p">(</span><span class="s1">&#39;classes&#39;</span><span class="p">,</span> <span class="n">nested_type</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DefinitionTracker.get_nested_in_class_method"><a class="viewcode-back" href="../../../obscurepy.utils.html#obscurepy.utils.definition_tracker.DefinitionTracker.get_nested_in_class_method">[docs]</a>    <span class="k">def</span> <span class="nf">get_nested_in_class_method</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nested_type</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_double_nested_item</span><span class="p">(</span><span class="s1">&#39;classes&#39;</span><span class="p">,</span> <span class="s1">&#39;methods&#39;</span><span class="p">,</span> <span class="n">nested_type</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="DefinitionTracker.add_function"><a class="viewcode-back" href="../../../obscurepy.utils.html#obscurepy.utils.definition_tracker.DefinitionTracker.add_function">[docs]</a>    <span class="k">def</span> <span class="nf">add_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">function</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Adds a function found in the ast to the definitions dictionary along with an obscure name</span>
 
@@ -222,6 +239,12 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">function</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;functions&#39;</span><span class="p">][</span><span class="n">function</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="DefinitionTracker.get_nested_in_function"><a class="viewcode-back" href="../../../obscurepy.utils.html#obscurepy.utils.definition_tracker.DefinitionTracker.get_nested_in_function">[docs]</a>    <span class="k">def</span> <span class="nf">get_nested_in_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nested_type</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_nested_item</span><span class="p">(</span><span class="s1">&#39;functions&#39;</span><span class="p">,</span> <span class="n">nested_type</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DefinitionTracker.get_double_nested_in_function"><a class="viewcode-back" href="../../../obscurepy.utils.html#obscurepy.utils.definition_tracker.DefinitionTracker.get_double_nested_in_function">[docs]</a>    <span class="k">def</span> <span class="nf">get_double_nested_in_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">second_nested_type</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_double_nested_item</span><span class="p">(</span><span class="s1">&#39;functions&#39;</span><span class="p">,</span> <span class="s1">&#39;functions&#39;</span><span class="p">,</span> <span class="n">second_nested_type</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="DefinitionTracker.add_variable"><a class="viewcode-back" href="../../../obscurepy.utils.html#obscurepy.utils.definition_tracker.DefinitionTracker.add_variable">[docs]</a>    <span class="k">def</span> <span class="nf">add_variable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">variable</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Adds a variable found in the ast to the definitions dictionary along with an obscure name</span>
@@ -245,6 +268,7 @@
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;variables&#39;</span><span class="p">][</span><span class="n">variable</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="DefinitionTracker.clear_definitions"><a class="viewcode-back" href="../../../obscurepy.utils.html#obscurepy.utils.definition_tracker.DefinitionTracker.clear_definitions">[docs]</a>    <span class="k">def</span> <span class="nf">clear_definitions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Clears all definitions within the DefinitionTracker instance&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;classes&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;functions&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">definitions</span><span class="p">[</span><span class="s1">&#39;variables&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span></div></div>

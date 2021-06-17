@@ -1,7 +1,8 @@
 import ast
 import unittest
-from obscurepy.handlers.attribute_handler import AttributeHandler, handle_class_properties
+from obscurepy.handlers.attribute_handler import AttributeHandler, handle_class_properties, handle_class_method_calls
 from obscurepy.handlers.classdef_handler import ClassDefHandler
+from obscurepy.handlers.functiondef_handler import FunctionDefHandler
 from obscurepy.utils.definition_tracker import DefinitionTracker
 from obscurepy.utils.tree import add_parents
 
@@ -11,6 +12,7 @@ class AttributeHandlerTest(unittest.TestCase):
     def setUp(self):
         self.fixture = AttributeHandler()
         self.classdef_handler = ClassDefHandler()
+        self.functiondef_handler = FunctionDefHandler()
         self.tracker = DefinitionTracker.get_instance()
         self.source = 'class SomeClass:\n\tdef __init__():\n\t\tself.property = 42\n\t\tself.property2 = 84'
         self.tree = ast.parse(self.source)
@@ -43,3 +45,13 @@ class AttributeHandlerTest(unittest.TestCase):
         handled_node = handle_class_properties(
             tree.body[0].body[0].body[0].targets[0], self.tracker)
         self.assertEqual(handled_node.attr, '_0x52e')
+
+    def test_handle_class_method_calls(self):
+        tree = ast.parse(
+            'class SomeClass:\n\tdef some_method():\n\t\tpass\na = SomeClass()\na.some_method()')
+        add_parents(tree)
+        tree = self.classdef_handler.handle(tree)
+        tree = self.functiondef_handler.handle(tree)
+        handled_node = handle_class_method_calls(
+            tree.body[2].value.func, self.tracker)
+        self.assertEqual(handled_node.attr, '_0x494')

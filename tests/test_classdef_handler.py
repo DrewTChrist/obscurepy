@@ -33,14 +33,15 @@ class ClassDefHandlerTest(unittest.TestCase):
         class_ = self.tracker.definitions['classes']['TestClass']
         self.assertEqual(class_['new_name'], '_0x396')
         self.assertEqual(class_['prev_name'], 'TestClass')
-        self.assertEqual(class_['variables']['eighty_four'], '_0x4a5')
+        self.assertEqual(class_['variables']
+                         ['eighty_four']['new_name'], '_0x4a5')
         self.assertEqual(class_['properties']['forty_two'], '_0x3ed')
         self.assertEqual(class_['methods']['some_method'], '_0x494')
         self.assertEqual(class_['bases'][0], 'BaseClass')
 
     def test_get_variables(self):
         variables = get_variables(self.tree.body[0])
-        self.assertEqual(variables['eighty_four'], '_0x4a5')
+        self.assertEqual(variables['eighty_four']['new_name'], '_0x4a5')
 
     def test_get_variables_none(self):
         tree = ast.parse('class TestClass:\n\tpass')

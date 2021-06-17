@@ -6,40 +6,92 @@ from obscurepy.utils.name import hex_name
 
 
 def get_variables(node):
+    """Creates a dictionary of variables defined within a function body
+
+    Args:
+        **node (:obj: `ast.FunctionDef`)**: The node to get the variables of
+
+    Returns:
+        A dictionary with variable names for keys and obscured variable names as values
+    """
     variables = {}
     for variable in node.body:
         if type(variable) == ast.Assign:
             for target in variable.targets:
                 if type(target) == ast.Name:
-                    variables[target.id] = hex_name(target.id)
+                    variables[target.id] = {'new_name': hex_name(
+                        target.id), 'prev_name': target.id}
+
     return variables
 
 
 def get_args(node):
+    """Creates a dictionary of parameters defined within a function body
+
+    Args:
+        **node (:obj: `ast.FunctionDef`)**: The node to get the args of
+
+    Returns:
+        A dictionary with arg names for keys and obscured arg names as values
+    """
     args = {}
     for arg in node.args.args:
-        args[arg.arg] = hex_name(arg.arg)
+        args[arg.arg] = {'prev_name': arg.arg,
+                         'new_name': hex_name(arg.arg)}
+
     return args
 
 
 def get_functions(node):
+    """Creates a dictionary of functions defined within a function body
+
+    Args:
+        **node (:obj: `ast.FunctionDef`)**: The node to get the functions of
+
+    Returns:
+        A dictionary with function names for keys and obscured function names as values
+    """
     functions = {}
     for function in node.body:
         if type(function) == ast.FunctionDef:
             func_dict = create_function_dictionary(function)
             functions[function.name] = func_dict
+
     return functions
 
 
 def get_return(node):
+    """Creates a dictionary of returns defined within a function body
+
+    Args:
+        **node (:obj: `ast.FunctionDef`)**: The node to get the returns of
+
+    Returns:
+        A dictionary with return names for keys and obscured return names as values
+    """
     return_ = {}
-    for nd in node.body:
-        if type(nd) == ast.Return:
-            return_[nd.value.id] = hex_name(nd.value.id)
+    for current_node in node.body:
+        if type(current_node) == ast.Return:
+            if type(current_node.value) == ast.Name:
+                return_[current_node.value.id] = hex_name(
+                    current_node.value.id)
+            elif type(current_node.value) == ast.Call:
+                if hasattr(current_node.value.func, 'id'):
+                    return_[current_node.value.func.id] = hex_name(
+                        current_node.value.func.id)
+
     return return_
 
 
 def create_function_dictionary(node):
+    """Creates a dictionary from a node describing a FunctionDef
+
+    Args:
+        **node (:obj: `ast.FunctionDef`)**: The node to create the dictionary for
+
+    Returns:
+        A dictionary
+    """
     func_dict = {
         'new_name': hex_name(node.name),
         'prev_name': node.name,
@@ -48,18 +100,40 @@ def create_function_dictionary(node):
         'args': get_args(node),
         'return': get_return(node),
     }
+
     return func_dict
 
 
 def handle_global_scope(node, tracker):
+    """Handles function definitions in the global scope
+
+    Args:
+        **node (:obj: `ast.FunctionDef`)**: The current node to handle
+
+        **tracker (:obj: `DefinitionTracker`**: An instance of a DefinitionTracker
+
+    Returns:
+        The handled node
+    """
     if not is_in_function_scope(node) and not is_in_class_scope(node):
         func_dict = create_function_dictionary(node)
         tracker.add_function(func_dict)
         node.name = tracker.definitions['functions'][node.name]['new_name']
+
     return node
 
 
 def handle_class_scope(node, tracker):
+    """Handles function definitions in a class scope
+
+    Args:
+        **node (:obj: `ast.FunctionDef`)**: The current node to handle
+
+        **tracker (:obj: `DefinitionTracker`)**: An instance of a DefinitionTracker
+
+    Returns:
+        The handled node
+    """
     if is_in_class_scope(node):
         for class_ in tracker.definitions['classes'].values():
             if node.name in class_['methods'] and class_['new_name'] == node.parent.name:
@@ -67,10 +141,21 @@ def handle_class_scope(node, tracker):
                 func_dict['new_name'] = class_['methods'][node.name]
                 class_['methods'][node.name] = func_dict
                 node.name = class_['methods'][node.name]['new_name']
+
     return node
 
 
 def handle_function_scope(node, tracker):
+    """Handles function definitions in a function scope
+
+    Args:
+        **node (:obj: `ast.FunctionDef`)**: The current node to be handled
+
+        **tracker (:obj: `DefinitionTracker`)**: An instance of a definition tracker
+
+    Returns:
+        The handled node
+    """
     if is_in_function_scope(node):
         for function in tracker.definitions['functions'].values():
             if node.name in function['functions']:
@@ -79,6 +164,7 @@ def handle_function_scope(node, tracker):
                 func_dict = create_function_dictionary(node)
                 function['functions'][func_dict['prev_name']] = func_dict
                 node.name = function['functions'][node.name]['new_name']
+
     return node
 
 

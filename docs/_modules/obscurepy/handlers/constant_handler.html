@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>obscurepy.handlers.constant_handler &mdash; obscurepy 0.7.0 documentation</title>
+  <title>obscurepy.handlers.constant_handler &mdash; obscurepy 0.8.0 documentation</title>
 
 
 
@@ -169,37 +169,40 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        A new obscured node with updated locations</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">new_node</span> <span class="o">=</span> <span class="n">ast</span><span class="o">.</span><span class="n">Call</span><span class="p">(</span>
-        <span class="n">func</span><span class="o">=</span><span class="n">ast</span><span class="o">.</span><span class="n">Attribute</span><span class="p">(</span>
-            <span class="n">value</span><span class="o">=</span><span class="n">ast</span><span class="o">.</span><span class="n">Constant</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="kc">None</span><span class="p">),</span>
-            <span class="n">attr</span><span class="o">=</span><span class="s1">&#39;join&#39;</span><span class="p">,</span>
-            <span class="n">ctx</span><span class="o">=</span><span class="n">ast</span><span class="o">.</span><span class="n">Load</span><span class="p">(),</span>
-        <span class="p">),</span>
-        <span class="n">args</span><span class="o">=</span><span class="p">[</span>
-            <span class="n">ast</span><span class="o">.</span><span class="n">ListComp</span><span class="p">(</span>
-                <span class="n">elt</span><span class="o">=</span><span class="n">ast</span><span class="o">.</span><span class="n">Call</span><span class="p">(</span>
-                    <span class="n">func</span><span class="o">=</span><span class="n">ast</span><span class="o">.</span><span class="n">Name</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;chr&#39;</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="n">ast</span><span class="o">.</span><span class="n">Load</span><span class="p">()),</span>
-                    <span class="n">args</span><span class="o">=</span><span class="p">[</span><span class="n">ast</span><span class="o">.</span><span class="n">Name</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="n">ast</span><span class="o">.</span><span class="n">Load</span><span class="p">())],</span>
-                    <span class="n">keywords</span><span class="o">=</span><span class="p">[]</span>
-                <span class="p">),</span>
-                <span class="n">generators</span><span class="o">=</span><span class="p">[</span>
-                    <span class="n">ast</span><span class="o">.</span><span class="n">comprehension</span><span class="p">(</span>
-                        <span class="n">target</span><span class="o">=</span><span class="n">ast</span><span class="o">.</span><span class="n">Name</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="n">ast</span><span class="o">.</span><span class="n">Store</span><span class="p">()),</span>
-                        <span class="nb">iter</span><span class="o">=</span><span class="n">ast</span><span class="o">.</span><span class="n">List</span><span class="p">(</span>
-                            <span class="n">elts</span><span class="o">=</span><span class="p">[</span>
-                                <span class="n">ast</span><span class="o">.</span><span class="n">Constant</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="nb">ord</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">kind</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">value</span>
-                            <span class="p">],</span>
-                            <span class="n">ctx</span><span class="o">=</span><span class="n">ast</span><span class="o">.</span><span class="n">Load</span><span class="p">(),</span>
-                        <span class="p">),</span>
-                        <span class="n">ifs</span><span class="o">=</span><span class="p">[],</span>
-                        <span class="n">is_async</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-                    <span class="p">),</span>
-                <span class="p">],</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">)</span> <span class="o">!=</span> <span class="n">ast</span><span class="o">.</span><span class="n">FormattedValue</span> <span class="ow">and</span> <span class="nb">type</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span><span class="p">)</span> <span class="o">!=</span> <span class="n">ast</span><span class="o">.</span><span class="n">FormattedValue</span> <span class="ow">and</span> <span class="nb">type</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">)</span> <span class="o">!=</span> <span class="n">ast</span><span class="o">.</span><span class="n">JoinedStr</span> <span class="ow">and</span> <span class="nb">type</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span><span class="p">)</span> <span class="o">!=</span> <span class="n">ast</span><span class="o">.</span><span class="n">JoinedStr</span><span class="p">:</span>
+        <span class="n">new_node</span> <span class="o">=</span> <span class="n">ast</span><span class="o">.</span><span class="n">Call</span><span class="p">(</span>
+            <span class="n">func</span><span class="o">=</span><span class="n">ast</span><span class="o">.</span><span class="n">Attribute</span><span class="p">(</span>
+                <span class="n">value</span><span class="o">=</span><span class="n">ast</span><span class="o">.</span><span class="n">Constant</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="kc">None</span><span class="p">),</span>
+                <span class="n">attr</span><span class="o">=</span><span class="s1">&#39;join&#39;</span><span class="p">,</span>
+                <span class="n">ctx</span><span class="o">=</span><span class="n">ast</span><span class="o">.</span><span class="n">Load</span><span class="p">(),</span>
             <span class="p">),</span>
-        <span class="p">],</span>
-        <span class="n">keywords</span><span class="o">=</span><span class="p">[]</span>
-    <span class="p">)</span>
-    <span class="k">return</span> <span class="n">ast</span><span class="o">.</span><span class="n">copy_location</span><span class="p">(</span><span class="n">new_node</span><span class="p">,</span> <span class="n">node</span><span class="p">)</span></div>
+            <span class="n">args</span><span class="o">=</span><span class="p">[</span>
+                <span class="n">ast</span><span class="o">.</span><span class="n">ListComp</span><span class="p">(</span>
+                    <span class="n">elt</span><span class="o">=</span><span class="n">ast</span><span class="o">.</span><span class="n">Call</span><span class="p">(</span>
+                        <span class="n">func</span><span class="o">=</span><span class="n">ast</span><span class="o">.</span><span class="n">Name</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;chr&#39;</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="n">ast</span><span class="o">.</span><span class="n">Load</span><span class="p">()),</span>
+                        <span class="n">args</span><span class="o">=</span><span class="p">[</span><span class="n">ast</span><span class="o">.</span><span class="n">Name</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="n">ast</span><span class="o">.</span><span class="n">Load</span><span class="p">())],</span>
+                        <span class="n">keywords</span><span class="o">=</span><span class="p">[]</span>
+                    <span class="p">),</span>
+                    <span class="n">generators</span><span class="o">=</span><span class="p">[</span>
+                        <span class="n">ast</span><span class="o">.</span><span class="n">comprehension</span><span class="p">(</span>
+                            <span class="n">target</span><span class="o">=</span><span class="n">ast</span><span class="o">.</span><span class="n">Name</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="n">ast</span><span class="o">.</span><span class="n">Store</span><span class="p">()),</span>
+                            <span class="nb">iter</span><span class="o">=</span><span class="n">ast</span><span class="o">.</span><span class="n">List</span><span class="p">(</span>
+                                <span class="n">elts</span><span class="o">=</span><span class="p">[</span>
+                                    <span class="n">ast</span><span class="o">.</span><span class="n">Constant</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="nb">ord</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">kind</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">value</span>
+                                <span class="p">],</span>
+                                <span class="n">ctx</span><span class="o">=</span><span class="n">ast</span><span class="o">.</span><span class="n">Load</span><span class="p">(),</span>
+                            <span class="p">),</span>
+                            <span class="n">ifs</span><span class="o">=</span><span class="p">[],</span>
+                            <span class="n">is_async</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                        <span class="p">),</span>
+                    <span class="p">],</span>
+                <span class="p">),</span>
+            <span class="p">],</span>
+            <span class="n">keywords</span><span class="o">=</span><span class="p">[]</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">ast</span><span class="o">.</span><span class="n">copy_location</span><span class="p">(</span><span class="n">new_node</span><span class="p">,</span> <span class="n">node</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">node</span></div>
 
 
 <div class="viewcode-block" id="handle_int"><a class="viewcode-back" href="../../../obscurepy.handlers.html#obscurepy.handlers.constant_handler.handle_int">[docs]</a><span class="k">def</span> <span class="nf">handle_int</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
