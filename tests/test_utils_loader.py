@@ -84,11 +84,11 @@ class TestTheLoader(unittest.TestCase):
         self.assertEqual(handlers[0].test_property, 42)
 
     def test_load_custom_handlers(self):
-        chain = load_custom_handlers(False, False)
+        chain = load_custom_handlers('tests/plugins', False, False)
         self.assertEqual(
             type(chain), tests.plugins.classdef_handler.ClassDefHandler)
 
-    def test_load_custom_handlers(self):
+    def test_load_custom_handlers_missing(self):
         shutil.move('tests/plugins', 'tests/test_data')
         with self.assertRaises(Exception):
             chain = load_custom_handlers(False, False)
