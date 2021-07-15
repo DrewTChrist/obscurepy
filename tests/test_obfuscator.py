@@ -3,6 +3,8 @@ import shutil
 import os
 from pathlib import Path
 import unittest
+
+import tests.plugins
 from obscurepy.obfuscator import Obfuscator
 from obscurepy.handlers.classdef_handler import ClassDefHandler
 
@@ -16,11 +18,12 @@ class ObfuscatorTest(unittest.TestCase):
         self.log = False
 
     def tearDown(self):
-        pass
+        if os.path.exists('tests/obscurepy_out'):
+            shutil.rmtree('tests/obscurepy_out')
 
     def test_constructor_multi_correct(self):
         self.dynamic_fixture = Obfuscator(
-            is_project=True, project_directory="tests/test_project")
+            project_directory="tests/test_project")
 
     def test_constructor_single_correct(self):
         self.dynamic_fixture = Obfuscator('tests/my_module.py')
@@ -28,12 +31,20 @@ class ObfuscatorTest(unittest.TestCase):
     def test_constructor_incorrect(self):
         with self.assertRaises(Exception):
             self.dynamic_fixture = Obfuscator(
-                filepath='tests/my_module.py', is_project=True)
+                filepath='tests/my_module.py', project_directory='tests/test_project')
 
     def test_build_chain(self):
         self.fixture.chain = None
         self.fixture.build_chain()
         self.assertEqual(type(self.fixture.chain), ClassDefHandler)
+
+    def test_build_chain_custom_handlers(self):
+        self.fixture.chain = None
+        self.fixture.plugin_directory = 'tests/plugins'
+        self.fixture.plugins = True
+        self.fixture.build_chain()
+        self.assertEqual(type(self.fixture.chain),
+                         tests.plugins.classdef_handler.ClassDefHandler)
 
     def test_get_project_filepaths(self):
         self.fixture.project_directory = 'tests'
@@ -49,7 +60,6 @@ class ObfuscatorTest(unittest.TestCase):
         try:
             self.fixture.project_directory = 'tests/test_data'
             self.fixture.output_directory = 'tests'
-            self.fixture.is_project = True
             self.fixture.build_output_directories()
             self.assertTrue(os.path.exists('tests/obscurepy_out/test_data'))
             self.assertTrue(os.path.exists(
@@ -65,6 +75,15 @@ class ObfuscatorTest(unittest.TestCase):
             self.assertTrue(os.path.exists('tests/obscurepy_out'))
         finally:
             os.rmdir('tests/obscurepy_out')
+
+    def test_build_output_directories_exists(self):
+        os.mkdir('tests/obscurepy_out')
+        with open('tests/obscurepy_out/test_file.py', 'w') as file:
+            pass
+        self.fixture.project_directory = 'tests/test_data'
+        self.fixture.output_directory = 'tests'
+        self.fixture.build_output_directories()
+        self.assertFalse(os.path.exists('tests/obscurepy_out/test_file.py'))
 
     def test_write_tree_to_file(self):
         try:

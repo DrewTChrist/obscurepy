@@ -124,7 +124,7 @@ obscure --filepath=my_module.py
 
 The following command can be used to obscure a multi file project:
 ```shell
-obscure -p --project_dir=my_project
+obscure --project_dir=my_project
 ```
 
 Alternatively, you can specify an output directory for both single file and multi file obscuring:
