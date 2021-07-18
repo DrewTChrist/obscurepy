@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>obscurepy package &mdash; obscurepy 0.8.1 documentation</title>
+  <title>obscurepy package &mdash; obscurepy 0.9.0 documentation</title>
 
 
 
@@ -221,12 +221,12 @@
 <span id="obscurepy-obfuscator-module"></span><h2>obscurepy.obfuscator module<a class="headerlink" href="#module-obscurepy.obfuscator" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="obscurepy.obfuscator.Obfuscator">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">obscurepy.obfuscator.</span></span><span class="sig-name descname"><span class="pre">Obfuscator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_project</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project_directory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_directory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/obfuscator.html#Obfuscator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.obfuscator.Obfuscator" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">obscurepy.obfuscator.</span></span><span class="sig-name descname"><span class="pre">Obfuscator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plugins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project_directory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_directory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/obscurepy/obfuscator.html#Obfuscator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#obscurepy.obfuscator.Obfuscator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Main obfuscator class for managing files, handlers and other processes</p>
 <dl>
 <dt>Attributes:</dt><dd><p><strong>filepath (str)</strong>: Single file to be obscured</p>
-<p><strong>is_project (bool)</strong>: Boolean representing whether or not to try obscuring a multi file project</p>
+<p><strong>plugins (bool)</strong>: Boolean representing whether or not load custom handlers</p>
 <p><strong>project_directory (str)</strong>: The directory of the project to be obscured</p>
 <p><strong>output_directory (str)</strong>: The directory to output the obscured code</p>
 <p><strong>filepaths (list)</strong>: List of filenames to be obscured</p>
@@ -234,7 +234,7 @@
 <p><strong>tree (:obj: `ast.Module`)</strong>: Reference to the ast tree created from text attribute</p>
 </dd>
 <dt>Args:</dt><dd><p><strong>filepath (str)</strong>: Single file to be obscured</p>
-<p><strong>is_project (bool)</strong>: Boolean representing whether or not to try obscuring a multi file project</p>
+<p><strong>plugins (bool)</strong>: Boolean representing whether or not load custom handlers</p>
 <p><strong>project_directory (str)</strong>: The directory of the project to be obscured</p>
 <p><strong>output_directory (str)</strong>: The directory to output the obscured code</p>
 </dd>
