@@ -53,28 +53,16 @@ class ObscureTest(unittest.TestCase):
         with self.runner.isolated_filesystem():
             self.create_test_project()
             result = self.runner.invoke(
-                obscure, ['-p', '--project_dir=test_project'])
+                obscure, ['--project_dir=test_project'])
             self.assertEqual(result.exit_code, 0)
             self.assertTrue(os.path.exists(
                 'obscurepy_out/test_project/first_module.py'))
             self.assertTrue(os.path.exists(
                 'obscurepy_out/test_project/some_package/second_module.py'))
 
-    def test_obscure_filepath_and_project(self):
-        result = self.runner.invoke(obscure, ['--filepath=my_module.py', '-p'])
-        self.assertTrue(result.exit_code > 0)
-
     def test_obscure_filepath_and_projectdir(self):
         result = self.runner.invoke(
             obscure, ['--filepath=my_module.py', '--project_dir=test_project'])
-        self.assertTrue(result.exit_code > 0)
-
-    def test_obscure_project_not_projectdir(self):
-        result = self.runner.invoke(obscure, ['-p'])
-        self.assertTrue(result.exit_code > 0)
-
-    def test_obscure_notproject_and_projectdir(self):
-        result = self.runner.invoke(obscure, ['--project_dir=test_project'])
         self.assertTrue(result.exit_code > 0)
 
     def test_obscure_no_args(self):
@@ -88,3 +76,6 @@ class ObscureTest(unittest.TestCase):
                 obscure, ['--filepath=my_module.py', '-l'])
             self.assertEqual(result.exit_code, 0)
             self.assertTrue(os.path.exists('obscurepy.log'))
+
+    def test_obscure_custom_handlers(self):
+        pass

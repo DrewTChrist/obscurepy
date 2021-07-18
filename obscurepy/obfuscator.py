@@ -1,8 +1,9 @@
 import ast
 import astunparse
+import shutil
 import os
 import sys
-from obscurepy.utils.loader import load_handlers, load_file
+from obscurepy.utils.loader import load_handlers, load_custom_handlers, load_file
 from obscurepy.utils.tree import add_parents
 from obscurepy.utils.log import get_verbose_logger, get_file_logger, get_null_logger
 
@@ -13,7 +14,7 @@ class Obfuscator:
     Attributes:
         **filepath (str)**: Single file to be obscured
 
-        **is_project (bool)**: Boolean representing whether or not to try obscuring a multi file project
+        **plugins (bool)**: Boolean representing whether or not load custom handlers
 
         **project_directory (str)**: The directory of the project to be obscured
 
@@ -28,18 +29,19 @@ class Obfuscator:
     Args:
         **filepath (str)**: Single file to be obscured
 
-        **is_project (bool)**: Boolean representing whether or not to try obscuring a multi file project
+        **plugins (bool)**: Boolean representing whether or not load custom handlers
 
         **project_directory (str)**: The directory of the project to be obscured
 
         **output_directory (str)**: The directory to output the obscured code
     """
 
-    def __init__(self, filepath=None, is_project=False, project_directory=None,
+    def __init__(self, filepath=None, plugins=False, project_directory=None,
                  output_directory='.', log=False, verbose=False):
         """Creates an instance of an Obfuscator"""
         self.filepath = filepath
-        self.is_project = is_project
+        self.plugins = plugins
+        self.plugin_directory = 'plugins'
         self.project_directory = project_directory
         self.output_directory = output_directory
         self.filepaths = []
@@ -53,7 +55,8 @@ class Obfuscator:
 
         self.build_chain()
 
-        if not self.is_multi_file() and not self.is_single_file():
+        if (not self.is_multi_file() and not self.is_single_file()) or \
+                (self.is_multi_file() and self.is_single_file()):
             raise Exception(
                 'Improper configuration for both single file and projects')
 
@@ -69,7 +72,11 @@ class Obfuscator:
     def build_chain(self):
         """Loads handlers and assigns the first one to the chain property"""
         self.logger.info('Building handlers chain')
-        self.chain = load_handlers(self.log, self.verbose)
+        if self.plugins:
+            self.chain = load_custom_handlers(
+                self.plugin_directory, self.log, self.verbose)
+        else:
+            self.chain = load_handlers(self.log, self.verbose)
 
     def get_project_filepaths(self):
         """Sets the filepaths property to a list of filepaths found in the project directory"""
@@ -114,7 +121,8 @@ class Obfuscator:
             elif self.is_single_file():
                 os.mkdir(os.path.join(self.output_directory, 'obscurepy_out'))
         except FileExistsError:
-            print('obscurepy_out already exists, delete the directory and try again')
+            shutil.rmtree(os.path.join(self.output_directory, 'obscurepy_out'))
+            self.build_output_directories()
 
     def write_tree_to_file(self, filepath):
         """Writes unparsed abstract syntax trees to files
@@ -171,8 +179,8 @@ class Obfuscator:
 
     def is_multi_file(self):
         """Checks if this class is configured properly for a multi file project"""
-        return self.is_project and self.project_directory and os.path.exists(self.project_directory)
+        return self.project_directory and os.path.exists(self.project_directory)
 
     def is_single_file(self):
         """Checks if this class is configured properly for a single file"""
-        return not self.is_project and self.filepath and os.path.exists(self.filepath)
+        return self.filepath and os.path.exists(self.filepath)
