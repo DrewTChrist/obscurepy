@@ -11,6 +11,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
+## [0.9.0](https://github.com/drewtchrist/obscurepy/releases/tag/v0.9.0) - 2021-07-17
+### Added
+* Users can now load custom handlers
+
+### Changed
+* Fixed an if statement in functiondef_handler that was checking previously obscured source code
+* `-p` flag is no longer a boolean for obscuring a project, but instead represents the option to load custom handlers
+
+### Removed
+
 ## [0.8.1](https://github.com/drewtchrist/obscurepy/releases/tag/v0.8.1) - 2021-06-17
 ### Added
 
