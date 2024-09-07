@@ -1,34 +1,14 @@
 # obscurepy
-[![Build Status](https://travis-ci.com/DrewTChrist/obscurepy.svg?branch=master)](https://travis-ci.com/DrewTChrist/obscurepy)
-[![codecov](https://codecov.io/gh/DrewTChrist/obscurepy/branch/master/graph/badge.svg?token=2LN7K8W2PZ)](https://codecov.io/gh/DrewTChrist/obscurepy)
 
 ## Description
-A tool for obscuring, or making python source code difficult to read.
+
+ARCHIVED
 
 ## Table of Contents
 
-1. [Installation](#installation)
-2. [Limitations](#limitations)
-3. [Usage](#usage)
-4. [Disclaimer](#disclaimer)
-5. [License](#license)
+1. [Usage](#usage)
+2. [License](#license)
 
-## Installation
-This command will install obscurepy:
-```shell
-python -m pip install obscurepy
-```
-I would recommend installing it in a virtual environment as opposed to globally:
-```shell
-python -m venv venv
-source venv/bin/activate
-python -m pip install obscurepy
-```
-
-## Limitations
-As this program is still in active development, there are many limitations. Below are some examples of what obscurepy
-can do. If it isn't in the example, obscurepy probably can't do it. This example serves to represent the ablities
-of each release. This example should be functional, both the original source and obscured source should execute.
 
 ### An example:
 ```python
@@ -134,14 +114,6 @@ obscure --filepath=my_module.py --output_dir=desired_output_directory
 ```shell
 obscure --project_dir=my_project --output_dir=desired_output_directory
 ```
-
-## Disclaimer
-Obscurepy is no substitution for standard security practices. Obscurepy will not protect your code, nor will it
-protect the constants within your code. Python is an interpreted language and by nature anyone with access
-to your source code can reverse engineer it or simply extract any constant replacement to determine the value.
-Obscurepy is not meant to be used with security in mind. Obscurepy can make your source code difficult to read and it
-may deter people from trying. It will not stop any determined person from figuring out what your code does. I suggest
-looking into [PyArmor](https://github.com/dashingsoft/pyarmor) if a more sophisticated method of obfuscation is required.
 
 ## License
 MIT License
